@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Model\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -35,6 +36,13 @@ class LoginController extends Controller
     protected $username;
 
     /**
+     * Login username to be used by the controller.
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -56,8 +64,14 @@ class LoginController extends Controller
 
         $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
+        $this->password = request()->input('username').request()->input('password');
         request()->merge([$fieldType => $login]);
-
+        if($fieldType === 'email'){
+            $user = User::where('email',$login)->first();
+            //dd($user->username);
+            $this->password = $user->username.request()->input('password');
+        }
+        request()->merge(['password' => $this->password]);
         return $fieldType;
     }
 
