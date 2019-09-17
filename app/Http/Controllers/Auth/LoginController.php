@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/backend/home';
 
     /**
      * Login username to be used by the controller.
@@ -51,6 +51,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->username = $this->findUsername();
+        //dd($this->username);
     }
 
     /**
@@ -68,7 +69,6 @@ class LoginController extends Controller
         request()->merge([$fieldType => $login]);
         if($fieldType === 'email'){
             $user = User::where('email',$login)->first();
-            //dd($user->username);
             $this->password = $user->username.request()->input('password');
         }
         request()->merge(['password' => $this->password]);

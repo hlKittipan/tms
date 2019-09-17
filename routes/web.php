@@ -17,8 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+/*Back-end*/
+Route::get('/backend',function(){
+    return view('backend.index');
+})->name('backend');
+
+Route::get('/backend/home', 'HomeController@index')->name('backend.home');
+/*End Back-end*/
