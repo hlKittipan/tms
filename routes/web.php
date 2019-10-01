@@ -23,6 +23,13 @@ Auth::routes();
 Route::get('/backend',function(){
     return view('backend.index');
 })->name('backend');
+Route::get('/backend/users',function(){
+    return view('backend.users.index');
+})->name('backend.users');
 
 Route::get('/backend/home', 'HomeController@index')->name('backend.home');
 /*End Back-end*/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
