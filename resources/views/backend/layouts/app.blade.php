@@ -21,6 +21,8 @@
     <link href="{{asset('css/bootstrap-grid.css')}}" rel="stylesheet">
     <link href="{{asset('css/bootstrap-reboot.css')}}" rel="stylesheet">
 
+    <!-- Font Awesome-->
+    <link href="{{asset('css/all.min.css')}}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -36,5 +38,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="{{asset('js/bootstrap.js')}}"></script>
 <script src="{{asset('js/bootstrap.bundle.js')}}"></script>
+    @yield('script')
 </body>
 </html>
