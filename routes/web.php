@@ -20,14 +20,19 @@ Auth::routes();
 
 
 /*Back-end*/
-Route::get('/backend',function(){
+Route::get('/letmepass',function(){
     return view('backend.index');
-})->name('backend');
-Route::get('/backend/users',function(){
-    return view('backend.users.index');
-})->name('backend.users');
+})->name('letmepass');
 
 Route::get('/backend/home', 'HomeController@index')->name('backend.home');
+// Add user
+Route::resource('/backend/user','Backend\UserController')->names([
+    'index' => 'backend.user.index',
+    'store' => 'backend.user.store',
+    'edit' => 'backend.user.edit',
+    'update' => 'backend.user.update',
+    'destroy' => 'backend.user.destroy',
+]);
 /*End Back-end*/
 
 Auth::routes();
