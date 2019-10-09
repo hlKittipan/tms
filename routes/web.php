@@ -17,8 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-
 /*Back-end*/
 Route::get('/letmepass',function(){
     return view('backend.index');
@@ -33,6 +31,11 @@ Route::resource('/backend/user','Backend\UserController')->names([
     'update' => 'backend.user.update',
     'destroy' => 'backend.user.destroy',
 ]);
+Route::resource('/backend/product/type','Backend\ProductTypeController');
+
+Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], function () {
+    Route::resource('product','ProductController');
+});
 /*End Back-end*/
 
 Auth::routes();

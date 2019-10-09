@@ -6,6 +6,7 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -80,9 +81,10 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        //dd($user);
+        return view('backend.users.edit',compact('user'));
     }
 
     /**
@@ -92,9 +94,19 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        if(empty($request->password)){
+            $password = $user->password;
+        }else{
+            $password = Hash::make($request->username.$request->password);
+        }
+
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update(['password' => $password,'name' => $request->name]);
+        return redirect()->route('backend.user.index')
+            ->with('success','User Update successfully.');
     }
 
     /**
