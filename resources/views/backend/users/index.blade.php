@@ -97,7 +97,7 @@
                                     <td>{{ $users->email }}</td>
                                     <td>
                                         <a href="{{ route('backend.user.edit',$users->id) }}" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="fas fa-user-edit fa-2x"></i>
+                                            <i class="fas fa-edit fa-2x"></i>
                                         </a>
                                         <!--<a href="" data-toggle="tooltip" data-placement="top" title="Reset Password">
                                             <i class="fas fa-recycle fa-2x"></i>

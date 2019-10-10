@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Model\ProductType;
+use App\Model\Product_type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,8 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        //
+        $productType = Product_type::latest()->paginate(10);
+        return view('backend.productType.index',compact('productType'));
     }
 
     /**
@@ -36,16 +41,18 @@ class ProductTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product_type::create($request->all());
+        return redirect()->route('backend.product_type.index')
+            ->with('success','Product type created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\ProductType  $productType
+     * @param  \App\Model\Product_type  $productType
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductType $productType)
+    public function show(Product_type $productType)
     {
         //
     }
@@ -53,33 +60,35 @@ class ProductTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\ProductType  $productType
+     * @param  \App\Model\Product_type  $productType
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductType $productType)
+    public function edit(Product_type $productType)
     {
-        //
+        return view('backend.productType.edit',compact('productType'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\ProductType  $productType
+     * @param  \App\Model\Product_type  $productType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductType $productType)
+    public function update(Request $request, Product_type $productType)
     {
-        //
+        $productType->update($request->all());
+        return redirect()->route('backend.product_type.index')
+            ->with('success','Product type Update successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\ProductType  $productType
+     * @param  \App\Model\Product_type  $productType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductType $productType)
+    public function destroy(Product_type $productType)
     {
         //
     }

@@ -32,10 +32,10 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="product">
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item" href="{{ route('backend.product_type.index') }}">
                                 {{ __('product.product_type') }}
                             </a>
-                            <a class="dropdown-item" href="">
+                            <a class="dropdown-item" href="{{ route('backend.product.index') }}">
                                 {{ __('product.product') }}
                             </a>
                         </div>

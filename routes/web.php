@@ -23,18 +23,11 @@ Route::get('/letmepass',function(){
 })->name('letmepass');
 
 Route::get('/backend/home', 'HomeController@index')->name('backend.home');
-// Add user
-Route::resource('/backend/user','Backend\UserController')->names([
-    'index' => 'backend.user.index',
-    'store' => 'backend.user.store',
-    'edit' => 'backend.user.edit',
-    'update' => 'backend.user.update',
-    'destroy' => 'backend.user.destroy',
-]);
-Route::resource('/backend/product/type','Backend\ProductTypeController');
 
 Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], function () {
+    Route::resource('user','UserController');
     Route::resource('product','ProductController');
+    Route::resource('product_type','ProductTypeController');
 });
 /*End Back-end*/
 
