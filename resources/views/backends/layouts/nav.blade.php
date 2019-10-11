@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="">
+        <a class="navbar-brand" href="{{ route('backend.home') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -28,32 +28,35 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="product" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ __('product.product') }} <span class="caret"></span>
+                            <i class="fas fa-suitcase"></i> {{ __('product.product') }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="product">
                             <a class="dropdown-item" href="{{ route('backend.product_type.index') }}">
-                                {{ __('product.product_type') }}
+                                <i class="fas fa-bookmark"></i> {{ __('product.product_type') }}
                             </a>
                             <a class="dropdown-item" href="{{ route('backend.product.index') }}">
-                                {{ __('product.product') }}
+                                <i class="fas fa-suitcase"></i> {{ __('product.product') }}
                             </a>
                         </div>
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('backend.user.index') }}">{{ __('staff.user_management') }}</a>
+                        <a class="nav-link" href="{{ route('backend.user.index') }}"> <i class="fas fa-users"></i> {{ __('staff.user_management') }}</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->username }} <span class="caret"></span>
+                            <i class="fas fa-user"></i> {{ Auth::user()->username }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('backend.setup.index') }}">
+                                <i class="fas fa-cogs"></i> {{ __('setup.config') }}
+                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

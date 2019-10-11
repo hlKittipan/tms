@@ -20,7 +20,7 @@ class ProductTypeController extends Controller
     public function index()
     {
         $productType = Product_type::latest()->paginate(10);
-        return view('backend.productType.index',compact('productType'));
+        return view('backends.productTypes.index',compact('productType'));
     }
 
     /**
@@ -28,9 +28,9 @@ class ProductTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductTypeController extends Controller
      */
     public function edit(Product_type $productType)
     {
-        return view('backend.productType.edit',compact('productType'));
+        return view('backends.productTypes.edit',compact('productType'));
     }
 
     /**

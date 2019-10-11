@@ -14,7 +14,10 @@ class CreateSystemSetupsTable extends Migration
     public function up()
     {
         Schema::create('system_setups', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('setting_name',100)->unique();
+            $table->string('code',100)->unique();
+            $table->string('type',50);
+            $table->string('value',50);
             $table->timestamps();
         });
     }

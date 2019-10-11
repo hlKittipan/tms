@@ -29,7 +29,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::latest()->paginate(10);
-        return view('backend.users.index',compact('user'));
+        return view('backends.users.index',compact('user'));
     }
 
     /**
@@ -84,7 +84,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //dd($user);
-        return view('backend.users.edit',compact('user'));
+        return view('backends.users.edit',compact('user'));
     }
 
     /**

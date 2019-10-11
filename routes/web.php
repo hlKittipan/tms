@@ -19,7 +19,7 @@ Auth::routes();
 
 /*Back-end*/
 Route::get('/letmepass',function(){
-    return view('backend.index');
+    return view('backends.index');
 })->name('letmepass');
 
 Route::get('/backend/home', 'HomeController@index')->name('backend.home');
@@ -28,8 +28,13 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::resource('user','UserController');
     Route::resource('product','ProductController');
     Route::resource('product_type','ProductTypeController');
+    Route::resource('setup','SettingController');
 });
 /*End Back-end*/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

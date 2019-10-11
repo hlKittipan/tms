@@ -22,7 +22,7 @@
 </head>
 <body>
 <div id="app">
-    @include('backend.layouts.nav')
+    @include('backends.layouts.nav')
 
     <main class="py-4">
         @yield('content')

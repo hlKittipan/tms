@@ -21,6 +21,7 @@ class CreateProducts extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code','20');
             $table->string('name');
             $table->string('staff_id');
             $table->integer('number_of_pax');
@@ -65,6 +66,20 @@ class CreateProducts extends Migration
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
+
+        Schema::create('highlights', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('icon')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('product_many_highlights', function (Blueprint $table) {
+            $table->string('highlight_id');
+            $table->string('product_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -74,6 +89,8 @@ class CreateProducts extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('product_many_highlights');
+        Schema::dropIfExists('highlights');
         Schema::dropIfExists('periods');
         Schema::dropIfExists('prices');
         Schema::dropIfExists('products');
