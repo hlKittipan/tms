@@ -3,11 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Model\Product;
+use App\Model\Product_type;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    public $productType;
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->productType = Product_type::get()->pluck('name','id');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +29,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Product::latest()->paginate(10);
+        //dd($product);
+        return view('backends.products.index',compact('product'));
     }
 
     /**
@@ -25,7 +41,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $productType = $this->productType;
+        $product_id = 0;
+        return view('backends.products.create',compact('productType','product_id'));
     }
 
     /**
@@ -36,7 +54,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'number_of_pax' => 'required|numeric',
+            'duration_days' => 'required|numeric',
+            'duration_nights' => 'required|numeric',
+        ]);
+        $code = Carbon::now()->format('ymdhms');
+        request()->merge(['status' => '1','code'=>$code,'staff_id' => Auth::user()->id]);
+        $product = Product::create($request->all());
+        return redirect()->route('backend.product.after',$product->id)
+            ->with('success','Product created successfully.');
+    }
+
+    public function afterCreateProduct($id){
+        $productType = $this->productType;
+        $product_id = $id;
+        return view('backends.products.create',compact('productType','product_id'));
     }
 
     /**

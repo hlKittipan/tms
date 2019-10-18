@@ -28,9 +28,9 @@ class ProductTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        dd($request->all());
+        //
     }
 
     /**

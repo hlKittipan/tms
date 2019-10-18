@@ -18,6 +18,20 @@
     <link href="{{asset('css/all.min.css')}}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 
 </head>
 <body>
@@ -27,10 +41,19 @@
     <main class="py-4">
         @yield('content')
     </main>
+    <footer>
+        <div class=" col-md-12 text-center">
+            Copyright © 2018 Twenty four seven hours Tour Limited All rights reserved.
+        </div>
+    </footer>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="{{ asset('js/jquery-3.4.1.min.js') }}" ></script>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
+
+{{--google map--}}
+{{--<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('setting-services')->{'google-map-key'} }}&callback=initMap"--}}
+{{--        type="text/javascript"></script>--}}
     @yield('script')
 </body>
 </html>

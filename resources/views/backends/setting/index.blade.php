@@ -68,20 +68,14 @@
                             @csrf
                             @foreach($setting as $key => $value)
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">{{ $value->setting_name }}</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-4 col-form-label">{{ $value->setting_name }}</label>
+                                <div class="col-sm-6">
                                     <input type="{{$value->type}}" class="form-control" name="{{ $value->code }}" value="{{ $value->value }}" required>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a href="" onclick="event.preventDefault();
-                                                     document.getElementById('delete-form').submit();"  data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <a href="" onclick="deleteData({{ $value->code }})"  data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="fas fa-trash fa-2x"></i>
                                     </a>
-
-                                    <form id="delete-form" action="{{ route('backend.setup.destroy',$value->code) }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
                                 </div>
                             </div>
                             @endforeach
@@ -92,19 +86,26 @@
                 </div>
             </div>
         </div>
+        <form id="delete-form" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
     </div>
 @endsection
 @section('script')
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
         $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip()
             $('input[name="setting_name"]').keyup(function(e) {
                 var txtVal = $(this).val();
                 txtVal = txtVal.toLowerCase().replace(/\s/g, '-');
                 $('input[name="code"]').val(txtVal);
             });
         });
+        function deleteData(code) {
+            var url = '{{ url('backend/setup/') }}/'+code;
+            document.getElementById('delete-form').action = url;
+            setTimeout(function(){ document.getElementById('delete-form').submit(); }, 100);
+        }
     </script>
 @endsection

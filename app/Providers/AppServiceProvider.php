@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +29,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
+        $data = DB::table('system_setups')->get();
+        // View::share('company',$company);
+        $setting = new \stdClass();
+        foreach ($data as $key => $value){
+            $setting->{$value->code} = $value->value;
+        }
+        config(['setting-services' => $setting]);
     }
 }

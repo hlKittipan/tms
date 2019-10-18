@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 class SettingController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -99,4 +108,5 @@ class SettingController extends Controller
         return redirect()->route('backend.setup.index')
             ->with('success', 'Setting delete successfully.');
     }
+
 }

@@ -10,7 +10,17 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header">{{ __('product.product_management') }}</div>
+                    <div class="card-header">
+
+                        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <h4>{{ __('product.product_management') }}</h4>
+                            </div>
+                            <div class="input-group">
+                                <a href="{{ route('backend.product.create') }}"  class="btn btn-primary">Create</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <tr>
@@ -20,7 +30,7 @@
                                 <th>Periods</th>
                                 <th width="280px">Action</th>
                             </tr>
-                            @foreach ($productType as $key => $list)
+                            @foreach ($product as $key => $list)
                                 <tr>
                                     <td>{{ $key++ }}</td>
                                     <td>{{ $list->name }}</td>
@@ -40,7 +50,7 @@
                                 </tr>
                             @endforeach
                         </table>
-                        {!! $productType->links() !!}
+                        {!! $product->links() !!}
                     </div>
                 </div>
             </div>

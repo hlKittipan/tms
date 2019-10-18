@@ -26,16 +26,20 @@ Route::get('/backend/home', 'HomeController@index')->name('backend.home');
 
 Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], function () {
     Route::resource('user','UserController');
+    //Product
     Route::resource('product','ProductController');
+    Route::get('product/after/{id}','ProductController@afterCreateProduct')->name('product.after');
     Route::resource('product_type','ProductTypeController');
     Route::resource('setup','SettingController');
 });
 /*End Back-end*/
+Route::get('/task', function(){
+    return response()->json([
+        'message' => 'Task deleted successfully!'
+    ], 200);
+})->name('home');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
