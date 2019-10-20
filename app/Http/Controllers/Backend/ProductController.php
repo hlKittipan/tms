@@ -69,8 +69,13 @@ class ProductController extends Controller
 
     public function afterCreateProduct($id){
         $productType = $this->productType;
+        $product = Product::findOrFail($id);
+        return view('backends.products.afterCreateProduct',compact('productType','product'));
+    }
+
+    public function createPeriod($id){
         $product_id = $id;
-        return view('backends.products.create',compact('productType','product_id'));
+        return view('backends.periods.create',compact('product_id'));
     }
 
     /**

@@ -10,159 +10,108 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header">
-                        <nav>
-                            <div class="nav nav-tabs card-header-tabs justify-content-center nav-fill" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link {{$product_id == 0 ? "active" : "disabled" }} " id="nav-main-tab" data-toggle="tab" href="#nav-main"
-                                   role="tab" aria-controls="nav-home" aria-selected="true">
-                                    {{__('product.information')}}</a>
-                                <a class="nav-item nav-link {{$product_id != 0 ? "" : "disabled"}}" id="nav-image-tab" data-toggle="tab" href="#nav-image"
-                                   role="tab"
-                                   aria-controls="nav-profile" aria-selected="false">{{__('product.images')}}</a>
-                                <a class="nav-item nav-link {{$product_id != 0 ? "" : "disabled"}}" id="nav-pap-tab" data-toggle="tab" href="#nav-pap"
-                                   role="tab"
-                                   aria-controls="nav-contact" aria-selected="false">{{ __('product.periods') }} & {{ __('product.prices') }}</a>
-                            </div>
-                        </nav>
-                    </div>
+                    <div class="card-header">{{ __('product.create') }}</div>
 
                     <div class="card-body">
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-main" role="tabpanel"
-                                 aria-labelledby="nav-main-tab">
-                                <form class="was-validated needs-validation" method="POST" id="main-form"
-                                      action="{{ route('backend.product.store') }}">
-                                    @csrf
-                                    <div class="form-row">
-                                        <div class="form-group col-md-8">
-                                            <label>{{ __('product.name') }}</label>
-                                            <input type="text" class="form-control is-invalid" name="name"
-                                                   value="{{ old('name') }}" placeholder="name" required>
 
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
+                        <form class="was-validated needs-validation" method="POST" id="main-form"
+                              action="{{ route('backend.product.store') }}">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label>{{ __('product.name') }}</label>
+                                    <input type="text" class="form-control is-invalid" name="name"
+                                           value="{{ old('name') }}" placeholder="name" required>
+
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label>{{ __('product.number_of_pax') }}</label>
-                                            <input type="number" class="form-control is-invalid" name="number_of_pax"
-                                                   value="{{ old('number_of_pax') }}" placeholder="30" required>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>{{ __('product.number_of_pax') }}</label>
+                                    <input type="number" class="form-control is-invalid" name="number_of_pax"
+                                           value="{{ old('number_of_pax') }}" placeholder="30" required>
 
-                                            @error('number_of_pax')
-                                            <span class="invalid-feedback" role="alert">
+                                    @error('number_of_pax')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('product.duration_days') }}</label>
-                                            <input type="number" class="form-control" name="duration_days"
-                                                   value="{{ old('duration_days') }}" placeholder="30">
-
-                                            @error('duration_days')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('product.duration_nights') }}</label>
-                                            <input type="number" class="form-control" name="duration_nights"
-                                                   value="{{ old('duration_nights') }}" placeholder="30">
-
-                                            @error('duration_nights')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.product_type') }}</label>
-                                        <select class="form-control  is-invalid" name="product_type" >
-                                            @foreach($productType as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.includes') }}</label>
-                                        <textarea class="form-control" name="includes" placeholder="Required"
-                                                  rows="3">{{ old('includes') }}</textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.excludes') }}</label>
-                                        <textarea class="form-control" name="excludes" placeholder="Required"
-                                                  rows="3">{{ old('excludes') }}</textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.conditions') }}</label>
-                                        <textarea class="form-control" name="conditions" placeholder="Required"
-                                                  rows="3">{{ old('conditions') }}</textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.itinerary') }}</label>
-                                        <textarea class="form-control" name="itinerary" placeholder="Required"
-                                                  rows="3">{{ old('itinerary') }}</textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>{{ __('product.remark') }}</label>
-                                        <textarea class="form-control" name="remark" placeholder="Required"
-                                                  rows="3">{{ old('remark') }}</textarea>
-                                    </div>
-                                    <button type="button" class="btn btn-primary"
-                                            onclick="event.preventDefault();document.getElementById('main-form').submit();">{{ __('auth.save') }}</button>
-                                    <button type="button" class="btn btn-danger"
-                                            onClick="confirm_reset()">{{ __('auth.reset') }}</button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab">
-                                <form class="was-validated needs-validation" method="POST" id="main-form"
-                                      action="{{ route('backend.product_type.store') }}">
-                                    <input type="hidden" name="product_id" value="{{$product_id}}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label>@lang('product.main') @lang('product.images')</label>
-                                        <input type="file" class="form-control-file" name="main" accept="image/*">
-                                        <small  class="form-text text-muted">Choose 1</small>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>@lang('product.gallery')</label>
-                                        <input type="file" class="form-control-file" name="gallery" multiple accept="image/*">
-                                        <small  class="form-text text-muted">Choose 1 or more</small>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">{{ __('auth.save') }}</button>
-                                </form>
-                                <hr>
-                                <div class="col-md-12">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
-                                    <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded " alt="Responsive image">
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="nav-pap" role="tabpanel" aria-labelledby="nav-pap-tab">
-                                <a href="" class="btn btn-success">{{ __('product.add_periods') }}</a>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>{{ __('product.duration_days') }}</label>
+                                    <input type="number" class="form-control" name="duration_days"
+                                           value="{{ old('duration_days') }}" placeholder="30">
+
+                                    @error('duration_days')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>{{ __('product.duration_nights') }}</label>
+                                    <input type="number" class="form-control" name="duration_nights"
+                                           value="{{ old('duration_nights') }}" placeholder="30">
+
+                                    @error('duration_nights')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.product_type') }}</label>
+                                <select class="form-control  is-invalid" name="product_type">
+                                    @foreach($productType as $key => $value)
+                                        <option value="{{$key}}">{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.includes') }}</label>
+                                <textarea class="form-control" name="includes" placeholder="Required"
+                                          rows="3">{{ old('includes') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.excludes') }}</label>
+                                <textarea class="form-control" name="excludes" placeholder="Required"
+                                          rows="3">{{ old('excludes') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.conditions') }}</label>
+                                <textarea class="form-control" name="conditions" placeholder="Required"
+                                          rows="3">{{ old('conditions') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.itinerary') }}</label>
+                                <textarea class="form-control" name="itinerary" placeholder="Required"
+                                          rows="3">{{ old('itinerary') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ __('product.remark') }}</label>
+                                <textarea class="form-control" name="remark" placeholder="Required"
+                                          rows="3">{{ old('remark') }}</textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary"
+                                    onclick="event.preventDefault();document.getElementById('main-form').submit();">{{ __('auth.save') }}</button>
+                            <button type="button" class="btn btn-danger"
+                                    onClick="confirm_reset()">{{ __('auth.reset') }}</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -172,15 +121,16 @@
 
 @section('script')
     <script>
-        $(document).ready(function(){
-            if('{{$product_id}}' != '0'){
+        $(document).ready(function () {
+            if ('{{$product_id}}' != '0') {
                 $('#nav-tab a[href="#nav-image"]').tab('show');
                 $('#nav-main').empty();
             }
         });
+
         function confirm_reset() {
-            var reset_button =  confirm("Are you sure?");
-            if(reset_button){
+            var reset_button = confirm("Are you sure?");
+            if (reset_button) {
                 document.getElementById('main-form').reset();
             }
         }

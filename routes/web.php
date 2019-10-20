@@ -29,6 +29,7 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     //Product
     Route::resource('product','ProductController');
     Route::get('product/after/{id}','ProductController@afterCreateProduct')->name('product.after');
+    Route::get('product/period/create/{id}','ProductController@createPeriod')->name('product.period.create');
     Route::resource('product_type','ProductTypeController');
     Route::resource('setup','SettingController');
 });

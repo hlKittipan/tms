@@ -23,7 +23,7 @@ class CreateProducts extends Migration
             $table->bigIncrements('id');
             $table->string('code','20');
             $table->string('name');
-            $table->string('staff_id');
+            $table->string('staff_id',10);
             $table->integer('number_of_pax');
             $table->integer('duration_days')->nullable()->default(1);
             $table->integer('duration_nights')->nullable()->default(1);
@@ -38,8 +38,9 @@ class CreateProducts extends Migration
 
         Schema::create('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('product_id');
-            $table->string('staff_id');
+            $table->string('product_id',10);
+            $table->string('period_id',10)->nullable();
+            $table->string('staff_id',10);
             $table->double('adult')->nullable()->default(0);
             $table->double('child')->nullable()->default(0);
             $table->double('infra')->nullable()->default(0);
@@ -50,9 +51,9 @@ class CreateProducts extends Migration
 
         Schema::create('periods', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('product_id');
-            $table->string('price_id');
-            $table->string('staff_id');
+            $table->string('product_id',10);
+            $table->string('price_id',10)->nullable();
+            $table->string('staff_id',10);
             $table->dateTime('date_start');
             $table->dateTime('date_end');
             $table->boolean('sun')->nullable()->default(0);
@@ -76,8 +77,8 @@ class CreateProducts extends Migration
         });
 
         Schema::create('product_many_highlights', function (Blueprint $table) {
-            $table->string('highlight_id');
-            $table->string('product_id');
+            $table->string('highlight_id',10);
+            $table->string('product_id',10);
             $table->timestamps();
         });
     }
