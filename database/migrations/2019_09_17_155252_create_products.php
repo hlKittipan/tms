@@ -41,9 +41,12 @@ class CreateProducts extends Migration
             $table->string('product_id',10);
             $table->string('period_id',10)->nullable();
             $table->string('staff_id',10);
-            $table->double('adult')->nullable()->default(0);
-            $table->double('child')->nullable()->default(0);
-            $table->double('infra')->nullable()->default(0);
+            $table->double('cost_adult')->nullable()->default(0);
+            $table->double('cost_child')->nullable()->default(0);
+            $table->double('cost_infra')->nullable()->default(0);
+            $table->double('public_adult')->nullable()->default(0);
+            $table->double('public_child')->nullable()->default(0);
+            $table->double('public_infra')->nullable()->default(0);
             $table->text('remark');
             $table->string('status')->nullable()->default(0);
             $table->timestamps();

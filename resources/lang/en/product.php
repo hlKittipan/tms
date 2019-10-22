@@ -40,4 +40,13 @@ return [
     'all' => 'All',
     'available_of_days' => 'Available of days',
     'done' => 'Done',
+    'date' => 'Date',
+    'period_lists' => 'Period lists',
+    'price_lists' => 'Price lists',
+    'cost_adult' => 'Cost adult',
+    'cost_child' => 'Cost child',
+    'cost_infra' => 'Cost infra',
+    'public_adult' => 'Public adult',
+    'public_child' => 'Public child',
+    'public_infra' => 'Public infra',
 ];

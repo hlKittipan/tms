@@ -29,7 +29,12 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     //Product
     Route::resource('product','ProductController');
     Route::get('product/after/{id}','ProductController@afterCreateProduct')->name('product.after');
+    //create period
     Route::get('product/period/create/{id}','ProductController@createPeriod')->name('product.period.create');
+    //upload image
+    Route::post('product/image/store','ProductController@storeImage')->name('product.image.store');
+    //set type image
+    Route::get('product/image/set/{id}/{type}/{product_id}','ProductController@setTypeImage')->name('product.image.set');
     Route::resource('product_type','ProductTypeController');
     Route::resource('setup','SettingController');
 });

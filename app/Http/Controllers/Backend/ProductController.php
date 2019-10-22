@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\model\Image;
 use App\Model\Product;
 use App\Model\Product_type;
+use App\model\ProductManyImage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -70,12 +73,53 @@ class ProductController extends Controller
     public function afterCreateProduct($id){
         $productType = $this->productType;
         $product = Product::findOrFail($id);
-        return view('backends.products.afterCreateProduct',compact('productType','product'));
+        $image = DB::table('product_many_images')
+            ->join('images','id','=','images_id')
+            ->where('product_id','=',1)->get();
+        return view('backends.products.afterCreateProduct',compact('productType','product','image'));
     }
 
     public function createPeriod($id){
         $product_id = $id;
         return view('backends.periods.create',compact('product_id'));
+    }
+
+    public function storeImage(Request $request){
+        //dd($request->all());
+        //dd($request->hasFile('gallery'));
+        if ($request->hasFile('gallery')) {
+            //dd($request->file('gallery'));
+            $files = $request->file('gallery');
+            foreach ($files as $image) {
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path() .'/uploads/'.$request->product_id.'/';
+                $src = '/uploads/'.$request->product_id.'/'.$imageName;
+                $image->move($destinationPath, $imageName);
+                //dd($src);
+                request()->merge(['title' => 'Image title',
+                    'alt' => 'Alt Attribute เป็นข้อความที่ทุกรูปภาพควรจะต้องมี เพราะมีประโยชน์ต่อ Google, ผู้ค้นหา และผู้เข้าชมเว็บไซต์',
+                    'description' => 'Some quick example text to build on the image title and make up the bulk of the image\'s content.',
+                    'file_path'=>$destinationPath,
+                    'file_name'=>$imageName,
+                    'src'=>$src]);
+                $ref_image = Image::create($request->all());
+                DB::table('product_many_images')->insert([
+                    'product_id' => $request->product_id,
+                    'images_id' => $ref_image->id,
+                    'created_at' => now()
+                ]);
+            }
+        }
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Image upload successfully.');
+    }
+
+    public function setTypeImage($id,$type,$product_id){
+        $image = Image::findOrFail($id);
+        $image->type = $type;
+        $image->save();
+        return redirect()->route('backend.product.after',$product_id)
+            ->with('success','Image Update successfully.');
     }
 
     /**

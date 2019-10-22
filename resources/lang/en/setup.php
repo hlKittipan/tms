@@ -6,5 +6,6 @@ return [
     'name' => 'Config Name',
     'code' => 'Config code',
     'type' => 'Type',
+    'action' => 'Action',
 
 ];

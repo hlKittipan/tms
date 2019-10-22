@@ -17,6 +17,8 @@ class CreateImages extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('src');
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
             $table->string('alt')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

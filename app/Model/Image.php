@@ -12,14 +12,14 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'title','src', 'alt', 'description','type',
+        'title','src', 'alt', 'description','type','file_path','file_name'
     ];
 
     /**
      * Get the images that owns the product_many_images.
      */
-    public function product_many_images()
+    /*public function ProductManyImage()
     {
-        return $this->belongsTo('App\Model\Product_many_image');
-    }
+        return $this->hasMany(ProductManyImage::class,'images_id','id');
+    }*/
 }
