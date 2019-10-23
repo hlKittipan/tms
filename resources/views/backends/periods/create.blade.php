@@ -21,25 +21,8 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>{{ __('product.start_date') }}</label>
-                                    <input type="date" class="form-control is-invalid" name="start_date"
-                                           value="{{ old('start_date') }}" required>
-
-                                    @error('start_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>{{ __('product.end_date') }}</label>
-                                    <input type="date" class="form-control is-invalid" name="end_date"
-                                           value="{{ old('end_date') }}" required>
-
-                                    @error('end_date')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input type="text" class="form-control is-invalid" name="period_date"
+                                           value="{{ old('period_date') }}" required>
                                 </div>
                             </div>
 
@@ -94,11 +77,29 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
-            if ('{{$product_id}}' != '0') {
-                $('#nav-tab a[href="#nav-image"]').tab('show');
-                $('#nav-main').empty();
+        $(function() {
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('input[name="period_date"] span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
+
+            $('input[name="period_date"]').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
         });
 
         function confirm_reset() {
