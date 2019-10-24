@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\model\Image;
+use App\Model\Period;
+use App\Model\Price;
 use App\Model\Product;
 use App\Model\Product_type;
 use App\model\ProductManyImage;
@@ -76,7 +78,8 @@ class ProductController extends Controller
         $image = DB::table('product_many_images')
             ->join('images','id','=','images_id')
             ->where('product_id','=',1)->get();
-        return view('backends.products.afterCreateProduct',compact('productType','product','image'));
+        $period = Period::where('periods.product_id','=',$id)->get();
+        return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
     }
 
     public function createPeriod($id){
@@ -84,18 +87,61 @@ class ProductController extends Controller
         return view('backends.periods.create',compact('product_id'));
     }
 
+    public function storePeriod(Request $request){
+        request()->merge(['staff_id' => Auth::user()->id]);
+        $isCheckedAll = $request->has('all');
+        if ($isCheckedAll){
+            request()->merge([
+                'sun' => '1',
+                'mon' => '1',
+                'tue' => '1',
+                'wed' => '1',
+                'thu' => '1',
+                'fri' => '1',
+                'sat' => '1',
+                ]);
+        }
+
+        $date = $request->date_start;
+        if($date == null){
+            return redirect()->route('backend.product.period.create',$request->product_id)
+                ->with('success','Can not create period please check.');
+        }
+        //dd($request->all());
+        Period::create($request->all());
+
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Period Create successfully.');
+    }
+
+    public function createPrice($product_id,$period_id){
+        return view('backends.prices.create',compact('product_id','period_id'));
+    }
+
+    public function storePrice(Request $request){
+        //dd($request->all());
+        request()->merge(['staff_id' => Auth::user()->id]);
+        $date = $request->date_start;
+        if($date == null){
+            return redirect()->route('backend.product.period.create',$request->product_id)
+                ->with('success','Can not create period please check.');
+        }
+        //dd($request->all());
+        Price::create($request->all());
+
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Period Create successfully.');
+    }
+
     public function storeImage(Request $request){
         //dd($request->all());
-        //dd($request->hasFile('gallery'));
         if ($request->hasFile('gallery')) {
-            //dd($request->file('gallery'));
             $files = $request->file('gallery');
             foreach ($files as $image) {
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $destinationPath = public_path() .'/uploads/'.$request->product_id.'/';
                 $src = '/uploads/'.$request->product_id.'/'.$imageName;
                 $image->move($destinationPath, $imageName);
-                //dd($src);
                 request()->merge(['title' => 'Image title',
                     'alt' => 'Alt Attribute เป็นข้อความที่ทุกรูปภาพควรจะต้องมี เพราะมีประโยชน์ต่อ Google, ผู้ค้นหา และผู้เข้าชมเว็บไซต์',
                     'description' => 'Some quick example text to build on the image title and make up the bulk of the image\'s content.',
@@ -121,6 +167,7 @@ class ProductController extends Controller
         return redirect()->route('backend.product.after',$product_id)
             ->with('success','Image Update successfully.');
     }
+
 
     /**
      * Display the specified resource.

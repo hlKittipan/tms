@@ -14,15 +14,20 @@
 
                     <div class="card-body">
 
-                        <form class="was-validated needs-validation" method="POST" id="main-form"
-                              action="">
+                        <form class="" method="POST" id="main-form"
+                              action="{{route('backend.product.period.store')}}">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product_id}}">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>{{ __('product.start_date') }}</label>
-                                    <input type="text" class="form-control is-invalid" name="period_date"
-                                           value="{{ old('period_date') }}" required>
+                                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                    <input type="hidden" name="date_start">
+                                    <input type="hidden" name="date_end">
+
                                 </div>
                             </div>
 
@@ -83,10 +88,12 @@
             var end = moment();
 
             function cb(start, end) {
-                $('input[name="period_date"] span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $('input[name="date_start"]').val(start.format('YYYY-MM-DD'));
+                $('input[name="date_end"]').val(end.format('YYYY-MM-DD'));
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
 
-            $('input[name="period_date"]').daterangepicker({
+            $('#reportrange').daterangepicker({
                 startDate: start,
                 endDate: end,
                 ranges: {
@@ -95,7 +102,10 @@
                     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                     'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'This Year': [moment().startOf('year'), moment().endOf('year')],
+                    'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+                    'Next Year': [moment().add(1, 'year').startOf('year'), moment().add(1, 'year').endOf('year')]
                 }
             }, cb);
 

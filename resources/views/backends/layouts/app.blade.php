@@ -15,6 +15,8 @@
         }
     </style>
 
+    <!-- Font awesome -->
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 

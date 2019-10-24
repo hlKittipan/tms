@@ -31,6 +31,10 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::get('product/after/{id}','ProductController@afterCreateProduct')->name('product.after');
     //create period
     Route::get('product/period/create/{id}','ProductController@createPeriod')->name('product.period.create');
+    Route::post('product/period/store','ProductController@storePeriod')->name('product.period.store');
+    //create price
+    Route::get('product/price/create/{product_id}/{period_id}','ProductController@createPrice')->name('product.price.create');
+    Route::post('product/price/store','ProductController@storePrice')->name('product.price.store');
     //upload image
     Route::post('product/image/store','ProductController@storeImage')->name('product.image.store');
     //set type image

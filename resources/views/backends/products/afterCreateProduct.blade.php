@@ -42,194 +42,96 @@
                                     <h5 class="card-header">{{__('product.period_lists')}}</h5>
                                     <div class="card-body">
                                         {{--period table--}}
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="float-md-left">
-                                                    <b> {{__('product.date')}} : </b>30-01-2019 to 31-12-2019
-                                                </div>
-                                                <div class="float-md-right">
-                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                       class="btn btn-success">@lang('product.add_prices')</a>
-                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                       class="btn" data-toggle="tooltip"
-                                                       data-placement="top" title="Edit"><i
-                                                            class="fas fa-edit fa-2x"></i>
-                                                    </a>
-                                                </div>
+                                        @isset($period)
+                                            @foreach($period as $key => $value)
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <div class="float-md-left">
+                                                            <b> {{__('product.date')}} : </b>{{\Carbon\Carbon::parse($value->date_start)->format('F jS, Y')}} to {{\Carbon\Carbon::parse($value->date_end)->format('F jS, Y')}}
+                                                        </div>
+                                                        <div class="float-md-right">
+                                                            <a href="{{route('backend.product.price.create',['product_id'=>$product->id,'period_id'=>$value->id])}}"
+                                                               class="btn btn-success">@lang('product.add_prices')</a>
+                                                            <a href="{{route('backend.product.period.create',$product->id)}}"
+                                                               class="btn btn-success disabled" data-toggle="tooltip"
+                                                               data-placement="top" title="Edit"><i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a href="{{route('backend.product.period.create',$product->id)}}"
+                                                               class="btn btn-success" data-toggle="tooltip"
+                                                               data-placement="top" title="Copy"><i class="far fa-copy"></i></a>
+                                                        </div>
 
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-12 table-responsive">
-                                                        <table class="table table-hover table-sm text-center">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>{{__('product.sunday')}}</td>
-                                                                <td>{{__('product.monday')}}</td>
-                                                                <td>{{__('product.tuesday')}}</td>
-                                                                <td>{{__('product.wednesday')}}</td>
-                                                                <td>{{__('product.thursday')}}</td>
-                                                                <td>{{__('product.friday')}}</td>
-                                                                <td>{{__('product.saturday')}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><b>{{__('product.remark')}}</b></td>
-                                                                <td colspan="7">Some quick example text to build on the
-                                                                    card title and make up the bulk of the card's
-                                                                    content.
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table
-                                                            class="table table-hover table-sm table-bordered text-center">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>{{__('product.cost_adult')}}</td>
-                                                                <td>{{__('product.cost_child')}}</td>
-                                                                <td>{{__('product.cost_infra')}}</td>
-                                                                <td>{{__('product.public_adult')}}</td>
-                                                                <td>{{__('product.public_child')}}</td>
-                                                                <td>{{__('product.public_infra')}}</td>
-                                                                <td>{{__('setup.action')}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>200.00</td>
-                                                                <td>100.00</td>
-                                                                <td>0.00</td>
-                                                                <td>500.00</td>
-                                                                <td>400.00</td>
-                                                                <td>100.00</td>
-                                                                <td>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn btn-success"><i
-                                                                            class="far fa-copy fa-2x"></i></a>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn" data-toggle="tooltip"
-                                                                       data-placement="top"
-                                                                       title="Edit"><i class="fas fa-edit fa-2x"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12 table-responsive">
+                                                                <table class="table table-hover table-sm text-center">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>{{__('product.sunday')}}</td>
+                                                                        <td>{{__('product.monday')}}</td>
+                                                                        <td>{{__('product.tuesday')}}</td>
+                                                                        <td>{{__('product.wednesday')}}</td>
+                                                                        <td>{{__('product.thursday')}}</td>
+                                                                        <td>{{__('product.friday')}}</td>
+                                                                        <td>{{__('product.saturday')}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><i class="fas {{ $value->sun === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->mon === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->tue === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->wed === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->thu === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->fri === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                        <td><i class="fas {{ $value->sat === 1 ? "fa-check-circle text-success" : "fa-times-circle text-danger" }}"></i></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><b>{{__('product.remark')}}</b></td>
+                                                                        <td colspan="7">{{$value->remark}}
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <table
+                                                                    class="table table-hover table-sm table-bordered text-center">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>{{__('product.cost_adult')}}</td>
+                                                                        <td>{{__('product.cost_child')}}</td>
+                                                                        <td>{{__('product.cost_infant')}}</td>
+                                                                        <td>{{__('product.public_adult')}}</td>
+                                                                        <td>{{__('product.public_child')}}</td>
+                                                                        <td>{{__('product.public_infant')}}</td>
+                                                                        <td>{{__('setup.action')}}</td>
+                                                                    </tr>
+                                                                    @foreach($value->price as $k => $v)
+                                                                    <tr>
+                                                                        <td>{{number_format($v->cost_adult,2)}}</td>
+                                                                        <td>{{number_format($v->cost_child,2)}}</td>
+                                                                        <td>{{number_format($v->cost_infant,2)}}</td>
+                                                                        <td>{{number_format($v->public_adult,2)}}</td>
+                                                                        <td>{{number_format($v->public_child,2)}}</td>
+                                                                        <td>{{number_format($v->public_infant,2)}}</td>
+                                                                        <td>
+                                                                            <a href="{{route('backend.product.period.create',$v->id)}}"
+                                                                               class="btn btn-success"  data-toggle="tooltip"
+                                                                               data-placement="top" title="Copy"><i class="far fa-copy"></i></a>
+                                                                            <a href="{{route('backend.product.period.create',$v->id)}}"
+                                                                               class="btn btn-success disabled" data-toggle="tooltip"
+                                                                               data-placement="top"
+                                                                               title="Edit"><i class="fas fa-edit"></i>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        {{--period table--}}
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <div class="float-md-left">
-                                                    <b> {{__('product.date')}} : </b>30-01-2019 to 31-12-2019
-                                                </div>
-                                                <div class="float-md-right">
-                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                       class="btn btn-success">@lang('product.add_prices')</a>
-                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                       class="btn" data-toggle="tooltip"
-                                                       data-placement="top" title="Edit"><i
-                                                            class="fas fa-edit fa-2x"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-12 table-responsive">
-                                                        <table class="table table-hover table-sm text-center">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>{{__('product.sunday')}}</td>
-                                                                <td>{{__('product.monday')}}</td>
-                                                                <td>{{__('product.tuesday')}}</td>
-                                                                <td>{{__('product.wednesday')}}</td>
-                                                                <td>{{__('product.thursday')}}</td>
-                                                                <td>{{__('product.friday')}}</td>
-                                                                <td>{{__('product.saturday')}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-check-circle text-success"></i>
-                                                                </td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-                                                                <td><i class="fas fa-times-circle text-danger"></i></td>
-
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table
-                                                            class="table table-hover table-sm text-center table-bordered">
-                                                            <tbody>
-                                                            <tr>
-                                                                <td>{{__('product.cost_adult')}}</td>
-                                                                <td>{{__('product.cost_child')}}</td>
-                                                                <td>{{__('product.cost_infra')}}</td>
-                                                                <td>{{__('product.public_adult')}}</td>
-                                                                <td>{{__('product.public_child')}}</td>
-                                                                <td>{{__('product.public_infra')}}</td>
-                                                                <td>{{__('setup.action')}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>200.00</td>
-                                                                <td>100.00</td>
-                                                                <td>0.00</td>
-                                                                <td>500.00</td>
-                                                                <td>400.00</td>
-                                                                <td>100.00</td>
-                                                                <td>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn btn-success"><i
-                                                                            class="far fa-copy fa-2x"></i></a>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn" data-toggle="tooltip"
-                                                                       data-placement="top"
-                                                                       title="Edit"><i class="fas fa-edit fa-2x"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>200.00</td>
-                                                                <td>100.00</td>
-                                                                <td>0.00</td>
-                                                                <td>500.00</td>
-                                                                <td>400.00</td>
-                                                                <td>100.00</td>
-                                                                <td>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn btn-success"><i
-                                                                            class="far fa-copy fa-2x"></i></a>
-                                                                    <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                                       class="btn" data-toggle="tooltip"
-                                                                       data-placement="top"
-                                                                       title="Edit"><i class="fas fa-edit fa-2x"></i>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endforeach
+                                        @endisset
                                     </div>
                                 </div>
                             </div>
@@ -300,7 +202,7 @@
 @section('script')
     <script>
         $(document).ready(function () {
-
+            $('[data-toggle="tooltip"]').tooltip()
         });
 
         function confirm_reset() {

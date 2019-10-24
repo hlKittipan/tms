@@ -45,8 +45,8 @@ return [
     'price_lists' => 'Price lists',
     'cost_adult' => 'Cost adult',
     'cost_child' => 'Cost child',
-    'cost_infra' => 'Cost infra',
+    'cost_infant' => 'Cost infant',
     'public_adult' => 'Public adult',
     'public_child' => 'Public child',
-    'public_infra' => 'Public infra',
+    'public_infant' => 'Public infant',
 ];
