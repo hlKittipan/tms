@@ -24,6 +24,7 @@ class CreateProducts extends Migration
             $table->string('code','20');
             $table->string('name');
             $table->string('staff_id',10);
+            $table->string('product_type_id',10);
             $table->integer('number_of_pax');
             $table->integer('duration_days')->nullable()->default(1);
             $table->integer('duration_nights')->nullable()->default(1);

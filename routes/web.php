@@ -32,6 +32,9 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     //create period
     Route::get('product/period/create/{id}','ProductController@createPeriod')->name('product.period.create');
     Route::post('product/period/store','ProductController@storePeriod')->name('product.period.store');
+    //edit period
+    Route::get('product/period/edit/{id}','ProductController@editPeriod')->name('product.period.edit');
+    Route::post('product/period/update','ProductController@updatePeriod')->name('product.period.update');
     //create price
     Route::get('product/price/create/{product_id}/{period_id}','ProductController@createPrice')->name('product.price.create');
     Route::post('product/price/store','ProductController@storePrice')->name('product.price.store');

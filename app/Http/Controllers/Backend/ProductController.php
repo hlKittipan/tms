@@ -35,7 +35,6 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::latest()->paginate(10);
-        //dd($product);
         return view('backends.products.index',compact('product'));
     }
 
@@ -78,7 +77,8 @@ class ProductController extends Controller
         $image = DB::table('product_many_images')
             ->join('images','id','=','images_id')
             ->where('product_id','=',1)->get();
-        $period = Period::where('periods.product_id','=',$id)->get();
+        $period = Period::where('periods.product_id','=',$id)->orderBy('date_start','asc')->get();
+        //dd($period);
         return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
     }
 
@@ -114,6 +114,70 @@ class ProductController extends Controller
             ->with('success','Period Create successfully.');
     }
 
+    public function editPeriod($id){
+        $period = Period::findOrFail($id);
+        return view('backends.periods.edit',compact('period'));
+    }
+
+    public function updatePeriod(Request $request){
+        request()->merge(['staff_id' => Auth::user()->id]);
+        $isCheckedAll = $request->has('all');
+        if ($isCheckedAll){
+            request()->merge([
+                'sun' => '1',
+                'mon' => '1',
+                'tue' => '1',
+                'wed' => '1',
+                'thu' => '1',
+                'fri' => '1',
+                'sat' => '1',
+            ]);
+        }else{
+            request()->merge([
+                'sun' => isset($request->sun) ? 1 : 0,
+                'mon' => isset($request->mon) ? 1 : 0,
+                'tue' => isset($request->tue) ? 1 : 0,
+                'wed' => isset($request->wed) ? 1 : 0,
+                'thu' => isset($request->thu) ? 1 : 0,
+                'fri' => isset($request->fri) ? 1 : 0,
+                'sat' => isset($request->sat) ? 1 : 0,
+            ]);
+        }
+
+        $date = $request->date_start;
+        if($date == null){
+            return redirect()->route('backend.product.period.create',$request->product_id)
+                ->with('success','Can not create period please check.');
+        }
+        if($request->date_start != $request->current_date_start && $request->date_end != $request->current_date_end){
+            request()->merge(['date_start' => Carbon::tomorrow()]);
+            $new_period = Period::create($request->all());
+
+            $this->clonePriceToPeriod($request->period_id,$new_period->id);
+
+            $period = Period::findOrFail($request->period_id);
+            $period->date_end = Carbon::today();
+            $period->save();
+        }else{
+            $period = Period::findOrFail($request->period_id);
+            $period->date_start = $request->date_start;
+            $period->date_end = $request->date_end;
+            $period->sun =  $request->sun;
+            $period->mon =  $request->mon;
+            $period->tue =  $request->tue;
+            $period->wed =  $request->wed;
+            $period->thu =  $request->thu;
+            $period->fri =  $request->fri;
+            $period->sat =  $request->sat;
+            $period->remark = $request->remark;
+            $period->save();
+        }
+        //dd($request->all());
+
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Period Update successfully.');
+    }
+
     public function createPrice($product_id,$period_id){
         return view('backends.prices.create',compact('product_id','period_id'));
     }
@@ -131,6 +195,25 @@ class ProductController extends Controller
 
         return redirect()->route('backend.product.after',$request->product_id)
             ->with('success','Period Create successfully.');
+    }
+
+    public function clonePriceToPeriod($period_id,$new_id){
+        $price = DB::table('prices')->where('period_id','=',$period_id)->get();
+        foreach ($price as $key => $value){
+            //dd($value);
+            $new = new Price();
+            $new->product_id = $value->product_id;
+            $new->period_id = $new_id;
+            $new->staff_id = Auth::user()->id;
+            $new->cost_adult = $value->cost_adult;
+            $new->cost_child = $value->cost_child;
+            $new->cost_infant = $value->cost_infant;
+            $new->public_adult = $value->public_adult;
+            $new->public_child = $value->public_child;
+            $new->public_infant = $value->public_infant;
+            $new->remark = $value->remark;
+            $new->save();
+        }
     }
 
     public function storeImage(Request $request){

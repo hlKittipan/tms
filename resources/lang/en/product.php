@@ -24,6 +24,7 @@ return [
     'summary' => 'Summary',
     'periods' => 'Periods',
     'add_periods' => 'Add Periods',
+    'edit_periods' => 'Edit Periods',
     'prices' => 'Prices',
     'add_prices' => 'Add Prices',
     'main' => 'Main',

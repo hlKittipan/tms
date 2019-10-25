@@ -48,15 +48,16 @@
                                                     <div class="card-header">
                                                         <div class="float-md-left">
                                                             <b> {{__('product.date')}} : </b>{{\Carbon\Carbon::parse($value->date_start)->format('F jS, Y')}} to {{\Carbon\Carbon::parse($value->date_end)->format('F jS, Y')}}
+                                                             @if(\Carbon\Carbon::parse($value->date_end) < \Carbon\Carbon::today() ) <span class="badge badge-pill badge-danger">Expire</span> @else <span class="badge badge-pill badge-success">Active</span> @endif
                                                         </div>
                                                         <div class="float-md-right">
                                                             <a href="{{route('backend.product.price.create',['product_id'=>$product->id,'period_id'=>$value->id])}}"
                                                                class="btn btn-success">@lang('product.add_prices')</a>
-                                                            <a href="{{route('backend.product.period.create',$product->id)}}"
-                                                               class="btn btn-success disabled" data-toggle="tooltip"
+                                                            <a href="{{route('backend.product.period.edit',$value->id)}}"
+                                                               class="btn btn-success " data-toggle="tooltip"
                                                                data-placement="top" title="Edit"><i class="fas fa-edit"></i>
                                                             </a>
-                                                            <a href="{{route('backend.product.period.create',$product->id)}}"
+                                                            <a href="{{route('backend.product.period.create',$value->id)}}"
                                                                class="btn btn-success" data-toggle="tooltip"
                                                                data-placement="top" title="Copy"><i class="far fa-copy"></i></a>
                                                         </div>
@@ -130,6 +131,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <br>
                                             @endforeach
                                         @endisset
                                     </div>

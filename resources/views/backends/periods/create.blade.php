@@ -51,13 +51,13 @@
                                     </tr>
                                     <tr>
                                         <td><input type="checkbox" value="{{old('all')}}" name="all"></td>
-                                        <td><input type="checkbox" value="{{old('sunday')}}" name="sunday"></td>
-                                        <td><input type="checkbox" value="{{old('monday')}}" name="monday"></td>
-                                        <td><input type="checkbox" value="{{old('tuesday')}}" name="tuesday"></td>
-                                        <td><input type="checkbox" value="{{old('wednesday')}}" name="wednesday"></td>
-                                        <td><input type="checkbox" value="{{old('thursday')}}" name="thursday"></td>
-                                        <td><input type="checkbox" value="{{old('friday')}}" name="friday"></td>
-                                        <td><input type="checkbox" value="{{old('saturday')}}" name="saturday"></td>
+                                        <td><input type="checkbox" value="{{old('sunday')}}" name="sun"></td>
+                                        <td><input type="checkbox" value="{{old('monday')}}" name="mon"></td>
+                                        <td><input type="checkbox" value="{{old('tuesday')}}" name="tue"></td>
+                                        <td><input type="checkbox" value="{{old('wednesday')}}" name="wed"></td>
+                                        <td><input type="checkbox" value="{{old('thursday')}}" name="thu"></td>
+                                        <td><input type="checkbox" value="{{old('friday')}}" name="fri"></td>
+                                        <td><input type="checkbox" value="{{old('saturday')}}" name="sat"></td>
                                     </tr>
                                 </table>
                             </div>

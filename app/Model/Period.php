@@ -21,4 +21,9 @@ class Period extends Model
         return $this->hasMany(Price::class,'period_id','id');
     }
 
+    public function Product()
+    {
+        return $this->belongsTo(Price::class,'period_id','id');
+    }
+
 }
