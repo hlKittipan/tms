@@ -50,4 +50,8 @@ return [
     'public_adult' => 'Public adult',
     'public_child' => 'Public child',
     'public_infant' => 'Public infant',
+    'title' => 'Title',
+    'description' => 'Description',
+    'alt' => 'Alt * for google search',
+    'delete' => 'Delete',
 ];

@@ -70,7 +70,7 @@
 
                             <div class="form-group">
                                 <label>{{ __('product.product_type') }}</label>
-                                <select class="form-control  is-invalid" name="product_type">
+                                <select class="form-control  is-invalid" name="product_type_id">
                                     @foreach($productType as $key => $value)
                                         <option value="{{$key}}">{{$value}}</option>
                                     @endforeach

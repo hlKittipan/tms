@@ -76,9 +76,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $image = DB::table('product_many_images')
             ->join('images','id','=','images_id')
-            ->where('product_id','=',1)->get();
+            ->where('product_id','=',$id)->get();
         $period = Period::where('periods.product_id','=',$id)->orderBy('date_start','asc')->get();
-        //dd($period);
+        //dd($image);
         return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
     }
 
@@ -249,6 +249,32 @@ class ProductController extends Controller
         $image->save();
         return redirect()->route('backend.product.after',$product_id)
             ->with('success','Image Update successfully.');
+    }
+
+    public function editImage($id){
+        $image = DB::table('images')->join('product_many_images','images_id','=','id')
+            ->where('images_id','=',$id)->first();
+        //dd($image);
+        return view('backends.products.images',compact('image'));
+    }
+
+    public function updateImage(Request $request,$id){
+        $image = Image::findOrFail($id);
+        $image->title = $request->title;
+        $image->description = $request->description;
+        $image->alt = $request->alt;
+        $image->save();
+
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Image Update successfully.');
+    }
+
+    public function destroyImage(Request $request){
+        $image = Image::find($request->id);
+        $image->delete();
+
+        return redirect()->route('backend.product.after',$request->product_id)
+            ->with('success','Image Delete successfully.');
     }
 
 

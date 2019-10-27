@@ -179,8 +179,16 @@
                                                         <p class="card-text">{{$value->description}}</p>
                                                         <a href="{{route('backend.product.image.set',['id'=>$value->id,'type'=>'Cover','product_id'=>$value->product_id])}}" class="btn btn-primary btn-sm {{ $value->type === "Cover" ? "disabled" : "" }}">Cover</a>
                                                         <a href="{{route('backend.product.image.set',['id'=>$value->id,'type'=>'Main','product_id'=>$value->product_id])}}" class="btn btn-primary btn-sm {{ $value->type === "Main" ? "disabled" : "" }}">Main</a>
-                                                        <a href="#{{$value->id}}" class="btn btn-success btn-sm">Edit</a>
-                                                        <a href="#{{$value->id}}" class="btn btn-danger btn-sm">Delete</a>
+                                                        <a href="{{route('backend.product.image.edit',$value->id)}}" class="btn btn-success btn-sm">Edit</a>
+                                                        <a class="btn btn-danger btn-sm" href="#"
+                                                           onclick="event.preventDefault();document.getElementById('destroy').submit();">
+                                                             @lang('product.delete')
+                                                        </a>
+                                                        <form action="{{ route('backend.product.image.destroy')}}" method="post" id="destroy">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{$value->id}}">
+                                                            <input type="hidden" name="product_id" value="{{$value->product_id}}">
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>

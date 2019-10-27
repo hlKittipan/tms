@@ -42,6 +42,10 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::post('product/image/store','ProductController@storeImage')->name('product.image.store');
     //set type image
     Route::get('product/image/set/{id}/{type}/{product_id}','ProductController@setTypeImage')->name('product.image.set');
+    //edit image
+    Route::get('product/image/edit/{id}','ProductController@editImage')->name('product.image.edit');
+    Route::put('product/image/{id}','ProductController@updateImage')->name('product.image.update');
+    Route::post('product/image/destroy','ProductController@destroyImage')->name('product.image.destroy');
     Route::resource('product_type','ProductTypeController');
     Route::resource('setup','SettingController');
 });

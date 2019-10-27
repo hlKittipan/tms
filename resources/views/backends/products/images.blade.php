@@ -4,56 +4,39 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
-                    </div>
-                @endif
                 <div class="card">
                     <div class="card-header">{{__('product.images')}}</div>
 
                     <div class="card-body">
 
                         <form class="was-validated needs-validation" method="POST" id="main-form"
-                              action="{{ route('backend.product_type.store') }}">
-                            <input type="hidden" name="product_id" value="{{$product_id}}">
+                              action="{{ route('backend.product.image.update',$image->id) }}">
+                            <input type="hidden" name="product_id" value="{{$image->product_id}}">
+                            {{--<input type="hidden" name="id" value="{{$image->id}}">--}}
                             @csrf
-                            <div class="form-group">
-                                <label>@lang('product.main') @lang('product.images')</label>
-                                <input type="file" class="form-control-file" name="main" accept="image/*">
-                                <small class="form-text text-muted">Choose 1</small>
-                            </div>
-
-                            <div class="form-group">
-                                <label>@lang('product.gallery')</label>
-                                <input type="file" class="form-control-file" name="gallery" multiple
-                                       accept="image/*">
-                                <small class="form-text text-muted">Choose 1 or more</small>
+                            @method('PUT')
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <a href="{{asset($image->src)}}" target="_blank"> <img src="{{asset($image->src)}}" class="card-img-top"
+                                                                                           alt="{{$image->alt}}"></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>@lang('product.title')</label>
+                                        <input type="text" class="form-control" name="title" value="{{$image->title}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@lang('product.description')</label>
+                                        <textarea class="form-control" name="description">{{$image->description}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>@lang('product.alt')</label>
+                                        <input type="text" class="form-control" name="alt" value="{{$image->alt}}">
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary">{{ __('auth.save') }}</button>
                         </form>
-                        <hr>
-                        <div class="col-md-12">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                            <img src="{{asset('img/dummy-200x200.png')}}" class="img-fluid rounded "
-                                 alt="Responsive image">
-                        </div>
-
                     </div>
                 </div>
             </div>
