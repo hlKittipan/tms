@@ -216,6 +216,14 @@ class ProductController extends Controller
         }
     }
 
+    public function editPrice($id){
+        //
+    }
+
+    public function updatePrice(Request $request){
+        //
+    }
+
     public function storeImage(Request $request){
         //dd($request->all());
         if ($request->hasFile('gallery')) {

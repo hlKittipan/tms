@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "daterangepicker": "^3.0.5",
-        "moment": "^2.4.0"
+        "moment": "^2.4.0",
+        "select2": "^4.0.11"
     }
 }

@@ -29,13 +29,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        $data = DB::table('system_setups')->get();
-        // View::share('company',$company);
-        $setting = new \stdClass();
-        foreach ($data as $key => $value){
-            $setting->{$value->code} = $value->value;
+        if (Schema::hasTable('system_setups')) {
+            $data = DB::table('system_setups')->get();
+            // View::share('company',$company);
+            $setting = new \stdClass();
+            foreach ($data as $key => $value) {
+                $setting->{$value->code} = $value->value;
+            }
+            config(['setting-services' => $setting]);
         }
-        config(['setting-services' => $setting]);
     }
 }

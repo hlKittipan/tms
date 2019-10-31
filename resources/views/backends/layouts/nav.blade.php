@@ -27,6 +27,21 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
+                        <a id="booking" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fas fa-cart-plus"></i> {{ __('book.booking') }} <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="booking">
+                            <a class="dropdown-item" href="{{ route('backend.booking.create') }}">
+                                <i class="fas fa-cart-plus"></i> {{ __('book.add_booking') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('backend.booking.index') }}">
+                                <i class="fas fa-list-ul"></i> {{ __('book.booking') }}
+                            </a>
+                        </div>
+
+                    </li>
+                    <li class="nav-item dropdown">
                         <a id="product" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-suitcase"></i> {{ __('product.product') }} <span class="caret"></span>
                         </a>

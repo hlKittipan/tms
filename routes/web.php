@@ -38,6 +38,9 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     //create price
     Route::get('product/price/create/{product_id}/{period_id}','ProductController@createPrice')->name('product.price.create');
     Route::post('product/price/store','ProductController@storePrice')->name('product.price.store');
+    //edit price
+    Route::get('product/price/edit/{id}','ProductController@editPrice')->name('product.price.edit');
+    Route::post('product/price/update','ProductController@updatePrice')->name('product.price.update');
     //upload image
     Route::post('product/image/store','ProductController@storeImage')->name('product.image.store');
     //set type image
@@ -48,8 +51,20 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::post('product/image/destroy','ProductController@destroyImage')->name('product.image.destroy');
     Route::resource('product_type','ProductTypeController');
     Route::resource('setup','SettingController');
+
+    Route::resource('booking','QuotationController');
+
 });
+
+
 /*End Back-end*/
+
+/*Api*/
+Route::group(['prefix' => 'api','namespace'=>'API','as'=>'api.'], function () {
+    route::get('search/product','ProductController@searchProduct')->name('search.product');
+});
+
+/*End Api*/
 Route::get('/task', function(){
     return response()->json([
         'message' => 'Task deleted successfully!'
