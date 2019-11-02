@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 /*Back-end*/
@@ -59,12 +60,7 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
 
 /*End Back-end*/
 
-/*Api*/
-Route::group(['prefix' => 'api','namespace'=>'API','as'=>'api.'], function () {
-    route::get('search/product','ProductController@searchProduct')->name('search.product');
-});
 
-/*End Api*/
 Route::get('/task', function(){
     return response()->json([
         'message' => 'Task deleted successfully!'

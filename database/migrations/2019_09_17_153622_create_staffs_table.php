@@ -15,10 +15,7 @@ class CreateStaffsTable extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();;
             $table->string('name')->nullable();
             $table->timestamps();
         });
@@ -31,6 +28,6 @@ class CreateStaffsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('staffs')->dropForeign(['user_id']);
+        Schema::dropIfExists('staffs');
     }
 }

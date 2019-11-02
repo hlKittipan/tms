@@ -15,10 +15,7 @@ class CreateClientsTable extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->integer('user_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('id_card')->unique();
@@ -42,6 +39,6 @@ class CreateClientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients')->dropForeign(['user_id']);
+        Schema::dropIfExists('clients');
     }
 }

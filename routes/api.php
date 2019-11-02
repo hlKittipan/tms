@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('users', 'API\UserController@index');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/*Api*/
+Route::group(['prefix' => 'api','namespace'=>'API','as'=>'api.'], function () {
+    route::get('search/product','ProductController@searchProduct')->name('search.product');
+});
+
+/*End Api*/
