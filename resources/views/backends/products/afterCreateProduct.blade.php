@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="col-md-12">
-                                <h4>@lang('product.periods')</h4>
+                                <h4>@lang('product.prices')</h4>
                                 <hr>
                             </div>
                             <hr>

@@ -23,7 +23,50 @@
                                     <select class="form-control" id="searchProduct"></select>
                                 </div>
                             </div>
-
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <h4>@lang('book.product_list')</h4>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">Id : 1 , Product Name : Phi Phi  <span class="float-right">Available 0/30</span></div>
+                                            <div class="card-body">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-4">
+                                                        <label><b>{{__('book.adult')}} : </b> 100</label>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label><b>{{__('book.child')}} : </b> 50</label>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label><b>{{__('book.infant')}} : </b> 10</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <form action="" method="post">
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-4 col-form-label">Number of pax</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="number" class="form-control" value="0">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-sm-4 col-form-label">Password</label>
+                                                                <div class="col-sm-8">
+                                                                    <input type="num" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <table class="table table-bordered">
                                     <thead>
@@ -62,6 +105,7 @@
 
     <script>
         var urlSearch = '{{route('api.search.product')}}';
+        var urlCheckAvailable = '{{route('api.search.product.available')}}';
         $(function() {
 
 

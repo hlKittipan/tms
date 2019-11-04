@@ -55,12 +55,24 @@ $('#searchProduct').on('select2:select', function (e) {
 function addProductTable(repo){
     var check_list = $("#table_body").find("tr#list_id_"+repo.id).html();
     if (repo.id != "" || check_list == undefined){
-        $("#table_body").append("<tr id='list_id_"+repo.id+"'><td>"+repo.id+"</td><td>"+repo.name+"</td><td></td><td>"+repo.public_adult+
+        $("#table_body").append("<tr id='list_id_"+repo.id+"'><td>"+repo.id+"</td><td>"+repo.name+"</td><td id='available"+repo.id+"'></td><td>"+repo.public_adult+
             "</td><td>"+repo.public_child+"</td><td>"+repo.public_infant+"</td><td>"+
             "<a href='#'><i class=\"fas fa-trash\" onclick='removeProduct("+repo.id+")'></i></a></td></tr>");
     }
+    checkAvailable(repo.id,repo.number_of_pax);
 }
 
 function removeProduct(id){
     $("#list_id_"+id).remove();
+}
+
+function checkAvailable(product_id,number_of_pax){
+    $.ajax({
+        type:'get',
+        url:urlCheckAvailable,
+        data:{product_id:product_id},
+        success:function(data) {
+            $("#available"+product_id).html(data+'/'+number_of_pax);
+        }
+    });
 }

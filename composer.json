@@ -64,8 +64,7 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta",
-            "chmod -R 777 public/"
+            "@php artisan ide-helper:meta"
         ]
     }
 }
