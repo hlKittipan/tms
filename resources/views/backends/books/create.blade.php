@@ -11,89 +11,35 @@
                 @endif
                 <div class="card">
                     <div class="card-header">{{ __('book.add_booking') }}</div>
-
                     <div class="card-body">
-
                         <form class="" method="POST" id="main-form"
                               action="{{route('backend.product.period.store')}}">
                             @csrf
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>{{ __('book.search_product') }}</label>
-                                    <select class="form-control" id="searchProduct"></select>
-                                </div>
-                            </div>
+
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
                                         <h4>@lang('book.product_list')</h4>
                                         <hr>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">Id : 1 , Product Name : Phi Phi  <span class="float-right">Available 0/30</span></div>
-                                            <div class="card-body">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-4">
-                                                        <label><b>{{__('book.adult')}} : </b> 100</label>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label><b>{{__('book.child')}} : </b> 50</label>
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label><b>{{__('book.infant')}} : </b> 10</label>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <form action="" method="post">
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-4 col-form-label">Number of pax</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="number" class="form-control" value="0">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-4 col-form-label">Password</label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="num" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-12" id="product_list">
+
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th colspan="8">{{__('book.product_list')}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th>{{__('product.id')}}</th>
-                                        <th>{{__('product.name')}}</th>
-                                        <th>{{__('book.available')}}</th>
-                                        <th>{{__('book.adult')}}</th>
-                                        <th>{{__('book.child')}}</th>
-                                        <th>{{__('book.infant')}}</th>
-                                        <th>{{__('setup.action')}}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="table_body"></tbody>
-                                </table>
-                            </div>
 
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>{{ __('book.search_product') }}</label>
+                                    <select class="form-control" id="searchProduct"></select>
+                                </div>
+                            </div>
 
                             <button type="button" class="btn btn-primary"
                                     onclick="event.preventDefault();document.getElementById('main-form').submit();">{{ __('auth.save') }}</button>
                             <button type="button" class="btn btn-danger"
                                     onClick="confirm_reset()">{{ __('auth.reset') }}</button>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -106,6 +52,20 @@
     <script>
         var urlSearch = '{{route('api.search.product')}}';
         var urlCheckAvailable = '{{route('api.search.product.available')}}';
+        var lg_available = '{{__('book.available')}}';
+        var lg_adult = '{{__('book.adult')}}';
+        var lg_child = '{{__('book.child')}}';
+        var lg_infant = '{{__('book.infant')}}';
+        var lg_number_of_adult = '{{__('book.number_of_adult')}}';
+        var lg_number_of_child = '{{__('book.number_of_child')}}';
+        var lg_number_of_infant = '{{__('book.number_of_infant')}}';
+        var lg_discounts = '{{__('book.discounts')}}';
+        var lg_total = '{{__('book.total')}}';
+        var lg_vat = '{{__('book.vat')}}';
+        var lg_net_total = '{{__('book.net_total')}}';
+        var lg_id = '{{__('book.id')}}';
+        var lg_product_name = '{{__('book.product_name')}}';
+
         $(function() {
 
 

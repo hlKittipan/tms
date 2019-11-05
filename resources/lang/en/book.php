@@ -24,5 +24,14 @@ return [
     'adult' => 'Adult',
     'child' => 'Child',
     'infant' => 'Infant',
+    'number_of_adult' => 'Number of Adult',
+    'number_of_child' => 'Number of Child',
+    'number_of_infant' => 'Number of Infant',
+    'discounts' => 'Discounts',
+    'total' => 'Total',
+    'vat' => 'Vat',
+    'net_total' => 'Net Total',
+    'id' => 'Id',
+    'product_name' => 'Product name',
 
 ];
