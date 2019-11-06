@@ -55,10 +55,11 @@ $('#searchProduct').on('select2:select', function (e) {
 function addProductCard(repo){
     var check_list = $("#table_body").find("tr#list_id_"+repo.id).html();
     var card_product_list = "";
+    var public_price = {};
     if (repo.id != "" || check_list == undefined){
         /*start card header*/
         card_product_list = '<div class="card mb-3" id="list_id_3"><div class="card-header"><b>'+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
-            '<span class="float-right" id="avalable_span_'+repo.id+'"></span></div>'+
+            '<span class="float-right" id="available_span_'+repo.id+'" number_of_pax="'+repo.number_of_pax+'"></span></div>'+
             //end card header
             /*start card body*/
             '<div class="card-body"><div class="form-row"><div class="col-md-6">' +
@@ -69,25 +70,26 @@ function addProductCard(repo){
             //right form
             //number_of_adult
             '<div class="col-md-6"><div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_adult+'</label>'+
-            '<div class="col-sm-8"><input type="number" class="form-control text-right" value="0"></div> </div>'+
+            '<div class="col-sm-8"><input type="number" name="noa_'+repo.id+'" class="form-control text-right" value="0"  pattern="[0-9]{10}"  onchange="calculatePrice('+repo.id+')" price="'+repo.public_adult+'"></div> </div>'+
             //number_of_child
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_child+'</label>'+
-            '<div class="col-sm-8"><input type="number" class="form-control text-right" value="0"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="noc_'+repo.id+'" class="form-control text-right" value="0"   pattern="[0-9]{10}" onchange="calculatePrice('+repo.id+')" price="'+repo.public_child+'"></div></div>'+
             //number_of_infant
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_infant+'</label>'+
-            '<div class="col-sm-8"><input type="number" class="form-control text-right" value="0"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="noi_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+')" price="'+repo.public_infant+'"></div></div>'+
             //discount
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_discounts+'</label>' +
-            '<div class="col-sm-8"><input type="number" class="form-control text-right" value="0"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="d_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+')"></div></div>'+
             //total
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_total+'</label>'+
-            '<div class="col-sm-8"><input type="number" readonly class="form-control text-right" value="1000"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="t_'+repo.id+'" readonly class="form-control text-right" ></div></div>'+
             //vat
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_vat+'</label>'+
-            '<div class="input-group col-sm-8"><div class="input-group-prepend"><div class="input-group-text">%</div></div><input type="number" class="form-control text-right" value="7"></div></div>'+
+            '<div class="input-group col-sm-8"><div class="input-group-prepend"><div class="input-group-text">%</div></div>' +
+            '<input type="number" name="v_'+repo.id+'" class="form-control text-right" value="7" onchange="calculatePrice('+repo.id+')"></div></div>'+
             //net total
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_net_total+'</label>'+
-            '<div class="col-sm-8"><input type="number" readonly class="form-control text-right" value="1070"></div></div> </div> </div> </div> </div>';
+            '<div class="col-sm-8"><input type="number" name="nt_'+repo.id+'" readonly class="form-control text-right" ></div></div> </div> </div> </div> </div>';
             $("#product_list").append(card_product_list);
     }
     checkAvailable(repo.id,repo.number_of_pax);
@@ -100,15 +102,52 @@ function removeProduct(id){
     }
 
 }
-
+var available_of_product = {};
 function checkAvailable(product_id,number_of_pax){
     $.ajax({
         type:'get',
         url:urlCheckAvailable,
         data:{product_id:product_id},
         success:function(data) {
-            $("#avalable_span_"+product_id).html(lg_available+' '+data+'/'+number_of_pax +'&nbsp;&nbsp;<button type="button" class="btn btn-primary">' +
+            $("#available_span_"+product_id).html(lg_available+' '+data+'/'+number_of_pax +'&nbsp;&nbsp;<button type="button" class="btn btn-primary">' +
             '<i class="fas fa-trash" onclick="removeProduct('+product_id+')"></i></button> ');
+            available_of_product[product_id] = data;
         }
     });
 }
+function calculatePrice(product_id) {
+    var noa = parseInt($('input[name="noa_'+product_id+'"]').val());
+    var noc = parseInt($('input[name="noc_'+product_id+'"]').val());
+    var noi = parseInt($('input[name="noi_'+product_id+'"]').val());
+    var total_pax = (noa+noc+noi)+parseInt(available_of_product[product_id]);
+    var d = parseInt($('input[name="d_'+product_id+'"]').val());
+    var vat = parseInt($('input[name="v_'+product_id+'"]').val());
+    var t = 0;
+    var nt = 0;
+    var public_adult = parseInt($('input[name="noa_'+product_id+'"]').attr('price'));
+    var public_child = parseInt($('input[name="noc_'+product_id+'"]').attr('price'));
+    var public_infant = parseInt($('input[name="noi_'+product_id+'"]').attr('price'));
+    var number_of_pax = $("#available_span_"+product_id).attr('number_of_pax');
+    var checkFocusout = "";
+
+    if (!$.isNumeric(noa) || !$.isNumeric(noc) || !$.isNumeric(noi)){
+        return false
+    }
+
+    if (total_pax > number_of_pax){
+        $("#alertMessageBody").html('<p>The number of passengers exceeds the maximum number of products.</p>');
+        $('#alertMessage').modal('show')
+        $("input").unbind().on("focusout", function(event){
+            var input_name = $(this).attr('name');
+            $('input[name="'+input_name+'"]').val(0)
+        });
+    }else{
+        t = ((noa*public_adult)+(noc*public_child)+(noi*public_infant)-d);
+        nt = (t+(t*vat/100));
+        $('input[name="t_'+product_id+'"]').val( t.toFixed(2));
+        $('input[name="nt_'+product_id+'"]').val( nt.toFixed(2));
+    }
+
+}
+
+

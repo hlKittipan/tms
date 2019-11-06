@@ -28,11 +28,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>{{ __('book.search_product') }}</label>
-                                    <select class="form-control" id="searchProduct"></select>
-                                </div>
+                            <div class="form-group">
+                                <label>{{ __('book.search_product') }}</label>
+                                <select class="form-control" id="searchProduct"></select>
                             </div>
 
                             <button type="button" class="btn btn-primary"
@@ -41,6 +39,27 @@
                                     onClick="confirm_reset()">{{ __('auth.reset') }}</button>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="alertMessage" tabindex="-1" role="dialog" aria-labelledby="alertMessageLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertMessageLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="alertMessageBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -66,7 +85,7 @@
         var lg_id = '{{__('book.id')}}';
         var lg_product_name = '{{__('book.product_name')}}';
 
-        $(function() {
+        $(function () {
 
 
         });
@@ -78,7 +97,7 @@
             }
         }
     </script>
-    <script src="{{ asset('js/backend/booking.js') }}" ></script>
+    <script src="{{ asset('js/backend/booking.js') }}"></script>
 @endsection
 
 
