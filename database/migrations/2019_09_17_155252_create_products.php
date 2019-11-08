@@ -40,8 +40,8 @@ class CreateProducts extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('product_id',10);
-            $table->dateTime('date_start');
-            $table->dateTime('date_end');
+            $table->dateTime('date_start')->nullable();
+            $table->dateTime('date_end')->nullable();
             $table->string('period_id',10)->nullable();
             $table->string('staff_id',10);
             $table->double('cost_adult')->nullable()->default(0);
@@ -50,7 +50,7 @@ class CreateProducts extends Migration
             $table->double('public_adult')->nullable()->default(0);
             $table->double('public_child')->nullable()->default(0);
             $table->double('public_infant')->nullable()->default(0);
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
