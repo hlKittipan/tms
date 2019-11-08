@@ -28,11 +28,11 @@ class CreateProducts extends Migration
             $table->integer('number_of_pax');
             $table->integer('duration_days')->nullable()->default(1);
             $table->integer('duration_nights')->nullable()->default(1);
-            $table->text('includes');
-            $table->text('excludes');
-            $table->text('conditions');
-            $table->text('itinerary');
-            $table->text('remark');
+            $table->text('includes')->nullable();
+            $table->text('excludes')->nullable();
+            $table->text('conditions')->nullable();
+            $table->text('itinerary')->nullable();
+            $table->text('remark')->nullable();
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
