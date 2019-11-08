@@ -15,7 +15,7 @@ class CreateQuotations extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('staff_id');
+            $table->string('staff_id')->nullable();
             $table->string('client_id');
             $table->dateTime('quo_date')->nullable();
             $table->double('total')->nullable()->default(0);
@@ -32,10 +32,16 @@ class CreateQuotations extends Migration
             $table->string('product_id');
             $table->string('price_id');
             $table->string('period_id');
-            $table->integer('unit')->nullable()->default(0);
-            $table->double('price')->nullable()->default(0);
-            $table->double('vat')->nullable()->default(0);
+            $table->integer('unit_adult')->nullable()->default(0);
+            $table->integer('unit_child')->nullable()->default(0);
+            $table->integer('unit_infant')->nullable()->default(0);
+            $table->double('public_adult')->nullable()->default(0);
+            $table->double('public_child')->nullable()->default(0);
+            $table->double('public_infant')->nullable()->default(0);
+            $table->double('discount')->nullable()->default(0);
+            $table->integer('vat')->nullable()->default(0);
             $table->double('total')->nullable()->default(0);
+            $table->double('net')->nullable()->default(0);
             $table->text('remark')->nullable();
             $table->timestamps();
         });

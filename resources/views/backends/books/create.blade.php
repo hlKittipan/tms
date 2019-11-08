@@ -13,24 +13,70 @@
                     <div class="card-header">{{ __('book.add_booking') }}</div>
                     <div class="card-body">
                         <form class="" method="POST" id="main-form"
-                              action="{{route('backend.product.period.store')}}">
+                              action="{{route('backend.booking.store')}}">
                             @csrf
 
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
+                                        <h4>{{__('book.customer_name')}}</h4>
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">{{__('book.first_name')}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="first_name" class="form-control" placeholder="{{__('book.first_name')}}">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">{{__('book.last_name')}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" name="last_name" class="form-control" placeholder="{{__('book.last_name')}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">{{__('book.email')}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="email" name="email" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">{{__('book.upload_passport')}}</label>
+                                            <div class="col-sm-4">
+                                                <input type="file" name="passport" class="form-control-file">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">{{__('book.hotel_name')}}</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="hotel_name" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">{{__('book.hotel_tel')}}</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" name="hotel_tel" class="form-control">
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">{{__('book.room_number')}}</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" name="room_number" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
                                         <h4>@lang('book.product_list')</h4>
                                         <hr>
                                     </div>
+
                                     <div class="col-md-12" id="product_list">
 
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>{{ __('book.search_product') }}</label>
-                                <select class="form-control" id="searchProduct"></select>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>{{ __('book.search_product') }} </label>
+                                    <select class="form-control" id="searchProduct"></select>
+                                </div>
                             </div>
 
                             <button type="button" class="btn btn-primary"

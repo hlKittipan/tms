@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->integer('user_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('id_card')->unique();
+            $table->string('id_card')->nullable();
             $table->string('address',255)->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
@@ -26,7 +26,10 @@ class CreateClientsTable extends Migration
             $table->string('postal_code',10);
             $table->string('tel')->nullable();
             $table->string('phone')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
+            $table->string('hotel_name')->nullable();
+            $table->string('room_number')->nullable();
+            $table->string('hotel_tel')->nullable();
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });

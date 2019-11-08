@@ -58,35 +58,37 @@ function addProductCard(repo){
     var public_price = {};
     if (repo.id != "" || check_list == undefined){
         /*start card header*/
-        card_product_list = '<div class="card mb-3" id="list_id_3"><div class="card-header"><b>'+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
-            '<span class="float-right" id="available_span_'+repo.id+'" number_of_pax="'+repo.number_of_pax+'"></span></div>'+
+        card_product_list = '<div class="card mb-3" id="list_id_'+repo.id+'"><div class="card-header"><b>'+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
+            '<span class="float-right" id="available_span_'+repo.id+'" number_of_pax="'+repo.number_of_pax+'"></span>' +
+            '<input type="hidden" name="product_id[]" value="'+repo.id+'"></div>'+
             //end card header
             /*start card body*/
             '<div class="card-body"><div class="form-row"><div class="col-md-6">' +
             //left show price
             '<div class="form-group col-md-12"><label><b>'+lg_adult+' : </b>'+repo.public_adult+'</label></div>'+
             '<div class="form-group col-md-12"><label><b>'+lg_child+' : </b>'+repo.public_child+'</label></div>'+
-            '<div class="form-group col-md-12"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div></div>'+
+            '<div class="form-group col-md-12 hide"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div><hr>' +
+            '</div>'+
             //right form
             //number_of_adult
             '<div class="col-md-6"><div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_adult+'</label>'+
-            '<div class="col-sm-8"><input type="number" name="noa_'+repo.id+'" class="form-control text-right" value="0"  pattern="[0-9]{10}"  onchange="calculatePrice('+repo.id+')" price="'+repo.public_adult+'"></div> </div>'+
+            '<div class="col-sm-8"><input type="number" name="noa_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'noa_\')" price="'+repo.public_adult+'"></div> </div>'+
             //number_of_child
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_child+'</label>'+
-            '<div class="col-sm-8"><input type="number" name="noc_'+repo.id+'" class="form-control text-right" value="0"   pattern="[0-9]{10}" onchange="calculatePrice('+repo.id+')" price="'+repo.public_child+'"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="noc_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'noc_\')" price="'+repo.public_child+'"></div></div>'+
             //number_of_infant
-            '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_infant+'</label>'+
-            '<div class="col-sm-8"><input type="number" name="noi_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+')" price="'+repo.public_infant+'"></div></div>'+
+            '<div class="form-group row hide"><label class="col-sm-4 col-form-label">'+lg_number_of_infant+'</label>'+
+            '<div class="col-sm-8"><input type="number" name="noi_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'noi_\')" price="'+repo.public_infant+'"></div></div>'+
             //discount
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_discounts+'</label>' +
-            '<div class="col-sm-8"><input type="number" name="d_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+')"></div></div>'+
+            '<div class="col-sm-8"><input type="number" name="d_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'\')"></div></div>'+
             //total
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_total+'</label>'+
             '<div class="col-sm-8"><input type="number" name="t_'+repo.id+'" readonly class="form-control text-right" ></div></div>'+
             //vat
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_vat+'</label>'+
             '<div class="input-group col-sm-8"><div class="input-group-prepend"><div class="input-group-text">%</div></div>' +
-            '<input type="number" name="v_'+repo.id+'" class="form-control text-right" value="7" onchange="calculatePrice('+repo.id+')"></div></div>'+
+            '<input type="number" name="v_'+repo.id+'" class="form-control text-right" value="7" onchange="calculatePrice('+repo.id+',\'\')"></div></div>'+
             //net total
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_net_total+'</label>'+
             '<div class="col-sm-8"><input type="number" name="nt_'+repo.id+'" readonly class="form-control text-right" ></div></div> </div> </div> </div> </div>';
@@ -115,7 +117,7 @@ function checkAvailable(product_id,number_of_pax){
         }
     });
 }
-function calculatePrice(product_id) {
+function calculatePrice(product_id,input_name) {
     var noa = parseInt($('input[name="noa_'+product_id+'"]').val());
     var noc = parseInt($('input[name="noc_'+product_id+'"]').val());
     var noi = parseInt($('input[name="noi_'+product_id+'"]').val());
@@ -127,8 +129,7 @@ function calculatePrice(product_id) {
     var public_adult = parseInt($('input[name="noa_'+product_id+'"]').attr('price'));
     var public_child = parseInt($('input[name="noc_'+product_id+'"]').attr('price'));
     var public_infant = parseInt($('input[name="noi_'+product_id+'"]').attr('price'));
-    var number_of_pax = $("#available_span_"+product_id).attr('number_of_pax');
-    var checkFocusout = "";
+    var number_of_pax = parseInt($("#available_span_"+product_id).attr('number_of_pax'));
 
     if (!$.isNumeric(noa) || !$.isNumeric(noc) || !$.isNumeric(noi)){
         return false
@@ -136,11 +137,8 @@ function calculatePrice(product_id) {
 
     if (total_pax > number_of_pax){
         $("#alertMessageBody").html('<p>The number of passengers exceeds the maximum number of products.</p>');
-        $('#alertMessage').modal('show')
-        $("input").unbind().on("focusout", function(event){
-            var input_name = $(this).attr('name');
-            $('input[name="'+input_name+'"]').val(0)
-        });
+        $('#alertMessage').modal('show');
+        resetValuePax(input_name+product_id);
     }else{
         t = ((noa*public_adult)+(noc*public_child)+(noi*public_infant)-d);
         nt = (t+(t*vat/100));
@@ -150,4 +148,7 @@ function calculatePrice(product_id) {
 
 }
 
+function resetValuePax(input_name) {
+    $('input[name="'+input_name+'"]').val(0)
+}
 

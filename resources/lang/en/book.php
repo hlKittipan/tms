@@ -33,5 +33,13 @@ return [
     'net_total' => 'Net Total',
     'id' => 'Id',
     'product_name' => 'Product name',
+    'customer_name' => 'Customer name',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'hotel_name' => 'Hotel name',
+    'room_number' => 'Room number',
+    'hotel_tel' => 'Hotel Tel.',
+    'email' => 'E-mail',
+    'upload_passport' => 'Upload Passport',
 
 ];
