@@ -130,6 +130,7 @@
         var lg_net_total = '{{__('book.net_total')}}';
         var lg_id = '{{__('book.id')}}';
         var lg_product_name = '{{__('book.product_name')}}';
+        var lg_date = '{{__('product.date')}}';
 
         $(function () {
 

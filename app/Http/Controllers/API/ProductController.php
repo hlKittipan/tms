@@ -29,10 +29,15 @@ class ProductController extends Controller
         $available = DB::table('quotations as q')
             ->join('quotation_details as qd','q.id','=','qd.quo_id')
             ->join('products as p','p.id','=','product_id')
-            ->whereDate('q.quo_date','=',Carbon::today())
+            ->whereDate('qd.book_date','=',Carbon::parse($request->book_date)->format('Y-m-d'))
             ->where('p.id','=',$request->product_id)
-            ->sum('q.total');
+            ->get();
         //dd($available);
-        return json_encode($available);
+        $unit = 0;
+        foreach ($available as $k => $v){
+            $unit = $unit + ($v->unit_adult + $v->unit_child + $v->unit_infant);
+        }
+
+        return json_encode($unit);
     }
 }

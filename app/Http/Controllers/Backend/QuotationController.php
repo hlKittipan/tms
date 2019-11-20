@@ -33,7 +33,10 @@ class QuotationController extends Controller
      */
     public function index()
     {
-        $quotation = Quotation::latest()->paginate(10);
+        $quotation = DB::table('quotations as q')
+            ->join('clients as c','q.client_id','=','c.id')
+            ->latest('q.created_at')->paginate(10);
+        //dd($quotation);
         return view('backends.books.index',compact('quotation'));
     }
 
@@ -55,7 +58,6 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-        $quo_product_id = array();
         $quo_total = 0;
         $quo_vat = 0;
         $quo_net = 0;
@@ -98,6 +100,7 @@ class QuotationController extends Controller
                 $quo_detail->product_id = $product->product_id;
                 $quo_detail->price_id = $product->price_id;
                 $quo_detail->period_id = $product->period_id;
+                $quo_detail->book_date = $request->input('date_' . $product_id);
                 $quo_detail->unit_adult = $request->input('noa_' . $product_id);
                 $quo_detail->unit_child = $request->input('noc_' . $product_id);
                 $quo_detail->unit_infant = $request->input('noi_' . $product_id);
