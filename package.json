@@ -26,6 +26,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "datatables.net": "^1.10.20",
+        "datatables.net-bs4": "^1.10.20",
+        "datatables.net-buttons-bs4": "^1.6.1",
         "daterangepicker": "^3.0.5",
         "moment": "^2.4.0",
         "select2": "^4.0.11"

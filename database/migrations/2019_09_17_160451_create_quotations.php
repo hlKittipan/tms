@@ -32,6 +32,7 @@ class CreateQuotations extends Migration
             $table->string('product_id');
             $table->string('price_id');
             $table->string('period_id');
+            $table->dateTime('book_date')->nullable(); //Client date use tour
             $table->integer('unit_adult')->nullable()->default(0);
             $table->integer('unit_child')->nullable()->default(0);
             $table->integer('unit_infant')->nullable()->default(0);

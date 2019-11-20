@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/backend/home';
+    protected $redirectTo = '/letmepass';
 
     /**
      * Login username to be used by the controller.

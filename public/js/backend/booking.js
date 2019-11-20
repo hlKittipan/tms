@@ -68,6 +68,7 @@ function addProductCard(repo){
             '<div class="form-group col-md-12"><label><b>'+lg_adult+' : </b>'+repo.public_adult+'</label></div>'+
             '<div class="form-group col-md-12"><label><b>'+lg_child+' : </b>'+repo.public_child+'</label></div>'+
             '<div class="form-group col-md-12 hide"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div><hr>' +
+            '<div class="form-group row"><label class="col-sm-2 col-form-label">'+lg_date+'</label><div class="col-sm-10"><input type="text" name="date_'+repo.id+'" class="form-control " onchange="checkAvailable('+repo.id+','+repo.number_of_pax+')"></div> </div>'+
             '</div>'+
             //right form
             //number_of_adult
@@ -93,8 +94,12 @@ function addProductCard(repo){
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_net_total+'</label>'+
             '<div class="col-sm-8"><input type="number" name="nt_'+repo.id+'" readonly class="form-control text-right" ></div></div> </div> </div> </div> </div>';
             $("#product_list").append(card_product_list);
+            $('input[name="date_'+repo.id+'"]').daterangepicker({
+                "singleDatePicker": true
+            }, function(start, end, label) {
+                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            });
     }
-    checkAvailable(repo.id,repo.number_of_pax);
 }
 
 function removeProduct(id){
@@ -109,7 +114,7 @@ function checkAvailable(product_id,number_of_pax){
     $.ajax({
         type:'get',
         url:urlCheckAvailable,
-        data:{product_id:product_id},
+        data:{product_id:product_id,book_date:$("input[name='date_"+product_id+"']").val()},
         success:function(data) {
             $("#available_span_"+product_id).html(lg_available+' '+data+'/'+number_of_pax +'&nbsp;&nbsp;<button type="button" class="btn btn-primary">' +
             '<i class="fas fa-trash" onclick="removeProduct('+product_id+')"></i></button> ');

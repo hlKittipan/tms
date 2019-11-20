@@ -5,12 +5,15 @@
  */
 
 require('./bootstrap');
+require('datatables.net-buttons-bs4');
 
 window.Vue = require('vue');
 window.axios = require('axios');
 window.moment = require('moment');
 window.daterangepicker = require('daterangepicker');
 window.select2 = require('select2');
+window.dt = require('datatables.net');
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

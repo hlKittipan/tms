@@ -23,25 +23,26 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered table-striped" id="book_table">
+                            <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Periods</th>
+                                <th>Client name</th>
+                                <th>Booking date</th>
                                 <th width="280px">Action</th>
                             </tr>
-                            @empty($quotation)
+                            </thead>
+                            <tbody>
+                            @isset($quotation)
                                 @foreach ($quotation as $key => $list)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $list->name }}</td>
+                                        <td>{{ $list->first_name ." ".$list->first_name }}</td>
+                                        <td>{{ $list->quo_date }}</td>
+
                                         <td>
-                                            @foreach($list->period as $k => $v)
-                                                <b>{{\Carbon\Carbon::parse($v->date_start)->format('F jS, Y')}}</b> to <b>{{\Carbon\Carbon::parse($v->date_end)->format('F jS, Y')}}</b><br>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('backend.product.after',$list->id) }}" data-toggle="tooltip"
+                                            <a href="{{ route('backend.product.after',$list->id) }}"
+                                               data-toggle="tooltip"
                                                data-placement="top" title="Edit">
                                                 <i class="fas fa-edit fa-2x"></i>
                                             </a>
@@ -55,6 +56,7 @@
                                     </tr>
                                 @endforeach
                             @endisset
+                            </tbody>
                         </table>
                         {!! $quotation->links() !!}
                     </div>
@@ -65,8 +67,10 @@
 @endsection
 @section('script')
     <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $("#book_table").DataTable();
+
         })
     </script>
 @endsection
