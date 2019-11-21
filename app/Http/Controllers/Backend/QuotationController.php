@@ -100,7 +100,7 @@ class QuotationController extends Controller
                 $quo_detail->product_id = $product->product_id;
                 $quo_detail->price_id = $product->price_id;
                 $quo_detail->period_id = $product->period_id;
-                $quo_detail->book_date = $request->input('date_' . $product_id);
+                $quo_detail->book_date = Carbon::parse($request->input('date_' . $product_id));
                 $quo_detail->unit_adult = $request->input('noa_' . $product_id);
                 $quo_detail->unit_child = $request->input('noc_' . $product_id);
                 $quo_detail->unit_infant = $request->input('noi_' . $product_id);
