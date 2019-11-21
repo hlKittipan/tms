@@ -145,9 +145,24 @@ class QuotationController extends Controller
      * @param  \App\Model\Quotation  $quotation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quotation $quotation)
+    public function edit($id)
     {
-        return view('backends.books.edit');
+        $quotation = DB::table('quotations as q')
+            ->select('q.id as quo_id','q.staff_id','q.client_id','q.quo_date','q.total','q.discount_per','q.discount_price','q.vat','q.net','q.remark',
+                'c.first_name','c.last_name','c.email','c.hotel_name','c.room_number','c.hotel_tel','c.passport')
+            ->join('clients as c','c.id','=','q.client_id')
+            ->where('q.id','=',$id)
+            ->first();
+        if (isset($quotation)){
+
+            $quotation->quo_detail = DB::table('quotation_details as qd')
+                    ->join('products as p','p.id','=','qd.product_id')
+                    ->where('qd.quo_id','=',$quotation->quo_id)
+                    ->get();
+
+        }
+        //dd($quotation);
+        return view('backends.books.edit',compact('quotation'));
     }
 
     /**
@@ -159,6 +174,7 @@ class QuotationController extends Controller
      */
     public function update(Request $request, Quotation $quotation)
     {
+        dd($request->all());
         return redirect()->route('backend.booking.index') ->with('success','Booking updated successfully.');
     }
 

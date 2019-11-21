@@ -134,7 +134,6 @@
 
         $(function () {
 
-
         });
 
         function confirm_reset() {
