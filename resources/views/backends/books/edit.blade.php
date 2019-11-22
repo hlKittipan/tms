@@ -16,7 +16,9 @@
                               action="{{route('backend.booking.update',$quotation->quo_id)}}">
                             @csrf
                             @method('put')
-                            <input type="hidden" value="{{$quotation->quo_id}}" readonly>
+                            <input type="hidden" value="{{$quotation->quo_id}}" name="quotation_id" readonly>
+                            <input type="hidden" value="{{$quotation->client_id}}" name="client_id" readonly>
+                            <input type="hidden" value="{{$quotation->staff_id}}" name="staff_id" readonly>
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="col-md-12">
