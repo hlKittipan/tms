@@ -13,6 +13,7 @@ use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class QuotationController extends Controller
 {
@@ -114,9 +115,9 @@ class QuotationController extends Controller
                 $quo_detail->discount = $request->input('d_' . $product_id);
                 $quo_detail->save();
 
-                $quo_total = $quo_total + $request->input('v_' . $product_id);
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
                 $quo_vat = $quo_vat + $request->input('t_' . $product_id);
-                $quo_net = $quo_net + $request->input('nt_' . $product_id);
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
             }
         }
 
@@ -175,17 +176,31 @@ class QuotationController extends Controller
      */
     public function update(Request $request, Quotation $quotation)
     {
-        dd($request->all());
+        //dd($request->all());
 
         $quo_total = 0;
         $quo_vat = 0;
         $quo_net = 0;
 
+        //Upload passport client
+        if ($request->hasFile('passport')) {
+            $files = $request->file('passport');
+            $imageName = $request->client_id . '.' . $files->getClientOriginalExtension();
+            $destinationPath = public_path() .'/uploads/client_passport/';
+            $src = '/uploads/client_passport/'.$imageName;
+            if(!File::isDirectory($destinationPath)){
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+            $files->move($destinationPath, $imageName);
+        }else{
+            $src = $request->passport;
+        }
+
         $client = Customer::findOrFail($request->client_id);
         $client->first_name = $request->first_name;
         $client->last_name = $request->last_name;
         $client->email = $request->email;
-        $client->passport = $request->passport;
+        $client->passport = $src;
         $client->hotel_name = $request->hotel_name;
         $client->hotel_tel = $request->hotel_tel;
         $client->room_number = $request->room_number;
@@ -202,7 +217,7 @@ class QuotationController extends Controller
                     })
                     ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
                     ->where('p.id', '=', $product_id)->first();
-                $quo_detail = DB::table('quotation_details')->where('quo_id','=',$request->quotation_id)->where('product_id','=',$product_id)
+                DB::table('quotation_details')->where('quo_id','=',$request->quotation_id)->where('product_id','=',$product_id)
                     ->update([
                         'book_date' => Carbon::parse($request->input('date_' . $product_id)),
                         'unit_adult' => $request->input('noa_' . $product_id),
@@ -218,9 +233,9 @@ class QuotationController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
 
-                $quo_total = $quo_total + $request->input('v_' . $product_id);
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
                 $quo_vat = $quo_vat + $request->input('t_' . $product_id);
-                $quo_net = $quo_net + $request->input('nt_' . $product_id);
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
             }
         }
 

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -279,6 +280,11 @@ class ProductController extends Controller
 
     public function destroyImage(Request $request){
         $image = Image::find($request->id);
+
+        if(File::exists(public_path() .$image->src)) {
+            File::delete(public_path() .$image->src);
+        }
+
         $image->delete();
 
         return redirect()->route('backend.product.after',$request->product_id)

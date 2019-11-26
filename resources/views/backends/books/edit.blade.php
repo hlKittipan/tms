@@ -13,7 +13,7 @@
                     <div class="card-header">{{ __('book.edit_booking') }}</div>
                     <div class="card-body">
                         <form class="" method="POST" id="main-form"
-                              action="{{route('backend.booking.update',$quotation->quo_id)}}">
+                              action="{{route('backend.booking.update',$quotation->quo_id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <input type="hidden" value="{{$quotation->quo_id}}" name="quotation_id" readonly>
@@ -43,9 +43,15 @@
                                                 <input type="email" name="email" class="form-control" value="{{$quotation->email}}">
                                             </div>
                                             <label class="col-sm-2 col-form-label">{{__('book.upload_passport')}}</label>
-                                            <div class="col-sm-4">
-                                                <input type="file" name="passport" class="form-control-file">
-                                            </div>
+                                            @if(is_null($quotation->passport) || empty($quotation->passport))
+                                                <div class="col-sm-4">
+                                                    <input type="file" name="passport" class="form-control-file">
+                                                </div>
+                                            @else
+                                                <div class="col-sm-4">
+                                                    <a href="{{asset($quotation->passport)}}" target="_blank"> <img src="{{asset($quotation->passport)}}" class="card-img-top"></a>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">{{__('book.hotel_name')}}</label>
