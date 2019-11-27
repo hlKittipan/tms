@@ -11,12 +11,15 @@ class ProductController extends Controller
 {
     public function searchProduct(){
         $product = DB::table('products as p')
-            ->select('p.id','p.name','pri.public_adult','pri.public_child','pri.public_infant','p.number_of_pax')
+            ->select('p.id','p.name','pri.public_adult','pri.public_child','pri.public_infant','p.number_of_pax','pe.date_end','pri.status')
             ->join('periods as pe', function ($join) {
                 $join->on('p.id','=','pe.product_id')
                     ->whereDate('pe.date_end','>=',Carbon::today());
             })
-            ->join('prices as pri','pe.id','=','pri.period_id')
+            ->join('prices as pri', function ($join) {
+                $join->on('pe.id','=','pri.period_id')
+                    ->where('pri.status','!=',0);
+            })
             ->where('p.id','=',\request('search'))
             ->orWhere('p.name','like','%'.\request('search').'%')
             ->orWhere('p.name','like',\request('search').'%')

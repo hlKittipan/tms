@@ -24,6 +24,7 @@ class CreateQuotations extends Migration
             $table->double('vat')->nullable()->default(0);
             $table->double('net')->nullable()->default(0);
             $table->text('remark')->nullable();
+            $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
 
@@ -44,6 +45,7 @@ class CreateQuotations extends Migration
             $table->double('total')->nullable()->default(0);
             $table->double('net')->nullable()->default(0);
             $table->text('remark')->nullable();
+            $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
 
@@ -70,6 +72,7 @@ class CreateQuotations extends Migration
             $table->string('gateway');
             $table->string('pay_date');
             $table->text('remark')->nullable();
+            $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
     }

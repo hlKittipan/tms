@@ -18,7 +18,7 @@ class Period extends Model
 
     public function Price()
     {
-        return $this->hasMany(Price::class,'period_id','id');
+        return $this->hasMany(Price::class,'period_id','id')->where('status','!=', 0);
     }
 
     public function Product()

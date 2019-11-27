@@ -179,8 +179,8 @@ class ProductController extends Controller
             ->with('success','Period Update successfully.');
     }
 
-    public function createPrice($product_id,$period_id){
-        return view('backends.prices.create',compact('product_id','period_id'));
+    public function createPrice($product_id,$period_id,$status){
+        return view('backends.prices.create',compact('product_id','period_id','status'));
     }
 
     public function storePrice(Request $request){
@@ -189,13 +189,13 @@ class ProductController extends Controller
         $date = $request->date_start;
         if($date == null){
             return redirect()->route('backend.product.period.create',$request->product_id)
-                ->with('success','Can not create period please check.');
+                ->with('success','Can not create Price please check.');
         }
         //dd($request->all());
         Price::create($request->all());
 
         return redirect()->route('backend.product.after',$request->product_id)
-            ->with('success','Period Create successfully.');
+            ->with('success','Price Create successfully.');
     }
 
     public function clonePriceToPeriod($period_id,$new_id){
@@ -223,6 +223,15 @@ class ProductController extends Controller
 
     public function updatePrice(Request $request){
         //
+    }
+
+    public function deletePrice($id){
+        $price = Price::findOrFail($id);
+        $price->status = 0;
+        $price->save();
+
+        return redirect()->route('backend.product.after',$price->product_id)
+            ->with('success','Price delete successfully.');
     }
 
     public function storeImage(Request $request){

@@ -27,6 +27,7 @@ return [
     'edit_periods' => 'Edit Periods',
     'prices' => 'Prices',
     'add_prices' => 'Add Prices',
+    'add_s_prices' => 'Add Spacial Prices',
     'main' => 'Main',
     'gallery' => 'Gallery',
     'start_date' => 'Start Date',

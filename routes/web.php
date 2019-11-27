@@ -41,11 +41,13 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::get('product/period/edit/{id}','ProductController@editPeriod')->name('product.period.edit');
     Route::post('product/period/update','ProductController@updatePeriod')->name('product.period.update');
     //create price
-    Route::get('product/price/create/{product_id}/{period_id}','ProductController@createPrice')->name('product.price.create');
+    Route::get('product/price/create/{product_id}/{period_id}/{status}','ProductController@createPrice')->name('product.price.create');
     Route::post('product/price/store','ProductController@storePrice')->name('product.price.store');
     //edit price
     Route::get('product/price/edit/{id}','ProductController@editPrice')->name('product.price.edit');
     Route::post('product/price/update','ProductController@updatePrice')->name('product.price.update');
+    //delete price
+    Route::get('product/price/delete/{id}','ProductController@deletePrice')->name('product.price.delete');
     //upload image
     Route::post('product/image/store','ProductController@storeImage')->name('product.image.store');
     //set type image

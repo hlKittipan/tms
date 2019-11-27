@@ -125,6 +125,7 @@ class QuotationController extends Controller
             'total' => $quo_total,
             'vat' => $quo_vat,
             'net' => $quo_net,
+            'status' => 1,
         ]);
         return redirect()->route('backend.booking.index') ->with('success','Booking created successfully.');
     }
@@ -188,6 +189,9 @@ class QuotationController extends Controller
             $imageName = $request->client_id . '.' . $files->getClientOriginalExtension();
             $destinationPath = public_path() .'/uploads/client_passport/';
             $src = '/uploads/client_passport/'.$imageName;
+            if(File::exists($destinationPath.$imageName)) {
+                File::delete($destinationPath.$imageName);
+            }
             if(!File::isDirectory($destinationPath)){
                 File::makeDirectory($destinationPath, 0777, true, true);
             }
@@ -243,6 +247,7 @@ class QuotationController extends Controller
         $quo->total = $quo_total;
         $quo->vat = $quo_vat;
         $quo->net = $quo_net;
+        $quo->status = 1;
         $quo->save();
 
         return redirect()->route('backend.booking.index') ->with('success','Booking updated successfully.');

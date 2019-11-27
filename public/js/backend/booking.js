@@ -37,8 +37,11 @@ function formatRepo (repo) {
     if (repo.loading) {
         return repo.text;
     }
-
-    var container = $("<div><b>ID : </b>"+repo.id+"<b> Name : </b>"+repo.name+"</div>");
+    var spacial = '';
+    if(repo.status == 2){
+        spacial = "Spacial price"
+    }
+    var container = $("<div><b>"+spacial+" ID : </b>"+repo.id+"<b> Name : </b>"+repo.name+"</div>");
 
     return container;
 }
@@ -56,9 +59,13 @@ function addProductCard(repo){
     var check_list = $("#table_body").find("tr#list_id_"+repo.id).html();
     var card_product_list = "";
     var public_price = {};
+    var spacial = '';
+    if(repo.status == 2){
+        spacial = "Spacial price"
+    }
     if (repo.id != "" || check_list == undefined){
         /*start card header*/
-        card_product_list = '<div class="card mb-3" id="list_id_'+repo.id+'"><div class="card-header"><b>'+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
+        card_product_list = '<div class="card mb-3" id="list_id_'+repo.id+'"><div class="card-header"><b>'+spacial+' '+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
             '<span class="float-right" id="available_span_'+repo.id+'" number_of_pax="'+repo.number_of_pax+'"></span>' +
             '<input type="hidden" name="product_id[]" value="'+repo.id+'"></div>'+
             //end card header

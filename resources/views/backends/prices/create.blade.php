@@ -19,6 +19,7 @@
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product_id}}">
                             <input type="hidden" name="period_id" value="{{$period_id}}">
+                            <input type="hidden" name="status" value="{{$status}}">
                             <div class="form-row" style="display: none">
                                 <div class="form-group col-md-6">
                                     <label>{{ __('product.start_date') }}</label>
