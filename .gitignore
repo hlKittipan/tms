@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 /config/debugbar.php
 /config/ide-helper.php
+/.phpstorm.meta.php
+/_ide_helper.php

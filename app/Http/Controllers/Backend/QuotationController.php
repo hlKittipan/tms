@@ -9,9 +9,11 @@ use App\Model\Client as Customer;
 use App\Model\Quotation;
 use App\Model\Quotation_detail;
 use Carbon\Carbon;
+use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class QuotationController extends Controller
 {
@@ -100,7 +102,7 @@ class QuotationController extends Controller
                 $quo_detail->product_id = $product->product_id;
                 $quo_detail->price_id = $product->price_id;
                 $quo_detail->period_id = $product->period_id;
-                $quo_detail->book_date = $request->input('date_' . $product_id);
+                $quo_detail->book_date = Carbon::parse($request->input('date_' . $product_id));
                 $quo_detail->unit_adult = $request->input('noa_' . $product_id);
                 $quo_detail->unit_child = $request->input('noc_' . $product_id);
                 $quo_detail->unit_infant = $request->input('noi_' . $product_id);
@@ -113,9 +115,9 @@ class QuotationController extends Controller
                 $quo_detail->discount = $request->input('d_' . $product_id);
                 $quo_detail->save();
 
-                $quo_total = $quo_total + $request->input('v_' . $product_id);
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
                 $quo_vat = $quo_vat + $request->input('t_' . $product_id);
-                $quo_net = $quo_net + $request->input('nt_' . $product_id);
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
             }
         }
 
@@ -123,6 +125,7 @@ class QuotationController extends Controller
             'total' => $quo_total,
             'vat' => $quo_vat,
             'net' => $quo_net,
+            'status' => 1,
         ]);
         return redirect()->route('backend.booking.index') ->with('success','Booking created successfully.');
     }
@@ -145,9 +148,24 @@ class QuotationController extends Controller
      * @param  \App\Model\Quotation  $quotation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Quotation $quotation)
+    public function edit($id)
     {
-        return view('backends.books.edit');
+        $quotation = DB::table('quotations as q')
+            ->select('q.id as quo_id','q.staff_id','q.client_id','q.quo_date','q.total','q.discount_per','q.discount_price','q.vat','q.net','q.remark',
+                'c.first_name','c.last_name','c.email','c.hotel_name','c.room_number','c.hotel_tel','c.passport')
+            ->join('clients as c','c.id','=','q.client_id')
+            ->where('q.id','=',$id)
+            ->first();
+        if (isset($quotation)){
+
+            $quotation->quo_detail = DB::table('quotation_details as qd')
+                    ->join('products as p','p.id','=','qd.product_id')
+                    ->where('qd.quo_id','=',$quotation->quo_id)
+                    ->get();
+
+        }
+        //dd($quotation);
+        return view('backends.books.edit',compact('quotation'));
     }
 
     /**
@@ -159,6 +177,79 @@ class QuotationController extends Controller
      */
     public function update(Request $request, Quotation $quotation)
     {
+        //dd($request->all());
+
+        $quo_total = 0;
+        $quo_vat = 0;
+        $quo_net = 0;
+
+        //Upload passport client
+        if ($request->hasFile('passport')) {
+            $files = $request->file('passport');
+            $imageName = $request->client_id . '.' . $files->getClientOriginalExtension();
+            $destinationPath = public_path() .'/uploads/client_passport/';
+            $src = '/uploads/client_passport/'.$imageName;
+            if(File::exists($destinationPath.$imageName)) {
+                File::delete($destinationPath.$imageName);
+            }
+            if(!File::isDirectory($destinationPath)){
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+            $files->move($destinationPath, $imageName);
+        }else{
+            $src = $request->passport;
+        }
+
+        $client = Customer::findOrFail($request->client_id);
+        $client->first_name = $request->first_name;
+        $client->last_name = $request->last_name;
+        $client->email = $request->email;
+        $client->passport = $src;
+        $client->hotel_name = $request->hotel_name;
+        $client->hotel_tel = $request->hotel_tel;
+        $client->room_number = $request->room_number;
+        $client->save();
+
+        if (is_array($request->product_id) || is_object($request->product_id)) {
+            foreach ($request->product_id as $product_id) {
+                $product = DB::table('products as p')
+                    ->select('p.id as product_id', 'p.name', 'pe.id as period_id', 'pri.id as price_id',
+                        'pri.public_adult', 'pri.public_child', 'pri.public_infant', 'p.number_of_pax')
+                    ->join('periods as pe', function ($join) {
+                        $join->on('p.id', '=', 'pe.product_id')
+                            ->whereDate('pe.date_end', '>=', Carbon::today());
+                    })
+                    ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
+                    ->where('p.id', '=', $product_id)->first();
+                DB::table('quotation_details')->where('quo_id','=',$request->quotation_id)->where('product_id','=',$product_id)
+                    ->update([
+                        'book_date' => Carbon::parse($request->input('date_' . $product_id)),
+                        'unit_adult' => $request->input('noa_' . $product_id),
+                        'unit_child' => $request->input('noc_' . $product_id),
+                        'unit_infant' => $request->input('noi_' . $product_id),
+                        'public_adult' => $product->public_adult,
+                        'public_child' => $product->public_child,
+                        'public_infant' => $product->public_infant,
+                        'vat' => $request->input('v_' . $product_id),
+                        'total' => $request->input('t_' . $product_id),
+                        'net' => $request->input('nt_' . $product_id),
+                        'discount' => $request->input('d_' . $product_id),
+                        'updated_at' => Carbon::now()
+                    ]);
+
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
+                $quo_vat = $quo_vat + $request->input('t_' . $product_id);
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
+            }
+        }
+
+        $quo = Quotation::findOrFail( $request->quotation_id);
+        $quo->total = $quo_total;
+        $quo->vat = $quo_vat;
+        $quo->net = $quo_net;
+        $quo->status = 1;
+        $quo->save();
+
         return redirect()->route('backend.booking.index') ->with('success','Booking updated successfully.');
     }
 

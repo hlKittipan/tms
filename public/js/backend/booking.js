@@ -37,8 +37,11 @@ function formatRepo (repo) {
     if (repo.loading) {
         return repo.text;
     }
-
-    var container = $("<div><b>ID : </b>"+repo.id+"<b> Name : </b>"+repo.name+"</div>");
+    var spacial = '';
+    if(repo.status == 2){
+        spacial = "Spacial price"
+    }
+    var container = $("<div><b>"+spacial+" ID : </b>"+repo.id+"<b> Name : </b>"+repo.name+"</div>");
 
     return container;
 }
@@ -56,9 +59,13 @@ function addProductCard(repo){
     var check_list = $("#table_body").find("tr#list_id_"+repo.id).html();
     var card_product_list = "";
     var public_price = {};
+    var spacial = '';
+    if(repo.status == 2){
+        spacial = "Spacial price"
+    }
     if (repo.id != "" || check_list == undefined){
         /*start card header*/
-        card_product_list = '<div class="card mb-3" id="list_id_'+repo.id+'"><div class="card-header"><b>'+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
+        card_product_list = '<div class="card mb-3" id="list_id_'+repo.id+'"><div class="card-header"><b>'+spacial+' '+lg_id+'</b> : '+repo.id+'  <b>'+lg_product_name+'</b> : '+repo.name+'  ' +
             '<span class="float-right" id="available_span_'+repo.id+'" number_of_pax="'+repo.number_of_pax+'"></span>' +
             '<input type="hidden" name="product_id[]" value="'+repo.id+'"></div>'+
             //end card header
@@ -68,7 +75,7 @@ function addProductCard(repo){
             '<div class="form-group col-md-12"><label><b>'+lg_adult+' : </b>'+repo.public_adult+'</label></div>'+
             '<div class="form-group col-md-12"><label><b>'+lg_child+' : </b>'+repo.public_child+'</label></div>'+
             '<div class="form-group col-md-12 hide"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div><hr>' +
-            '<div class="form-group row"><label class="col-sm-2 col-form-label">'+lg_date+'</label><div class="col-sm-10"><input type="text" name="date_'+repo.id+'" class="form-control " onchange="checkAvailable('+repo.id+','+repo.number_of_pax+')"></div> </div>'+
+            '<div class="form-group row"><label class="col-sm-2 col-form-label">'+lg_date+'</label><div class="col-sm-10"><input type="text" name="date_'+repo.id+'" class="form-control form-date" onchange="checkAvailable('+repo.id+','+repo.number_of_pax+')"></div> </div>'+
             '</div>'+
             //right form
             //number_of_adult
@@ -96,8 +103,6 @@ function addProductCard(repo){
             $("#product_list").append(card_product_list);
             $('input[name="date_'+repo.id+'"]').daterangepicker({
                 "singleDatePicker": true
-            }, function(start, end, label) {
-                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
             });
     }
 }

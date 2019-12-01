@@ -41,7 +41,7 @@
                                         <td>{{ $list->quo_date }}</td>
 
                                         <td>
-                                            <a href="{{ route('backend.product.after',$list->id) }}"
+                                            <a href="{{ route('backend.booking.edit',$list->id) }}"
                                                data-toggle="tooltip"
                                                data-placement="top" title="Edit">
                                                 <i class="fas fa-edit fa-2x"></i>

@@ -51,14 +51,16 @@
                                                              @if(\Carbon\Carbon::parse($value->date_end) < \Carbon\Carbon::today() ) <span class="badge badge-pill badge-danger">Expire</span> @else <span class="badge badge-pill badge-success">Active</span> @endif
                                                         </div>
                                                         <div class="float-md-right">
-                                                            <a href="{{route('backend.product.price.create',['product_id'=>$product->id,'period_id'=>$value->id])}}"
-                                                               class="btn btn-success">@lang('product.add_prices')</a>
+                                                            <a href="{{route('backend.product.price.create',['product_id'=>$product->id,'period_id'=>$value->id,'status'=>1])}}"
+                                                               class="btn btn-success">{{ __('product.add_prices') }}</a>
+                                                            <a href="{{route('backend.product.price.create',['product_id'=>$product->id,'period_id'=>$value->id,'status'=>2])}}"
+                                                               class="btn btn-danger">{{ __('product.add_s_prices') }}</a>
                                                             <a href="{{route('backend.product.period.edit',$value->id)}}"
-                                                               class="btn btn-success " data-toggle="tooltip"
+                                                               class="btn btn-primary " data-toggle="tooltip"
                                                                data-placement="top" title="Edit"><i class="fas fa-edit"></i>
                                                             </a>
                                                             <a href="{{route('backend.product.period.create',$value->id)}}"
-                                                               class="btn btn-success" data-toggle="tooltip"
+                                                               class="btn btn-success hide" data-toggle="tooltip"
                                                                data-placement="top" title="Copy"><i class="far fa-copy"></i></a>
                                                         </div>
 
@@ -106,7 +108,7 @@
                                                                         <td>{{__('setup.action')}}</td>
                                                                     </tr>
                                                                     @foreach($value->price as $k => $v)
-                                                                    <tr>
+                                                                    <tr class="{{ $v->status == 2 ? "table-danger" : ''  }}">
                                                                         <td>{{number_format($v->cost_adult,2)}}</td>
                                                                         <td>{{number_format($v->cost_child,2)}}</td>
                                                                         <td>{{number_format($v->cost_infant,2)}}</td>
@@ -115,12 +117,17 @@
                                                                         <td>{{number_format($v->public_infant,2)}}</td>
                                                                         <td>
                                                                             <a href="{{route('backend.product.period.create',$v->id)}}"
-                                                                               class="btn btn-success"  data-toggle="tooltip"
+                                                                               class="btn btn-success hide"  data-toggle="tooltip"
                                                                                data-placement="top" title="Copy"><i class="far fa-copy"></i></a>
                                                                             <a href="{{route('backend.product.period.create',$v->id)}}"
                                                                                class="btn btn-success disabled" data-toggle="tooltip"
                                                                                data-placement="top"
                                                                                title="Edit"><i class="fas fa-edit"></i>
+                                                                            </a>
+                                                                            <a href="{{route('backend.product.price.delete',$v->id)}}"
+                                                                               class="btn btn-success" data-toggle="tooltip"
+                                                                               data-placement="top"
+                                                                               title="Delete"><i class="fas fa-trash"></i>
                                                                             </a>
                                                                         </td>
                                                                     </tr>

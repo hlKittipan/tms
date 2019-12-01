@@ -69,7 +69,7 @@ class CreateProducts extends Migration
             $table->boolean('thu')->nullable()->default(0);
             $table->boolean('fri')->nullable()->default(0);
             $table->boolean('sat')->nullable()->default(0);
-            $table->text('remark');
+            $table->text('remark')->nullable();
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
