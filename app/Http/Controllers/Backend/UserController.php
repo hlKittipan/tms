@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -28,6 +29,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $response = $this->authorize('create', Auth::user());
+        dd($response);
         $user = User::latest()->paginate(10);
         return view('backends.users.index',compact('user'));
     }
