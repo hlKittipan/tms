@@ -23,13 +23,14 @@ class CreateClientsTable extends Migration
             $table->string('city')->nullable();
             $table->string('province')->nullable();
             $table->string('country')->nullable();
-            $table->string('postal_code',10);
+            $table->string('postal_code',10)->nullable();
             $table->string('tel')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('hotel_name')->nullable();
             $table->string('room_number')->nullable();
             $table->string('hotel_tel')->nullable();
+            $table->string('passport')->nullable();
             $table->string('status')->nullable()->default(0);
             $table->timestamps();
         });
