@@ -53,6 +53,9 @@
                             <a class="dropdown-item" href="{{ route('backend.product.index') }}">
                                 <i class="fas fa-suitcase"></i> {{ __('product.product') }}
                             </a>
+                            <a class="dropdown-item" href="{{ route('backend.transport.index') }}">
+                                <i class="fas fa-car"></i> {{ __('product.transport') }}
+                            </a>
                         </div>
 
                     </li>
