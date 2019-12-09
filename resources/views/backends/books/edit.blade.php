@@ -92,7 +92,7 @@
                                                             <div class="form-group col-md-12">
                                                                 <label><b>{{__('book.child')}} : </b>{{$value->public_child}}</label>
                                                             </div>
-                                                            <div class="form-group col-md-12 hide">
+                                                            <div class="form-group col-md-12">
                                                                 <label><b>{{__('book.infant')}} : </b>{{$value->public_infant}}</label>
                                                             </div>
                                                             <hr>
@@ -116,7 +116,7 @@
                                                                     <input type="number" name="noc_{{$value->product_id}}" class="form-control text-right" value="{{$value->unit_child}}" onchange="calculatePrice('{{$value->product_id}}','noc_')" price="{{$value->public_child}}">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row hide">
+                                                            <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.number_of_infant')}}</label>
                                                                 <div class="col-sm-8">
                                                                     <input type="number" name="noi_{{$value->product_id}}" class="form-control text-right" value="{{$value->unit_infant}}" onchange="calculatePrice('{{$value->product_id}}','noi_')" price="{{$value->public_infant}}">

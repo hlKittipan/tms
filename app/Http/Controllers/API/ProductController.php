@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Transport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -42,5 +43,10 @@ class ProductController extends Controller
         }
 
         return json_encode($unit);
+    }
+
+    public function searchTransport(){
+        $result = Transport::where('status','!=','0')->get();
+        return json_encode($result);
     }
 }

@@ -117,6 +117,7 @@
     <script>
         var urlSearch = '{{route('api.search.product')}}';
         var urlCheckAvailable = '{{route('api.search.product.available')}}';
+        var urlTransport = '{{route('api.search.transport')}}';
         var lg_available = '{{__('book.available')}}';
         var lg_adult = '{{__('book.adult')}}';
         var lg_child = '{{__('book.child')}}';
@@ -131,7 +132,8 @@
         var lg_id = '{{__('book.id')}}';
         var lg_product_name = '{{__('book.product_name')}}';
         var lg_date = '{{__('product.date')}}';
-
+        var lg_add_transport = '{{__('transport.add_transport')}}'
+        var transportList = "";
         $(function () {
 
         });

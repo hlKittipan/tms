@@ -3,6 +3,7 @@
 return [
     'transport_management' => 'Transport Management',
     'name' => 'Name',
-    'price' => 'Price'
+    'price' => 'Price',
+    'add_transport' => 'Add transport'
 
 ];

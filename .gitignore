@@ -19,4 +19,4 @@ public/images/vendor/jquery-ui/
 public/uploads/
 storage/debugbar/
 /.idea/
-!/.env
+/.env

@@ -1,3 +1,15 @@
+$(function () {
+    $.ajax({
+        type:'get',
+        url:urlTransport,
+        success:function(data) {
+            $.each(JSON.parse(data),function(k,v){
+                transportList = transportList + "<option value='"+v.id+"'>"+v.name+" "+v.price+"</option>"
+            })
+        }
+    });
+})
+
 $('#searchProduct').select2({
     ajax: {
         url: urlSearch,
@@ -74,9 +86,9 @@ function addProductCard(repo){
             //left show price
             '<div class="form-group col-md-12"><label><b>'+lg_adult+' : </b>'+repo.public_adult+'</label></div>'+
             '<div class="form-group col-md-12"><label><b>'+lg_child+' : </b>'+repo.public_child+'</label></div>'+
-            '<div class="form-group col-md-12 hide"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div><hr>' +
+            '<div class="form-group col-md-12"> <label><b>'+lg_infant+' : </b>'+repo.public_infant+'</label></div><hr>' +
             '<div class="form-group row"><label class="col-sm-2 col-form-label">'+lg_date+'</label><div class="col-sm-10"><input type="text" name="date_'+repo.id+'" class="form-control form-date" onchange="checkAvailable('+repo.id+','+repo.number_of_pax+')"></div> </div>'+
-            '</div>'+
+            '<div class="form-group row"><label class="col-sm-3 col-form-label">'+lg_add_transport+'</label><div class="col-sm-9"><select class="form-control" name="trans_'+repo.id+'">'+transportList+'</select> </div></div></div>'+
             //right form
             //number_of_adult
             '<div class="col-md-6"><div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_adult+'</label>'+
@@ -85,7 +97,7 @@ function addProductCard(repo){
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_child+'</label>'+
             '<div class="col-sm-8"><input type="number" name="noc_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'noc_\')" price="'+repo.public_child+'"></div></div>'+
             //number_of_infant
-            '<div class="form-group row hide"><label class="col-sm-4 col-form-label">'+lg_number_of_infant+'</label>'+
+            '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_number_of_infant+'</label>'+
             '<div class="col-sm-8"><input type="number" name="noi_'+repo.id+'" class="form-control text-right" value="0" onchange="calculatePrice('+repo.id+',\'noi_\')" price="'+repo.public_infant+'"></div></div>'+
             //discount
             '<div class="form-group row"><label class="col-sm-4 col-form-label">'+lg_discounts+'</label>' +
