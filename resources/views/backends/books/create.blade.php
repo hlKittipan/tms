@@ -13,7 +13,7 @@
                     <div class="card-header">{{ __('book.add_booking') }}</div>
                     <div class="card-body">
                         <form class="" method="POST" id="main-form"
-                              action="{{route('backend.booking.store')}}">
+                              action="{{route('backend.booking.store')}}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">
@@ -41,7 +41,8 @@
                                             </div>
                                             <label class="col-sm-2 col-form-label">{{__('book.upload_passport')}}</label>
                                             <div class="col-sm-4">
-                                                <input type="file" name="passport" class="form-control-file">
+                                                <input type="file" name="passport" class="form-control-file" multiple
+                                                       accept="image/*">
                                             </div>
                                         </div>
                                         <div class="form-group row">

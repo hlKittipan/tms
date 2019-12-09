@@ -37,7 +37,7 @@
                                 @foreach ($quotation as $key => $list)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $list->first_name ." ".$list->first_name }}</td>
+                                        <td>{{ $list->first_name ." ".$list->last_name }}</td>
                                         <td>{{ $list->quo_date }}</td>
 
                                         <td>
