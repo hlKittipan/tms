@@ -13,7 +13,7 @@
                     <div class="card-header">{{ __('book.add_booking') }}</div>
                     <div class="card-body">
                         <form class="" method="POST" id="main-form"
-                              action="{{route('backend.booking.store')}}">
+                              action="{{route('backend.booking.store')}}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">
@@ -41,7 +41,8 @@
                                             </div>
                                             <label class="col-sm-2 col-form-label">{{__('book.upload_passport')}}</label>
                                             <div class="col-sm-4">
-                                                <input type="file" name="passport" class="form-control-file">
+                                                <input type="file" name="passport" class="form-control-file" multiple
+                                                       accept="image/*">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -117,6 +118,7 @@
     <script>
         var urlSearch = '{{route('api.search.product')}}';
         var urlCheckAvailable = '{{route('api.search.product.available')}}';
+        var urlTransport = '{{route('api.search.transport')}}';
         var lg_available = '{{__('book.available')}}';
         var lg_adult = '{{__('book.adult')}}';
         var lg_child = '{{__('book.child')}}';
@@ -131,7 +133,8 @@
         var lg_id = '{{__('book.id')}}';
         var lg_product_name = '{{__('book.product_name')}}';
         var lg_date = '{{__('product.date')}}';
-
+        var lg_add_transport = '{{__('transport.add_transport')}}'
+        var transportList = "";
         $(function () {
 
         });

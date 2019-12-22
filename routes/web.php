@@ -61,6 +61,7 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
 
     Route::resource('booking','QuotationController');
 
+    Route::resource('transport','TransportController');
 });
 
 
