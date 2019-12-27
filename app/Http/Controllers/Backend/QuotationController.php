@@ -8,6 +8,8 @@ use App\Model\Product_type;
 use App\Model\Client as Customer;
 use App\Model\Quotation;
 use App\Model\Quotation_detail;
+use App\Model\QuotationManyServiceCharge;
+use App\Model\Transport;
 use Carbon\Carbon;
 use http\Client;
 use Illuminate\Http\Request;
@@ -18,6 +20,7 @@ use Illuminate\Support\Facades\File;
 class QuotationController extends Controller
 {
     public $productType;
+
     /**
      * Create a new controller instance.
      *
@@ -36,10 +39,11 @@ class QuotationController extends Controller
     public function index()
     {
         $quotation = DB::table('quotations as q')
-            ->join('clients as c','q.client_id','=','c.id')
+            ->select('q.id','q.quo_date','c.first_name','c.last_name')
+            ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->latest('q.created_at')->paginate(10);
         //dd($quotation);
-        return view('backends.books.index',compact('quotation'));
+        return view('backends.books.index', compact('quotation'));
     }
 
     /**
@@ -55,11 +59,12 @@ class QuotationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $quo_total = 0;
         $quo_vat = 0;
         $quo_net = 0;
@@ -70,21 +75,31 @@ class QuotationController extends Controller
         //Upload passport client
         if ($request->hasFile('passport')) {
             $files = $request->file('passport');
-                $imageName = $client->id . '.' . $files->getClientOriginalExtension();
-                $destinationPath = public_path() .'/uploads/client_passport/';
-                $src = '/uploads/client_passport/'.$imageName;
-                $files->move($destinationPath, $imageName);
-                $client = Customer::create($request->all());
-                DB::table('clients')->where('id', '=',$client->id)->update([
-                    'passport' => $src,
-                ]);
+            $imageName = $client->id . '.' . $files->getClientOriginalExtension();
+            $destinationPath = public_path() . '/uploads/client_passport/';
+            $src = '/uploads/client_passport/' . $imageName;
+            $files->move($destinationPath, $imageName);
+            $client = Customer::create($request->all());
+            DB::table('clients')->where('id', '=', $client->id)->update([
+                'passport' => $src,
+            ]);
         }
 
+        //create quotation
         $quo = new Quotation();
         $quo->staff_id = Auth::user()->id;
         $quo->quo_date = Carbon::now();
         $quo->client_id = $client->id;
         $quo->save();
+
+        //get transport price
+        $transPrice = Transport::findOrFail($request->input('trans_' . $request->product_id[0]));
+        //create transport
+        $trans = new QuotationManyServiceCharge();
+        $trans->quo_id = $quo->id;
+        $trans->charge_id = $request->input('trans_' . $request->product_id[0]);
+        $trans->price = $transPrice->price;
+        $trans->save();
 
         if (is_array($request->product_id) || is_object($request->product_id)) {
             foreach ($request->product_id as $product_id) {
@@ -115,26 +130,26 @@ class QuotationController extends Controller
                 $quo_detail->discount = $request->input('d_' . $product_id);
                 $quo_detail->save();
 
-                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_' . $product_id));
                 $quo_vat = $quo_vat + $request->input('t_' . $product_id);
-                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_' . $product_id));
             }
         }
 
-        Quotation::where('id', '=',$quo->id)->update([
+        Quotation::where('id', '=', $quo->id)->update([
             'total' => $quo_total,
             'vat' => $quo_vat,
             'net' => $quo_net,
             'status' => 1,
         ]);
-        return redirect()->route('backend.booking.index') ->with('success','Booking created successfully.');
+        return redirect()->route('backend.booking.index')->with('success', 'Booking created successfully.');
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Quotation  $quotation
+     * @param \App\Model\Quotation $quotation
      * @return \Illuminate\Http\Response
      */
     public function show(Quotation $quotation)
@@ -145,34 +160,34 @@ class QuotationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Quotation  $quotation
+     * @param \App\Model\Quotation $quotation
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $quotation = DB::table('quotations as q')
-            ->select('q.id as quo_id','q.staff_id','q.client_id','q.quo_date','q.total','q.discount_per','q.discount_price','q.vat','q.net','q.remark',
-                'c.first_name','c.last_name','c.email','c.hotel_name','c.room_number','c.hotel_tel','c.passport')
-            ->join('clients as c','c.id','=','q.client_id')
-            ->where('q.id','=',$id)
+            ->select('q.id as quo_id', 'q.staff_id', 'q.client_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net', 'q.remark',
+                'c.first_name', 'c.last_name', 'c.email', 'c.hotel_name', 'c.room_number', 'c.hotel_tel', 'c.passport')
+            ->join('clients as c', 'c.id', '=', 'q.client_id')
+            ->where('q.id', '=', $id)
             ->first();
-        if (isset($quotation)){
+        if (isset($quotation)) {
 
             $quotation->quo_detail = DB::table('quotation_details as qd')
-                    ->join('products as p','p.id','=','qd.product_id')
-                    ->where('qd.quo_id','=',$quotation->quo_id)
-                    ->get();
+                ->join('products as p', 'p.id', '=', 'qd.product_id')
+                ->where('qd.quo_id', '=', $quotation->quo_id)
+                ->get();
 
         }
         //dd($quotation);
-        return view('backends.books.edit',compact('quotation'));
+        return view('backends.books.edit', compact('quotation'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Quotation  $quotation
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Model\Quotation $quotation
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Quotation $quotation)
@@ -187,16 +202,16 @@ class QuotationController extends Controller
         if ($request->hasFile('passport')) {
             $files = $request->file('passport');
             $imageName = $request->client_id . '.' . $files->getClientOriginalExtension();
-            $destinationPath = public_path() .'/uploads/client_passport/';
-            $src = '/uploads/client_passport/'.$imageName;
-            if(File::exists($destinationPath.$imageName)) {
-                File::delete($destinationPath.$imageName);
+            $destinationPath = public_path() . '/uploads/client_passport/';
+            $src = '/uploads/client_passport/' . $imageName;
+            if (File::exists($destinationPath . $imageName)) {
+                File::delete($destinationPath . $imageName);
             }
-            if(!File::isDirectory($destinationPath)){
+            if (!File::isDirectory($destinationPath)) {
                 File::makeDirectory($destinationPath, 0777, true, true);
             }
             $files->move($destinationPath, $imageName);
-        }else{
+        } else {
             $src = $request->passport;
         }
 
@@ -221,7 +236,7 @@ class QuotationController extends Controller
                     })
                     ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
                     ->where('p.id', '=', $product_id)->first();
-                DB::table('quotation_details')->where('quo_id','=',$request->quotation_id)->where('product_id','=',$product_id)
+                DB::table('quotation_details')->where('quo_id', '=', $request->quotation_id)->where('product_id', '=', $product_id)
                     ->update([
                         'book_date' => Carbon::parse($request->input('date_' . $product_id)),
                         'unit_adult' => $request->input('noa_' . $product_id),
@@ -237,30 +252,30 @@ class QuotationController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
 
-                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_'.$product_id));
+                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_' . $product_id));
                 $quo_vat = $quo_vat + $request->input('t_' . $product_id);
-                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_'.$product_id));
+                $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_' . $product_id));
             }
         }
 
-        $quo = Quotation::findOrFail( $request->quotation_id);
+        $quo = Quotation::findOrFail($request->quotation_id);
         $quo->total = $quo_total;
         $quo->vat = $quo_vat;
         $quo->net = $quo_net;
         $quo->status = 1;
         $quo->save();
 
-        return redirect()->route('backend.booking.index') ->with('success','Booking updated successfully.');
+        return redirect()->route('backend.booking.index')->with('success', 'Booking updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Quotation  $quotation
+     * @param \App\Model\Quotation $quotation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Quotation $quotation)
     {
-        return redirect()->route('backend.booking.index') ->with('success','Booking delete successfully.');
+        return redirect()->route('backend.booking.index')->with('success', 'Booking delete successfully.');
     }
 }
