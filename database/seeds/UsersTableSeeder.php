@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'root',
             'username' => 'root',
             'email' => Str::random(10).'@gmail.com',
-            'password' => Hash::make('root123456'),
+            'password' => Hash::make('123456'),
         ]);
     }
 }

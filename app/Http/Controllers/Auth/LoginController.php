@@ -71,7 +71,8 @@ class LoginController extends Controller
             $user = User::where('email',$login)->first();
             $this->password = $user->username.request()->input('password');
         }
-        request()->merge(['password' => $this->password]);
+        /*Disabled custom password*/
+        //request()->merge(['password' => $this->password]);
         return $fieldType;
     }
 

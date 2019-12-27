@@ -74,7 +74,5 @@ Route::get('/task', function(){
     ], 200);
 })->name('home');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
