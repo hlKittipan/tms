@@ -15,7 +15,7 @@ class Product extends Model
      */
     protected $fillable = [
         'code','name','staff_id','product_type_id','number_of_pax','duration_days','duration_nights','includes','excludes','conditions','itinerary',
-        'remark','status'
+        'remark','status','overview'
     ];
 
 

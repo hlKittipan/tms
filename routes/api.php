@@ -19,11 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*Api*/
+Route::get('top-sales','API\ProductController@topSales');
+
 Route::group(['namespace'=>'API','as'=>'api.'], function () {
     route::get('search/product','ProductController@searchProduct')->name('search.product');
     route::get('search/product/available','ProductController@searchAvailable')->name('search.product.available');
     Route::get('search/transport','ProductController@searchTransport')->name('search.transport');
 });
 
-/*End Api*/
+

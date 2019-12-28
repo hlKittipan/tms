@@ -10,7 +10,7 @@
                     <div class="card-body">
 
                         <form class="" method="POST" id="main-form"
-                              action="{{route('backend.product.period.update')}}">
+                              action="{{route('backend.product.period.update',$period->id)}}">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$period->product_id}}">
                             <input type="hidden" name="period_id" value="{{$period->id}}">

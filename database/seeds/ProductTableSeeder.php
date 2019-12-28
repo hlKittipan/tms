@@ -13,7 +13,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
-        for ($i = 0; $i < 100000; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('products')->insert([
                 'code' => Carbon::now()->format('ymdhms'),
                 'name' => $faker->company,

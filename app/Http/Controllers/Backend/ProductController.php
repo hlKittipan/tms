@@ -320,7 +320,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $productType = $this->productType;
+        return view('backends.products.edit',compact('product','productType'));
     }
 
     /**
@@ -332,7 +333,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        return redirect()->route('backend.product.index')
+            ->with('success','Product type Update successfully.');
     }
 
     /**

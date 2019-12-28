@@ -78,6 +78,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>{{ __('product.overview') }}</label>
+                                <textarea class="form-control" name="overview" placeholder="Required"
+                                          rows="3">{{ old('overview') }}</textarea>
+                            </div>
+
+                            <div class="form-group">
                                 <label>{{ __('product.includes') }}</label>
                                 <textarea class="form-control" name="includes" placeholder="Required"
                                           rows="3">{{ old('includes') }}</textarea>

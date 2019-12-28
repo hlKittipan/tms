@@ -40,13 +40,13 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{ route('backend.product.after',$list->id) }}" data-toggle="tooltip"
+                                        <a href="{{ route('backend.product.edit',$list->id) }}" data-toggle="tooltip"
                                            data-placement="top" title="Edit">
                                             <i class="fas fa-edit fa-2x"></i>
                                         </a>
-                                        {{--<a href="" data-toggle="tooltip" data-placement="top" title="Periods">
+                                        <a href="{{ route('backend.product.after',$list->id) }}" data-toggle="tooltip" data-placement="top" title="Periods">
                                             <i class="fas fa-calendar-alt fa-2x"></i>
-                                        </a>--}}
+                                        </a>
                                         <!--<a href="" data-toggle="tooltip" data-placement="top" title="Reset Password">
                                             <i class="fas fa-recycle fa-2x"></i>
                                         </a>-->
