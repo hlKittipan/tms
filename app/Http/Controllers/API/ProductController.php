@@ -69,6 +69,6 @@ class ProductController extends Controller
                     ->where('pri.status', '!=', 0);
             })
             ->distinct()->inRandomOrder('8')->get();
-        return json_encode($result);
+        return $result;
     }
 }
