@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('top-sales','API\ProductController@topSales');
+Route::get('top-sales','API\ProductController@topSales')->middleware(['auth:api','cors']);
+Route::post('login', 'API\UserController@login');
+Route::post('register', 'API\UserController@register');
 
 Route::group(['namespace'=>'API','as'=>'api.'], function () {
     route::get('search/product','ProductController@searchProduct')->name('search.product');
