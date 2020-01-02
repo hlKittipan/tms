@@ -58,7 +58,10 @@ class ProductController extends Controller
     public function topSales()
     {
         $result = DB::table('products as p')
-            ->select('p.id', 'p.name', 'p.overview','i.src','i.title','i.alt', 'pri.public_adult', 'pri.public_child', 'pri.public_infant', 'p.number_of_pax', 'pe.date_end', 'pri.status')
+            ->select('p.id','p.code', 'p.name', 'p.overview','p.includes','p.excludes','p.conditions','p.itinerary' ,'p.remark','p.number_of_pax',
+                'i.src', 'i.title', 'i.alt','i.description',
+                'pri.public_adult', 'pri.public_child', 'pri.public_infant','pri.status',
+                'pe.date_end', 'pe.date_start')
             ->join('periods as pe', function ($join) {
                 $join->on('p.id', '=', 'pe.product_id')
                     ->whereDate('pe.date_end', '>=', Carbon::today())
@@ -68,12 +71,16 @@ class ProductController extends Controller
                 $join->on('pe.id', '=', 'pri.period_id')
                     ->where('pri.status', '!=', 0);
             })
-            ->join('product_many_images as pm','p.id','=','pm.product_id')
-            ->join('images as i',function($join){
-                $join->on('i.id','=','pm.images_id')
-                    ->where('i.type','=','Main');
+            ->leftJoin('product_many_images as pm', 'p.id', '=', 'pm.product_id')
+            ->leftJoin('images as i', function ($join) {
+                $join->on('i.id', '=', 'pm.images_id')
+                    ->where('i.type', '=', 'Main');
             })
             ->distinct()->inRandomOrder('8')->get();
         return $result;
+    }
+
+    public function getProductDetail () {
+
     }
 }

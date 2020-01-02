@@ -26,7 +26,7 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown {{ routeIsActive(['backend.booking.index','backend.booking.create']) }}">
                         <a id="booking" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-cart-plus"></i> {{ __('book.booking') }} <span class="caret"></span>
                         </a>
@@ -41,7 +41,7 @@
                         </div>
 
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown {{ routeIsActive(['backend.product.index','backend.product.after','backend.product_type.index','backend.transport.index']) }}">
                         <a id="product" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-suitcase"></i> {{ __('product.product') }} <span class="caret"></span>
                         </a>
@@ -59,10 +59,10 @@
                         </div>
 
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ routeIsActive(['backend.user.index','backend.setup.index']) }}">
                         <a class="nav-link" href="{{ route('backend.user.index') }}"> <i class="fas fa-users"></i> {{ __('staff.user_management') }}</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown {{ routeIsActive(['backend.setup.index']) }}">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-user"></i> {{ Auth::user()->username }} <span class="caret"></span>
                         </a>

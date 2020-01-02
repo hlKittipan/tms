@@ -78,8 +78,9 @@ class ProductController extends Controller
         $image = DB::table('product_many_images')
             ->join('images','id','=','images_id')
             ->where('product_id','=',$id)->get();
-        $period = Period::where('periods.product_id','=',$id)->orderBy('date_start','asc')->get();
-        //dd($image);
+        $period = Period::where('periods.product_id','=',$id)->orderBy('date_end','desc')->get();
+        //dd($period);
+        productDetail(2);
         return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
     }
 

@@ -47,7 +47,7 @@
                                                 <div class="card">
                                                     <div class="card-header">
                                                         <div class="float-md-left">
-                                                            <b> {{__('product.date')}} : </b>{{\Carbon\Carbon::parse($value->date_start)->format('F jS, Y')}} to {{\Carbon\Carbon::parse($value->date_end)->format('F jS, Y')}}
+                                                            <b> {{__('product.date')}} : </b>{{changeFormatDate($value->date_start,'F jS, Y')}} to {{ changeFormatDate($value->date_end,'F jS, Y') }}
                                                              @if(\Carbon\Carbon::parse($value->date_end) < \Carbon\Carbon::today() ) <span class="badge badge-pill badge-danger">Expire</span> @else <span class="badge badge-pill badge-success">Active</span> @endif
                                                         </div>
                                                         <div class="float-md-right">
