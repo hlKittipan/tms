@@ -80,7 +80,8 @@ class ProductController extends Controller
         return $result;
     }
 
-    public function getProductDetail () {
-
+    public function getProductDetail ($product_id) {
+        $result = productDetail($product_id);
+        return $result;
     }
 }

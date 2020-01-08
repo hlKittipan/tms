@@ -28,6 +28,7 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Periods</th>
+                                <th>Province</th>
                                 <th width="280px">Action</th>
                             </tr>
                             @foreach ($product as $key => $list)
@@ -39,6 +40,7 @@
                                             <b>{{\Carbon\Carbon::parse($v->date_start)->format('F jS, Y')}}</b> to <b>{{\Carbon\Carbon::parse($v->date_end)->format('F jS, Y')}}</b><br>
                                         @endforeach
                                     </td>
+                                    <td>{{$list->province->name}}</td>
                                     <td>
                                         <a href="{{ route('backend.product.edit',$list->id) }}" data-toggle="tooltip"
                                            data-placement="top" title="Edit">

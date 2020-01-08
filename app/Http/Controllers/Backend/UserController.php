@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index()
     {
         $response = $this->authorize('create', Auth::user());
-        dd($response);
+        //dd($response);
         $user = User::latest()->paginate(10);
         return view('backends.users.index',compact('user'));
     }

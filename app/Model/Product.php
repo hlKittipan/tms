@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $with = ['Period'];
+    protected $with = ['Period','Province'];
 
     /**
      * The attributes that are mass assignable.
@@ -14,7 +14,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'code','name','staff_id','product_type_id','number_of_pax','duration_days','duration_nights','includes','excludes','conditions','itinerary',
+        'province_id','code','name','staff_id','product_type_id','number_of_pax','duration_days','duration_nights','includes','excludes','conditions','itinerary',
         'remark','status','overview'
     ];
 
@@ -22,6 +22,11 @@ class Product extends Model
     public function Period()
     {
         return $this->hasMany(Period::class,'product_id','id');
+    }
+
+    public function Province()
+    {
+        return $this->hasOne(Province::class,'id','province_id');
     }
 
     /*public function ProductManyImage()

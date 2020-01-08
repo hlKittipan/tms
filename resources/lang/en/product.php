@@ -2,11 +2,14 @@
 
 return [
     'product_type' => 'Product Type',
+    'province' => 'Province',
     'product' => 'Product',
     'transport' => 'Transport',
     'product_management' => 'Product Management',
     'product_type_management' => 'Product Type Management',
     'product_type_name' => 'Product Type name',
+    'province_management' => 'Province Management',
+    'province_name' => 'Province name',
     'create' => 'Create',
     'edit' => 'Edit',
     'id' => 'ID',

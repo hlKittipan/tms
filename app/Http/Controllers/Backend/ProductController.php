@@ -8,6 +8,7 @@ use App\Model\Price;
 use App\Model\Product;
 use App\Model\Product_type;
 use App\model\ProductManyImage;
+use App\Model\Province;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    public $productType;
+    public $productType,$province;
     /**
      * Create a new controller instance.
      *
@@ -27,6 +28,7 @@ class ProductController extends Controller
     {
         $this->middleware('auth');
         $this->productType = Product_type::get()->pluck('name','id');
+        $this->province = Province::get()->pluck('name','id');
     }
     /**
      * Display a listing of the resource.
@@ -47,8 +49,9 @@ class ProductController extends Controller
     public function create()
     {
         $productType = $this->productType;
+        $province = $this->province;
         $product_id = 0;
-        return view('backends.products.create',compact('productType','product_id'));
+        return view('backends.products.create',compact('productType','product_id','province'));
     }
 
     /**
@@ -80,7 +83,6 @@ class ProductController extends Controller
             ->where('product_id','=',$id)->get();
         $period = Period::where('periods.product_id','=',$id)->orderBy('date_end','desc')->get();
         //dd($period);
-        productDetail(2);
         return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
     }
 

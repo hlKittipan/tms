@@ -57,6 +57,7 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     Route::put('product/image/{id}','ProductController@updateImage')->name('product.image.update');
     Route::post('product/image/destroy','ProductController@destroyImage')->name('product.image.destroy');
     Route::resource('product_type','ProductTypeController');
+    Route::resource('province','ProvinceController');
     Route::resource('setup','SettingController');
 
     Route::resource('booking','QuotationController');

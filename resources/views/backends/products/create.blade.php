@@ -14,13 +14,13 @@
 
                     <div class="card-body">
 
-                        <form class="was-validated needs-validation" method="POST" id="main-form"
+                        <form class="" method="POST" id="main-form"
                               action="{{ route('backend.product.store') }}">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-8">
                                     <label>{{ __('product.name') }}</label>
-                                    <input type="text" class="form-control is-invalid" name="name"
+                                    <input type="text" class="form-control" name="name"
                                            value="{{ old('name') }}" placeholder="name" required>
 
                                     @error('name')
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>{{ __('product.number_of_pax') }}</label>
-                                    <input type="number" class="form-control is-invalid" name="number_of_pax"
+                                    <input type="number" class="form-control" name="number_of_pax"
                                            value="{{ old('number_of_pax') }}" placeholder="30" required>
 
                                     @error('number_of_pax')
@@ -43,10 +43,10 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 hide">
                                     <label>{{ __('product.duration_days') }}</label>
                                     <input type="number" class="form-control" name="duration_days"
-                                           value="{{ old('duration_days') }}" placeholder="30">
+                                           value="1" placeholder="30">
 
                                     @error('duration_days')
                                     <span class="invalid-feedback" role="alert">
@@ -55,10 +55,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 hide">
                                     <label>{{ __('product.duration_nights') }}</label>
                                     <input type="number" class="form-control" name="duration_nights"
-                                           value="{{ old('duration_nights') }}" placeholder="30">
+                                           value="1" placeholder="30">
 
                                     @error('duration_nights')
                                     <span class="invalid-feedback" role="alert">
@@ -68,13 +68,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>{{ __('product.product_type') }}</label>
-                                <select class="form-control  is-invalid" name="product_type_id">
-                                    @foreach($productType as $key => $value)
-                                        <option value="{{$key}}">{{$value}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>{{ __('product.product_type') }}</label>
+                                    <select class="form-control " name="product_type_id">
+                                        @foreach($productType as $key => $value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>{{ __('product.province') }}</label>
+                                    <select class="form-control " name="province_id">
+                                        @foreach($province as $key => $value)
+                                            <option value="{{$key}}">{{$value}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="form-group">

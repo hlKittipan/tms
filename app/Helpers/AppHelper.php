@@ -30,9 +30,9 @@ if (!function_exists('changeFormatDate')) {
 if (!function_exists('loopKeyValue')){
     function loopKeyValue ($key,$value) {
         $object = new stdClass();
-        $object->{$key} = new stdClass();
+        //$object->{$key} = new stdClass();
         foreach ($value as $k => $v) {
-            $object->{$key}->{$k} = $v;
+            $object->{$k} = $v;
         }
         return $object;
     }
