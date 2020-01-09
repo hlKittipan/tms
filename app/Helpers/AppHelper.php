@@ -32,6 +32,9 @@ if (!function_exists('loopKeyValue')){
         $object = new stdClass();
         //$object->{$key} = new stdClass();
         foreach ($value as $k => $v) {
+            if ($k == 'src'){
+                $v = asset($v);
+            }
             $object->{$k} = $v;
         }
         return $object;
