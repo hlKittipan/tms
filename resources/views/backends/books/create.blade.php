@@ -146,7 +146,7 @@
             }
         }
     </script>
-    <script src="{{ asset('js/backend/booking.js') }}"></script>
+    <script src="{{ new_asset('js/backend/booking.js') }}"></script>
 @endsection
 
 

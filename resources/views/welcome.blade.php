@@ -84,11 +84,24 @@
                     <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
-                <passport-clients></passport-clients>
+                {{--<passport-clients></passport-clients>
                 <passport-authorized-clients></passport-authorized-clients>
-                <passport-personal-access-tokens></passport-personal-access-tokens>
+                <passport-personal-access-tokens></passport-personal-access-tokens>--}}
             </div>
         </div>
-        <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+        <script src="{{ new_asset('js/app.js') }}" type="text/javascript"></script>
+        <script>
+            $(document).ready(function(){
+                $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '{{route('log.welcome')}}',
+                    data:{ "_token": "{{ csrf_token() }}"}
+                }).success(function (data) {
+                    console.log(data)
+                });
+            });
+
+        </script>
     </body>
 </html>

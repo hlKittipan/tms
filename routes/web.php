@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', 'SiteController');
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
@@ -67,7 +65,8 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
 
 
 /*End Back-end*/
-
+//Log
+Route::post('/log/welcome','LogActivityController@store')->name('log.welcome');
 
 Route::get('/task', function(){
     return response()->json([

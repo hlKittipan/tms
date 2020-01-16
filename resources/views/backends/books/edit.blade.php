@@ -50,7 +50,7 @@
                                                 </div>
                                             @else
                                                 <div class="col-sm-4">
-                                                    <a href="{{asset($quotation->passport)}}" target="_blank"> <img src="{{asset($quotation->passport)}}" class="card-img-top"></a>
+                                                    <a href="{{new_asset($quotation->passport)}}" target="_blank"> <img src="{{new_asset($quotation->passport)}}" class="card-img-top"></a>
                                                 </div>
                                             @endif
                                         </div>
@@ -230,7 +230,7 @@
             }
         }
     </script>
-    <script src="{{ asset('js/backend/booking.js') }}"></script>
+    <script src="{{ new_asset('js/backend/booking.js') }}"></script>
 @endsection
 
 

@@ -11,15 +11,15 @@
     <style type="text/css">
         @font-face {
             font-family: "Nunito";
-            src: url('{{ asset('fonts/Nunito-Regular.ttf') }}');
+            src: url('{{ new_asset('fonts/Nunito-Regular.ttf') }}');
         }
     </style>
 
     <!-- Font awesome -->
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ new_asset('css/all.min.css') }}" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ new_asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ new_asset('css/custom.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -36,7 +36,7 @@
     </footer>
 </div>
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" ></script>
+<script src="{{ new_asset('js/app.js') }}" ></script>
     @yield('script')
 </body>
 </html>

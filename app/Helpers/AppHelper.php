@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\LogActivity;
+
 if (!function_exists('routeIsActive')) {
     function routeIsActive($routes, $print = 'active')
     {
@@ -38,5 +40,26 @@ if (!function_exists('loopKeyValue')){
             $object->{$k} = $v;
         }
         return $object;
+    }
+}
+
+if (!function_exists('new_asset')){
+    function new_asset($path){
+        if(ENV('APP_ENV') == 'Production'){
+            $path = 'public/'.$path;
+        }
+        return asset($path);
+    }
+}
+
+if (!function_exists('LogActivity')){
+    function LogActivity($request){
+        $log = new LogActivity();
+        $log->subject = $request->subject;
+        $log->url = \Request::fullUrl();
+        $log->method = \Request::method();
+        $log->ip = \Request::ip();
+        $log->agent = \Request::userAgent();
+        $log->save();
     }
 }

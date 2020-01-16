@@ -15,12 +15,13 @@ use Illuminate\Http\Request;
 
 Route::get('users', 'API\UserController@index');
 Route::get('detail/{id}', 'API\ProductController@getProductDetail');
+Route::get('personal/{id}/{username}','API\UserController@getPersonalToken');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('top-sales','API\ProductController@topSales')->middleware(['auth:api','cors']);
+Route::get('top-sales','API\ProductController@topSales')->middleware(['auth:api']);
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 

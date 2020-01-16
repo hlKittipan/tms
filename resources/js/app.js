@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 require('datatables.net-buttons-bs4');
+//require('swiper/js/swiper');
 
 window.Vue = require('vue');
 window.axios = require('axios');
@@ -13,6 +14,7 @@ window.moment = require('moment');
 window.daterangepicker = require('daterangepicker');
 window.select2 = require('select2');
 window.dt = require('datatables.net');
+window.Swiper = require('swiper/js/swiper');
 
 /**
  * The following block of code may be used to automatically register your

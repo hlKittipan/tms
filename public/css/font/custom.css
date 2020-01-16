@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+html, body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer {
+    background-color: #3498DB;
+    color: whitesmoke;
+}
+
+.footer-a {
+    color: whitesmoke;
+    font-weight: bold;
+}
+.navbar-top {
+    margin-top: 64px;
+}
+
+#app {
+    font-family: 'Nunito', sans-serif;
+}
+
+/*Background color*/
+.bg-blue {
+    background-color: #AED6F1 !important;
+}
+
+.bg-gray-light-1 {
+    background-color: #F2F4F4 !important;
+}
+
+/*Icon search*/
+.search-outline-blue {
+    color: #3498DB;
+    border-color: #3498DB;
+}
+
+.search-outline-blue:hover {
+    color: #fff;
+    background-color: #3498DB;
+    border-color: #3498DB;
+}
+
+/*Show icon search where display full*/
+.search-display-max {
+    display: none;
+}
+
+@media only screen and (min-width: 600px) {
+    .search-display-max {
+        display: block;
+    }
+}
+
+.search-display-min {
+    display: block;
+}
+
+/*Show icon search where display size less more 600px*/
+@media only screen and (min-width: 600px) {
+    .search-display-min {
+        display: none;
+    }
+}
+
+/*Text title*/
+.text-title{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#navbarSupportedContent .active {
+    background-color: #3498DB;
+    box-shadow: 0.5px 0.5px 10px rgba(52, 152, 219, 0.51);
+    -moz-box-shadow: 0.5px 0.5px 10px rgba(52, 152, 219, 0.51);
+    -webkit-box-shadow: 0.5px 0.5px 10px rgba(52, 152, 219, 0.51);
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+}
+
+.price-original {
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+.price-final {
+    font-size: 18px;
+    color: red;
+    font-weight: bold;
+}

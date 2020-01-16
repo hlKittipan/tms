@@ -8,6 +8,7 @@ use App\Model\Transport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Passport\Passport;
 
 class ProductController extends Controller
 {
@@ -82,12 +83,15 @@ class ProductController extends Controller
                     ->where('i.type', '=', 'Main');
             })
             ->distinct()->inRandomOrder('8')->get();
+        $result = new \stdClass();
         if (!$data->isEmpty()) {
-            $result = new \stdClass();
+
             foreach ($data as $value) {
                 $id = $value->id;
                 $result->{$id} = loopKeyValue($id, $value);
             }
+        }else{
+            $result->data = "Not Product";
         }
         return response()->json($result);
     }

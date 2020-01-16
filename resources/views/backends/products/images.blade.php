@@ -17,7 +17,7 @@
                             @method('PUT')
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <a href="{{asset($image->src)}}" target="_blank"> <img src="{{asset($image->src)}}" class="card-img-top"
+                                    <a href="{{new_asset($image->src)}}" target="_blank"> <img src="{{new_asset($image->src)}}" class="card-img-top"
                                                                                            alt="{{$image->alt}}"></a>
                                 </div>
                                 <div class="col-md-6">

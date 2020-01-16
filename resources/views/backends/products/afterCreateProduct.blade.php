@@ -179,7 +179,7 @@
                                         @foreach($image as $key => $value)
                                             <div class="col-md-3">
                                                 <div class="card">
-                                                    <a href="{{asset($value->src)}}" target="_blank"> <img src="{{asset($value->src)}}" class="card-img-top"
+                                                    <a href="{{new_asset($value->src)}}" target="_blank"> <img src="{{new_asset($value->src)}}" class="card-img-top"
                                                          alt="{{$value->alt}}"></a>
                                                     <div class="card-body">
                                                         <h5 class="card-title">{{$value->title}}</h5>

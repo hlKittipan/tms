@@ -7,6 +7,7 @@ use App\Model\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -143,5 +144,27 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
+    }
+
+    public function getPersonalToken($id,$username){
+        $data = DB::table('users')
+            ->where('id','=',$id)
+            ->where('username','=',$username)
+            ->first();
+        if ($data){
+            $user = User::find($data->id);
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->expires_at = Carbon::now()->addYears(1);
+            $token->save();
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse(
+                    $tokenResult->token->expires_at
+                )->toDateTimeString()
+            ]);
+        }
+        return response()->json('user not found');
     }
 }
