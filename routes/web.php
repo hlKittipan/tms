@@ -10,9 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
+ * Font
+ * */
 Route::resource('/', 'SiteController');
-
+Route::get('/product/{product_id}','SiteController@getProductDetail')->name('product');
+/*
+ * end font
+ * */
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";

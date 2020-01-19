@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -242,7 +243,7 @@ class ProductController extends Controller
         if ($request->hasFile('gallery')) {
             $files = $request->file('gallery');
             foreach ($files as $image) {
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imageName = Str::random(5).time() . '.' . $image->getClientOriginalExtension();
                 $destinationPath = public_path() .'/uploads/'.$request->product_id.'/';
                 $src = '/uploads/'.$request->product_id.'/'.$imageName;
                 $image->move($destinationPath, $imageName);

@@ -18,7 +18,7 @@
     <!-- Font awesome -->
     <link href="{{ new_asset('css/all.min.css') }}" rel="stylesheet">
     <!-- Styles -->
-    <link href="{{ new_asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ new_asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ new_asset('css/custom.css') }}" rel="stylesheet">
 
 </head>
