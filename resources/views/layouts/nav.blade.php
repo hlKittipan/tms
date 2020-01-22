@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav m-auto p-1 d-flex justify-content-between align-items-center">
             <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="{{url('/')}}">Home</a>
             </li>
             <li class="nav-item m-auto px-2">
                 <a class="nav-link" href="#">Person</a>

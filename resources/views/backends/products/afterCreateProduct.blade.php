@@ -10,7 +10,18 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header">@lang('product.information')</div>
+                    <div class="card-header">
+                        <div class="btn-toolbar justify-content-between" role="toolbar"
+                             aria-label="Toolbar with button groups">
+                            <div class="btn-group" role="group" aria-label="First group">
+                                <h3>@lang('product.information')</h3>
+                            </div>
+                            <div class="input-group">
+                                <a href="{{ route('backend.product.index') }}"
+                                   class="btn btn-primary">{{ __('product.done') }}</a>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         <div class="form-row">

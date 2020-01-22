@@ -90,3 +90,10 @@ html, body {
     color: red;
     font-weight: bold;
 }
+
+.fixed {
+    position: fixed;
+    bottom:0;
+    left:0;
+    width: 100%;
+}
