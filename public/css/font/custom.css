@@ -97,3 +97,17 @@ html, body {
     left:0;
     width: 100%;
 }
+
+#cardBookBottom {
+    z-index: 20;
+}
+
+#productDetailTab {
+    margin-bottom: 1rem;
+}
+
+#productDetailContent {
+    margin-left: 0.5rem;
+}
+
+

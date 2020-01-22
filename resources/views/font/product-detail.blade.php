@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex-center position-ref full-height">
         <div class="content">
-            <div class="container p-1">
+            <div class="container py-3">
                 <div class="card">
                     <div class="card-header">
                         <h4>{{$data->name}}</h4>
@@ -91,47 +91,71 @@
                             </div>
                         </div>
                         <div class="row">
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
+                            <div class="col-8">
+                                <ul class="nav nav-tabs" id="productDetailTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#overview"
+                                           role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#include"
+                                           role="tab" aria-controls="include" aria-selected="false">Include</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#exclude"
+                                           role="tab" aria-controls="exclude" aria-selected="false">Exclude</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#condition"
+                                           role="tab" aria-controls="condition" aria-selected="false">Condition</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#remark" role="tab"
+                                           aria-controls="remark" aria-selected="false">Remark</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="productDetailContent">
+                                    <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                                         aria-labelledby="overview-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4>Overview</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="include" role="tabpanel"
+                                         aria-labelledby="include-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4>Include</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="exclude" role="tabpanel"
+                                         aria-labelledby="exclude-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4>Exclude</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="condition" role="tabpanel"
+                                         aria-labelledby="condition-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4>Condition</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="remark" role="tabpanel" aria-labelledby="remark-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4>Condition</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
