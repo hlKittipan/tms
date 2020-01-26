@@ -39,7 +39,7 @@ class QuotationController extends Controller
     public function index()
     {
         $quotation = DB::table('quotations as q')
-            ->select('q.id','q.quo_date','c.first_name','c.last_name')
+            ->select('q.id', 'q.quo_date', 'c.first_name', 'c.last_name')
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->latest('q.created_at')->paginate(10);
         //dd($quotation);
@@ -93,13 +93,15 @@ class QuotationController extends Controller
         $quo->save();
 
         //get transport price
-        $transPrice = Transport::findOrFail($request->input('trans_' . $request->product_id[0]));
-        //create transport
-        $trans = new QuotationManyServiceCharge();
-        $trans->quo_id = $quo->id;
-        $trans->charge_id = $request->input('trans_' . $request->product_id[0]);
-        $trans->price = $transPrice->price;
-        $trans->save();
+        if ($request->has('trans_' . $request->product_id[0])) {
+            $transPrice = Transport::findOrFail($request->input('trans_' . $request->product_id[0]));
+            //create transport
+            $trans = new QuotationManyServiceCharge();
+            $trans->quo_id = $quo->id;
+            $trans->charge_id = $request->input('trans_' . $request->product_id[0]);
+            $trans->price = $transPrice->price;
+            $trans->save();
+        }
 
         if (is_array($request->product_id) || is_object($request->product_id)) {
             foreach ($request->product_id as $product_id) {
@@ -130,8 +132,8 @@ class QuotationController extends Controller
                 $quo_detail->discount = $request->input('d_' . $product_id);
                 $quo_detail->save();
 
-                $quo_total = ($quo_total + $request->input('v_' . $product_id) - $request->input('d_' . $product_id));
-                $quo_vat = $quo_vat + $request->input('t_' . $product_id);
+                $quo_total = ($quo_total + $request->input('t_' . $product_id) - $request->input('d_' . $product_id));
+                $quo_vat = $quo_vat + $request->input('v_' . $product_id);
                 $quo_net = ($quo_net + $request->input('nt_' . $product_id) - $request->input('d_' . $product_id));
             }
         }

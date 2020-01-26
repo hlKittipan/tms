@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\LogActivity;
+use App\Model\Province;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,8 @@ class SiteController extends Controller
         \LogActivity($log);
         $topSales = productTopSales();
         $promotion = productPromotion();
-        return view('font.index', compact('topSales', 'promotion'));
+        $province = Province::all()->sortBy('name')->pluck('name','id');
+        return view('font.index', compact('topSales', 'promotion','province'));
     }
 
     /**
@@ -97,10 +99,17 @@ class SiteController extends Controller
             ->join('images as i', function ($join) {
                 $join->on('i.id', '=', 'pm.images_id')
                     ->where('i.type', '=', 'Cover');
-                    })
+            })
             ->where('pm.product_id', '=', $product_id)
             ->first();
         //dd($cover);
-        return view('font.product-detail',compact('data','cover'));
+        return view('font.product-detail', compact('data', 'cover'));
+    }
+
+    public function postProductSearch(Request $request)
+    {
+        dd($request->all());
+
+        $data = productSearch($request->all());
     }
 }

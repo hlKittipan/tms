@@ -39,7 +39,8 @@
                     <div class="row justify-content-md-center">
                         <div class="col-md-10 py-2 border rounded my-4">
                             <h3 class="text-center text-title">Search tour</h3>
-                            <form>
+                            <form action="{{route('search')}}" method="POST">
+                                @csrf
                                 <div class="form-group row justify-content-lg-center">
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="search"
@@ -54,10 +55,12 @@
                                     <label class="col-sm-1 col-form-label text-lg-right">Country</label>
                                     <div class="col-sm-2">
                                         <select class="form-control" name="country">
-                                            <option>Select Country</option>
-                                            <option>Phuket</option>
-                                            <option>Pangnga</option>
-                                            <option>Krabi</option>
+                                            <option value="0">Select Country</option>
+                                            @isset($province)
+                                                @foreach($province as $k => $v)
+                                                    <option value="{{$k}}">{{$v}}</option>
+                                                @endforeach
+                                            @endisset
                                         </select>
                                     </div>
                                     <label class="col-sm-1 col-form-label text-lg-right">Adult</label>

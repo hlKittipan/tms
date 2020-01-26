@@ -15,6 +15,7 @@
  * */
 Route::resource('/', 'SiteController');
 Route::get('/product/{product_id}','SiteController@getProductDetail')->name('product');
+Route::post('/search','SiteController@postProductSearch')->name('search');
 /*
  * end font
  * */
