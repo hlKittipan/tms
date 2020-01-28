@@ -83,8 +83,14 @@ class ProductController extends Controller
             ->join('images','id','=','images_id')
             ->where('product_id','=',$id)->get();
         $period = Period::where('periods.product_id','=',$id)->orderBy('date_end','desc')->get();
+        $service = DB::table('product_many_services as pms')
+            ->select('pms.id','t.name','t.price')
+            ->join('transports as t','pms.service_id','=','t.id')
+            ->where('pms.product_id','=',$id)
+            ->where('pms.status','!=','0')
+            ->get();
         //dd($period);
-        return view('backends.products.afterCreateProduct',compact('productType','product','image','period'));
+        return view('backends.products.afterCreateProduct',compact('productType','product','image','period','service'));
     }
 
     public function createPeriod($id){
@@ -218,6 +224,40 @@ class ProductController extends Controller
             $new->public_infant = $value->public_infant;
             $new->remark = $value->remark;
             $new->save();
+        }
+    }
+
+    public function storeServiceCharge(Request $request){
+        $insert = DB::table('product_many_services')->insert([
+            'service_id'=>$request->service_id,
+            'product_id'=>$request->product_id,
+            'status'=>1,
+            'type'=>$request->type,
+            'created_at'=>Carbon::now()
+        ]);
+        if($insert) {
+            return redirect()->route('backend.product.after',$request->product_id)
+                ->with('success','Service Add successfully.');
+        } else {
+            return redirect()->route('backend.product.after',$request->product_id)
+                ->with('success','Something wrong!!!!!');
+        }
+    }
+
+    public function destroyServiceCharge($id){
+        $delete = DB::table('product_many_services')
+            ->where('id','=',$id)
+            ->update([
+            'status'=>0,
+            'updated_at'=>Carbon::now()
+        ]);
+        $product = DB::table('product_many_services')->where('id','=',$id)->first();
+        if($delete) {
+            return redirect()->route('backend.product.after',$product->product_id)
+                ->with('success','Service Add successfully.');
+        } else {
+            return redirect()->route('backend.product.after',$product->product_id)
+                ->with('success','Something wrong!!!!!');
         }
     }
 

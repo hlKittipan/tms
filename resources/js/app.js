@@ -15,6 +15,11 @@ window.daterangepicker = require('daterangepicker');
 window.select2 = require('select2');
 window.dt = require('datatables.net');
 window.Swiper = require('swiper/js/swiper');
+//Calender
+window.Calender = require('@fullcalendar/core');
+window.dayGridPlugin = require('@fullcalendar/daygrid');
+window.timeGridPlugin = require('@fullcalendar/timegrid');
+window.listPlugin = require('@fullcalendar/list');
 
 /**
  * The following block of code may be used to automatically register your

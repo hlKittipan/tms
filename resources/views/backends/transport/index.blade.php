@@ -17,7 +17,6 @@
                               action="{{ route('backend.transport.store') }}">
                             @csrf
                             <input type="hidden" name="status" value="1">
-                            <input type="hidden" name="type" value="Transport">
                             <div class="form-group">
                                 <label>{{ __('transport.name') }}</label>
                                 <input type="text" class="form-control is-invalid" name="name"
@@ -69,11 +68,11 @@
                                             <i class="fas fa-edit fa-2x"></i>
                                         </a>
                                         <a href="#" data-toggle="tooltip" data-placement="top" title="Remove" onclick="event.preventDefault();
-                                                     document.getElementById('hidden-form').submit();">
+                                                     document.getElementById('hidden-form{{$list->id}}').submit();">
                                             <i class="fas fa-trash fa-2x"></i>
                                         </a>
 
-                                        <form id="hidden-form" action="{{ route('backend.transport.destroy',$list->id) }}" method="POST" style="display: none;">
+                                        <form id="hidden-form{{$list->id}}" action="{{ route('backend.transport.destroy',$list->id) }}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>

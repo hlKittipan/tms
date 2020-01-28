@@ -43,12 +43,10 @@
                                 @csrf
                                 <div class="form-group row justify-content-lg-center">
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="search"
-                                               placeholder="Search your tour">
+                                        <input type="text" class="form-control" name="search" placeholder="Search your tour">
                                     </div>
                                     <div class="col-sm-1 text-center search-display-max">
-                                        <button type="submit" class="btn search-outline-blue"><i
-                                                class="fa fa-search"></i></button>
+                                        <button type="submit" class="btn search-outline-blue"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                                 <div class="form-group row justify-content-lg-center">
@@ -77,8 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center search-display-min">
-                                    <button type="submit" class="btn search-outline-blue"><i class="fa fa-search"></i>
-                                    </button>
+                                    <button type="submit" class="btn search-outline-blue"><i class="fa fa-search"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -109,10 +106,8 @@
                                                             @if($value->s_adult == null)
                                                                 <div class="float-right">{{$value->public_adult}}</div>
                                                             @else
-                                                                <div
-                                                                    class="float-right price-final">{{$value->s_adult}}</div>
-                                                                <div
-                                                                    class="float-right price-original">{{$value->public_adult}}</div>
+                                                                <div class="float-right price-final">{{$value->s_adult}}</div>
+                                                                <div class="float-right price-original">{{$value->public_adult}}</div>
                                                             @endif
                                                         </div>
                                                         <br>
@@ -121,10 +116,8 @@
                                                             @if($value->s_child == null)
                                                                 <div class="float-right">{{$value->public_child}}</div>
                                                             @else
-                                                                <div
-                                                                    class="float-right price-final">{{$value->s_child}}</div>
-                                                                <div
-                                                                    class="float-right price-original">{{$value->public_child}}</div>
+                                                                <div class="float-right price-final">{{$value->s_child}}</div>
+                                                                <div class="float-right price-original">{{$value->public_child}}</div>
                                                             @endif
                                                         </div>
                                                         <br>
@@ -133,10 +126,8 @@
                                                             @if($value->s_infant == null)
                                                                 <div class="float-right">{{$value->public_infant}}</div>
                                                             @else
-                                                                <div
-                                                                    class="float-right price-final">{{$value->s_infant}}</div>
-                                                                <div
-                                                                    class="float-right price-original">{{$value->public_infant}}</div>
+                                                                <div class="float-right price-final">{{$value->s_infant}}</div>
+                                                                <div class="float-right price-original">{{$value->public_infant}}</div>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -185,39 +176,30 @@
                                                                     <div class="py-1">
                                                                         <div class="float-left">Adult</div>
                                                                         @if($value->s_adult == null)
-                                                                            <div
-                                                                                class="float-right">{{$value->public_adult}}</div>
+                                                                            <div class="float-right">{{$value->public_adult}}</div>
                                                                         @else
-                                                                            <div
-                                                                                class="float-right price-final">{{$value->s_adult}}</div>
-                                                                            <div
-                                                                                class="float-right price-original">{{$value->public_adult}}</div>
+                                                                            <div class="float-right price-final">{{$value->s_adult}}</div>
+                                                                            <div class="float-right price-original">{{$value->public_adult}}</div>
                                                                         @endif
                                                                     </div>
                                                                     <br>
                                                                     <div class="py-1">
                                                                         <div class="float-left">Child</div>
                                                                         @if($value->s_child == null)
-                                                                            <div
-                                                                                class="float-right">{{$value->public_child}}</div>
+                                                                            <div class="float-right">{{$value->public_child}}</div>
                                                                         @else
-                                                                            <div
-                                                                                class="float-right price-final">{{$value->s_child}}</div>
-                                                                            <div
-                                                                                class="float-right price-original">{{$value->public_child}}</div>
+                                                                            <div class="float-right price-final">{{$value->s_child}}</div>
+                                                                            <div class="float-right price-original">{{$value->public_child}}</div>
                                                                         @endif
                                                                     </div>
                                                                     <br>
                                                                     <div class="py-1">
                                                                         <div class="float-left">Infant</div>
                                                                         @if($value->s_infant == null)
-                                                                            <div
-                                                                                class="float-right">{{$value->public_infant}}</div>
+                                                                            <div class="float-right">{{$value->public_infant}}</div>
                                                                         @else
-                                                                            <div
-                                                                                class="float-right price-final">{{$value->s_infant}}</div>
-                                                                            <div
-                                                                                class="float-right price-original">{{$value->public_infant}}</div>
+                                                                            <div class="float-right price-final">{{$value->s_infant}}</div>
+                                                                            <div class="float-right price-original">{{$value->public_infant}}</div>
                                                                         @endif
                                                                     </div>
                                                                 </div>

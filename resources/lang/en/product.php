@@ -27,6 +27,7 @@ return [
     'information' => 'Information',
     'images' => 'Images',
     'add_images' => 'Add Images',
+    'add_service' => 'Add service',
     'summary' => 'Summary',
     'periods' => 'Periods',
     'add_periods' => 'Add Periods',
@@ -61,4 +62,6 @@ return [
     'description' => 'Description',
     'alt' => 'Alt * for google search',
     'delete' => 'Delete',
+    'service_charge' => 'Service Charge',
+    'search'=>'Search'
 ];

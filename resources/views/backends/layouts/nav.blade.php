@@ -57,7 +57,7 @@
                                 <i class="fas fa-car"></i> {{ __('product.transport') }}
                             </a>
                             <a class="dropdown-item" href="{{ route('backend.province.index') }}">
-                                <i class="fas fa-car"></i> {{ __('product.province') }}
+                                <i class="fas fa-globe-asia"></i> {{ __('product.province') }}
                             </a>
                         </div>
 

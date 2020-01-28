@@ -44,6 +44,10 @@ Route::group(['prefix' => 'backend','namespace'=>'Backend','as'=>'backend.'], fu
     //edit period
     Route::get('product/period/edit/{id}','ProductController@editPeriod')->name('product.period.edit');
     Route::post('product/period/update','ProductController@updatePeriod')->name('product.period.update');
+    //Add service charge
+    Route::post('product/service/store','ProductController@storeServiceCharge')->name('product.service.store');
+    //Delete service charge
+    Route::get('product/service/delete/{id}','ProductController@destroyServiceCharge')->name('product.service.delete');
     //create price
     Route::get('product/price/create/{product_id}/{period_id}/{status}','ProductController@createPrice')->name('product.price.create');
     Route::post('product/price/store','ProductController@storePrice')->name('product.price.store');

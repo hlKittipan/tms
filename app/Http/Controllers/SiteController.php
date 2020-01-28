@@ -102,7 +102,7 @@ class SiteController extends Controller
             })
             ->where('pm.product_id', '=', $product_id)
             ->first();
-        //dd($cover);
+        //dd($data);
         return view('font.product-detail', compact('data', 'cover'));
     }
 

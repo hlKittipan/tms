@@ -17,7 +17,6 @@
                               action="{{ route('backend.transport.update',$transport->id) }}">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" name="status" value="0">
                             <div class="form-group">
                                 <label>{{ __('transport.name') }}</label>
                                 <input type="text" class="form-control is-invalid" name="name" value="{{ $transport->name }}"

@@ -39,6 +39,7 @@ if (!function_exists('productDetail')) {
         } else {
             $result = false;
         }
+        //dd($result);
         if ($result == false) {
             abort(404);
         } else {
@@ -85,11 +86,11 @@ if (!function_exists('productGetPeriod')) {
             ->where('pe.product_id', '=', $product_id)
             ->get();
 
-        $result = new stdClass();
+        $result = [];
         if (!$data->isEmpty()) {
             foreach ($data as $value) {
                 $id = $value->id;
-                $result->{$id}[] = loopKeyValue($id, $value);
+                $result[] = loopKeyValue($id, $value);
             }
         }
         //dd($result);
