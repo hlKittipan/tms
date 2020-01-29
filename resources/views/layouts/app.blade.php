@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <style type="text/css">
         @font-face {
             font-family: "Nunito";
@@ -25,11 +22,7 @@
     <!-- Styles -->
     <link href="{{ new_asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ new_asset('css/font/custom.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 
-    <script src="https://unpkg.com/swiper/js/swiper.js"></script>
-    <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -40,8 +33,9 @@
         </main>
         @include('layouts.footer')
     </div>
+
     <!-- Scripts -->
-    <script src="{{ new_asset('js/app.js') }}" ></script>
+    <script src="{{ new_asset('js/app.js') }}" defer></script>
     @yield('script')
 </body>
 </html>

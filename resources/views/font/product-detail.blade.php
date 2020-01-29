@@ -200,7 +200,7 @@
             <div id="cardBookBottom" class="card fixed">
                 <div class="card-body">
                     <div class="row text-center">
-                        <div class="col-4">
+                        <div class="col-md-4">
                             <div class="float-left">Adult</div>
                             @if($data->periods[0]->s_adult == null)
                                 <div class="float-right">{{$data->periods[0]->public_adult}}</div>
@@ -209,7 +209,7 @@
                                 <div class="float-right price-original">{{$data->periods[0]->public_adult}}</div>
                             @endif
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4">
                             <div class="float-left">Child</div>
                             @if($data->periods[0]->s_child == null)
                                 <div class="float-right">{{$data->periods[0]->public_child}}</div>
@@ -218,7 +218,7 @@
                                 <div class="float-right price-original">{{$data->periods[0]->public_child}}</div>
                             @endif
                         </div>
-                        <div class="col-4">
+                        <div class="col-md-4">
                             <div class="float-left">Infant</div>
                             @if($data->periods[0]->s_infant == null)
                                 <div class="float-right">{{$data->periods[0]->public_infant}}</div>
@@ -231,14 +231,14 @@
                 </div>
                 <div class="card-footer">
                     <div class="row text-center">
-                        <div class="col-4">
-                            <a href="#" type="button" class="btn btn-block btn-outline-primary">Book now</a>
+                        <div class="col-md-4">
+                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
                         </div>
-                        <div class="col-4">
-                            <a href="#" type="button" class="btn btn-block btn-outline-danger">Call book</a>
+                        <div class="col-md-4">
+                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
                         </div>
-                        <div class="col-4">
-                            <a href="#" type="button" class="btn btn-block btn-outline-success">Line book</a>
+                        <div class="col-md-4">
+                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-success">Line book</a>
                         </div>
                     </div>
                 </div>
@@ -248,8 +248,86 @@
 @endsection
 @section('script')
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
 
-        $(document).ready(function () {
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [dayGridPlugin,interactionPlugin],
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                selectable: true,
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                    {
+                        title: 'All Day Event',
+                        start: '2020-01-01',
+                    },
+                    {
+                        title: 'Long Event',
+                        start: '2018-01-07',
+                        end: '2020-01-10'
+                    },
+                    {
+                        id: 999,
+                        title: 'Repeating Event',
+                        start: '2020-01-09T16:00:00'
+                    },
+                    {
+                        id: 999,
+                        title: 'Repeating Event',
+                        start: '2020-01-16T16:00:00'
+                    },
+                    {
+                        title: 'Conference',
+                        start: '2018-01-11',
+                        end: '2020-01-13'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2020-01-12T10:30:00',
+                        end: '2020-01-12T12:30:00'
+                    },
+                    {
+                        title: 'Lunch',
+                        start: '2020-01-12T12:00:00'
+                    },
+                    {
+                        title: 'Meeting',
+                        start: '2020-01-12T14:30:00'
+                    },
+                    {
+                        title: 'Happy Hour',
+                        start: '2020-01-12T17:30:00'
+                    },
+                    {
+                        title: 'Dinner',
+                        start: '2020-01-12T20:00:00'
+                    },
+                    {
+                        title: 'Birthday Party',
+                        start: '2020-01-13T07:00:00'
+                    },
+                    {
+                        title: 'Click for Google',
+                        url: 'http://google.com/',
+                        start: '2020-01-28'
+                    }
+                ],
+                dateClick: function(info) {
+                    alert('Clicked on: ' + info.dateStr);
+                    alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                    alert('Current view: ' + info.view.type);
+                    // change the day's background color just for fun
+                    info.dayEl.style.backgroundColor = 'red';
+                }
+            });
+
+            calendar.render();
 
             var stickyOffset = $('#cardBook').offset().top;
             $("#cardBookBottom").hide();
@@ -267,80 +345,6 @@
                     $("#cardBookBottom").hide();
                 }
             });
-
-            var calendarEl = $('#calendar');
-
-            var calendar = new Calender(calendarEl, {
-                plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                },
-                defaultDate: '2018-01-12',
-                navLinks: true, // can click day/week names to navigate views
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: '2018-01-01',
-                    },
-                    {
-                        title: 'Long Event',
-                        start: '2018-01-07',
-                        end: '2018-01-10'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2018-01-09T16:00:00'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2018-01-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2018-01-11',
-                        end: '2018-01-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2018-01-12T10:30:00',
-                        end: '2018-01-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2018-01-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2018-01-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2018-01-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2018-01-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2018-01-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2018-01-28'
-                    }
-                ]
-            });
-
-            calendar.render();
-
         });
 
     </script>

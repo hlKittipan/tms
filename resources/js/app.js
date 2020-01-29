@@ -16,10 +16,18 @@ window.select2 = require('select2');
 window.dt = require('datatables.net');
 window.Swiper = require('swiper/js/swiper');
 //Calender
-window.Calender = require('@fullcalendar/core');
-window.dayGridPlugin = require('@fullcalendar/daygrid');
-window.timeGridPlugin = require('@fullcalendar/timegrid');
-window.listPlugin = require('@fullcalendar/list');
+
+import * as Calendar from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+
+window.FullCalendar = Calendar;
+window.dayGridPlugin = dayGridPlugin;
+window.timeGridPlugin = timeGridPlugin;
+window.listPlugin = listPlugin;
+window.interactionPlugin = interactionPlugin;
 
 /**
  * The following block of code may be used to automatically register your
