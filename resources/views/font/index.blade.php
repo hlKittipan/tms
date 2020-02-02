@@ -39,7 +39,7 @@
                     <div class="row justify-content-md-center">
                         <div class="col-md-10 py-2 border rounded my-4">
                             <h3 class="text-center text-title">Search tour</h3>
-                            <form action="{{route('search')}}" method="POST">
+                            <form action="{{route('search')}}" method="GET">
                                 @csrf
                                 <div class="form-group row justify-content-lg-center">
                                     <div class="col-sm-9">

@@ -108,8 +108,9 @@ class SiteController extends Controller
 
     public function postProductSearch(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
 
-        $data = productSearch($request->all());
+        //$data = productSearch($request->all());
+        return view('font.search');
     }
 }
