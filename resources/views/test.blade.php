@@ -1,102 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8' />
-    <link href='{{new_asset('@fullcalendar/core/main.css')}}' rel='stylesheet' />
-    <link href='{{new_asset('@fullcalendar/daygrid/main.css')}}' rel='stylesheet' />
-    <script src='{{new_asset('@fullcalendar/core/main.js')}}'></script>
-    <script src='{{new_asset('@fullcalendar/daygrid/main.js')}}'></script>
-    <script>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: [ 'interaction', 'dayGrid' ],
-                defaultDate: '2019-08-12',
-                editable: true,
-                eventLimit: true, // allow "more" link when too many events
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: '2019-08-01'
-                    },
-                    {
-                        title: 'Long Event',
-                        start: '2019-08-07',
-                        end: '2019-08-10'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2019-08-09T16:00:00'
-                    },
-                    {
-                        groupId: 999,
-                        title: 'Repeating Event',
-                        start: '2019-08-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2019-08-11',
-                        end: '2019-08-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2019-08-12T10:30:00',
-                        end: '2019-08-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2019-08-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2019-08-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2019-08-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2019-08-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2019-08-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2019-08-28'
-                    }
-                ]
-            });
-
-            calendar.render();
-        });
-
-    </script>
-    <style>
-
-        body {
-            margin: 40px 10px;
-            padding: 0;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
-        }
-
-        #calendar {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-    </style>
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar" data-offset="0">
 
-<div id='calendar'></div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#section1">Section 1</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section2">Section 2</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section3">Section 3</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Section 4
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#section41">Link 1</a>
+                <a class="dropdown-item" href="#section42">Link 2</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<div id="section1" class="container-fluid bg-success" style="padding-top:70px;padding-bottom:70px">
+    <h1>Section 1</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+<div id="section2" class="container-fluid bg-warning" style="padding-top:70px;padding-bottom:70px">
+    <h1>Section 2</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+<div id="section3" class="container-fluid bg-secondary" style="padding-top:70px;padding-bottom:70px">
+    <h1>Section 3</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+<div id="section41" class="container-fluid bg-danger" style="padding-top:70px;padding-bottom:70px">
+    <h1>Section 4 Submenu 1</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
+<div id="section42" class="container-fluid bg-info" style="padding-top:70px;padding-bottom:70px">
+    <h1>Section 4 Submenu 2</h1>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+    <p>Try to scroll this section and look at the navigation bar while scrolling! Try to scroll this section and look at the navigation bar while scrolling!</p>
+</div>
 
 </body>
 </html>

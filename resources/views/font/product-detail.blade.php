@@ -4,7 +4,7 @@
     <div class="flex-center position-ref full-height">
         <div class="content">
             <div class="container py-3">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-header">
 
                         <div class="btn-toolbar justify-content-between" role="toolbar"
@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <div class="container py-3">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-8 shadow-sm">
                                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             @foreach($data->images as $k => $v)
@@ -30,7 +30,7 @@
                                             @foreach($data->images as $k => $v)
                                                 <div
                                                     class="carousel-item @if ($v == reset($data->images)) active @endif">
-                                                    <img src="{{new_asset($v->src)}}"
+                                                    <img src="{{$v->src}}"
                                                          class="d-block w-100"
                                                          alt="{{$v->alt}}">
                                                 </div>
@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card" id="cardBook">
+                                    <div class="card shadow" id="cardBook">
                                         <div class="card-header"><h4>ID : {{$data->code}}</h4></div>
                                         <div class="card-body">
                                             <div>
@@ -104,141 +104,101 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="container py-3">
+                        <div class="container py-3 shadow-sm">
                             <div class="row">
-                                <div class="col-md-8">
-                                    <ul class="nav nav-tabs" id="productDetailTab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview"
-                                               aria-selected="true">Overview</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="itinerary-tab" data-toggle="tab" href="#itinerary" role="tab" aria-controls="itinerary"
-                                               aria-selected="false">Itinerary</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="include-tab" data-toggle="tab" href="#include" role="tab" aria-controls="include"
-                                               aria-selected="false">Include</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="exclude-tab" data-toggle="tab" href="#exclude" role="tab" aria-controls="exclude"
-                                               aria-selected="false">Exclude</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="condition-tab" data-toggle="tab" href="#condition" role="tab" aria-controls="condition"
-                                               aria-selected="false">Condition</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="remark-tab" data-toggle="tab" href="#remark" role="tab" aria-controls="remark" aria-selected="false">Remark</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="productDetailContent">
-                                        <div class="tab-pane fade show active" id="overview" role="tabpanel"
-                                             aria-labelledby="overview-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Overview</h4>
-                                                    <p>{{$data->overview}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="itinerary" role="tabpanel"
-                                             aria-labelledby="itinerary-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Itinerary</h4>
-                                                    <p>{{$data->itinerary}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="include" role="tabpanel"
-                                             aria-labelledby="include-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Include</h4>
-                                                    <p>{{$data->includes}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="exclude" role="tabpanel"
-                                             aria-labelledby="exclude-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Exclude</h4>
-                                                    <p>{{$data->excludes}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="condition" role="tabpanel"
-                                             aria-labelledby="condition-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Condition</h4>
-                                                    <p>{{$data->conditions}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="remark" role="tabpanel"
-                                             aria-labelledby="remark-tab">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Remark</h4>
-                                                    <p>{{$data->remark}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="col-md-8 col-sm-12">
+                                    <nav id="productDetailTab" class="navbar nav-sticky">
+                                        <ul class="nav justify-content-center nav-pills nav-fill">
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="overview-tab" href="#overview" onclick="smoothTo('overview')">Overview</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="itinerary-tab" href="#itinerary" onclick="smoothTo('itinerary')">Itinerary</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="includes-tab" href="#includes" onclick="smoothTo('includes')">Include</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="excludes-tab" href="#excludes" onclick="smoothTo('excludes')">Exclude</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="conditions-tab" href="#conditions" onclick="smoothTo('conditions')">Condition</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="remark-tab" href="#remark" onclick="smoothTo('remark')">Remark</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div data-spy="scroll" data-target="#productDetailTab" data-offset="0">
+                                        <h4 id="overview">{{ __('product.overview') }}</h4>
+                                        <div class="px-3">{!! $data->overview !!}</div>
+                                        <h4 id="itinerary">{{ __('product.itinerary') }}</h4>
+                                        <div class="px-3">{!! $data->itinerary !!}</div>
+                                        <h4 id="includes">{{ __('product.includes') }}</h4>
+                                        <div class="px-3">{!! $data->includes !!}</div>
+                                        <h4 id="excludes">{{ __('product.excludes') }}</h4>
+                                        <div class="px-3">{!! $data->excludes !!}</div>
+                                        <h4 id="conditions">{{ __('product.conditions') }}</h4>
+                                        <div class="px-3">{!! $data->conditions !!}</div>
+                                        <h4 id="remark">{{ __('product.remark') }}</h4>
+                                        <div class="px-3">{!! $data->remark !!}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 col-sm-12">
                                     <div id='calendar'></div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="cardBookBottom" class="card fixed">
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <div class="float-left">Adult</div>
-                            @if($data->periods[0]->s_adult == null)
-                                <div class="float-right">{{$data->periods[0]->public_adult}}</div>
-                            @else
-                                <div class="float-right price-final">{{$data->periods[0]->s_adult}}</div>
-                                <div class="float-right price-original">{{$data->periods[0]->public_adult}}</div>
-                            @endif
+            <div id="cardBookBottom" class="card fixed hide">
+                <div class="container">
+                    <div class="card-body pd-all-5">
+                        <div class="row text-center">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="float-left">Adult</div>
+                                @if($data->periods[0]->s_adult == null)
+                                    <div class="float-right">{{$data->periods[0]->public_adult}}</div>
+                                @else
+                                    <div class="float-right price-final">{{$data->periods[0]->s_adult}}</div>
+                                    <div class="float-right price-original">{{$data->periods[0]->public_adult}}</div>
+                                @endif
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="float-left">Child</div>
+                                @if($data->periods[0]->s_child == null)
+                                    <div class="float-right">{{$data->periods[0]->public_child}}</div>
+                                @else
+                                    <div class="float-right price-final">{{$data->periods[0]->s_child}}</div>
+                                    <div class="float-right price-original">{{$data->periods[0]->public_child}}</div>
+                                @endif
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="float-left">Infant</div>
+                                @if($data->periods[0]->s_infant == null)
+                                    <div class="float-right">{{$data->periods[0]->public_infant}}</div>
+                                @else
+                                    <div class="float-right price-final">{{$data->periods[0]->s_infant}}</div>
+                                    <div class="float-right price-original">{{$data->periods[0]->public_infant}}</div>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="float-left">Child</div>
-                            @if($data->periods[0]->s_child == null)
-                                <div class="float-right">{{$data->periods[0]->public_child}}</div>
-                            @else
-                                <div class="float-right price-final">{{$data->periods[0]->s_child}}</div>
-                                <div class="float-right price-original">{{$data->periods[0]->public_child}}</div>
-                            @endif
-                        </div>
-                        <div class="col-md-4">
-                            <div class="float-left">Infant</div>
-                            @if($data->periods[0]->s_infant == null)
-                                <div class="float-right">{{$data->periods[0]->public_infant}}</div>
-                            @else
-                                <div class="float-right price-final">{{$data->periods[0]->s_infant}}</div>
-                                <div class="float-right price-original">{{$data->periods[0]->public_infant}}</div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" type="button" class="btn btn-sm btn-block btn-outline-success">Line book</a>
+                        <div class="row text-center">
+                            <table class="table table-dark table-borderless">
+                                <tr>
+                                    <th>
+                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
+                                    </th>
+                                    <th>
+                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
+                                    </th>
+                                    <th>
+                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-success">WeChat book</a>
+                                    </th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -248,11 +208,11 @@
 @endsection
 @section('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: [dayGridPlugin,interactionPlugin],
+                plugins: [dayGridPlugin, interactionPlugin],
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -318,7 +278,7 @@
                         start: '2020-01-28'
                     }
                 ],
-                dateClick: function(info) {
+                dateClick: function (info) {
                     alert('Clicked on: ' + info.dateStr);
                     alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
                     alert('Current view: ' + info.view.type);
@@ -330,22 +290,27 @@
             calendar.render();
 
             var stickyOffset = $('#cardBook').offset().top;
-            $("#cardBookBottom").hide();
 
             $(window).scroll(function () {
                 var sticky = $('#cardBook'),
                     scroll = $(window).scrollTop();
                 if (scroll >= stickyOffset) {
                     //sticky.addClass('fixed');
-                    $("#cardBookBottom").show();
+                    $("#cardBookBottom").show(300);
                     $("#cardBook").hide();
                 } else {
                     //sticky.removeClass('fixed');
-                    $("#cardBook").show();
+                    $("#cardBook").show(300);
                     $("#cardBookBottom").hide();
                 }
             });
-        });
 
+            $('body').scrollspy({ target: '#productDetailTab' })
+        });
+        function smoothTo(f_id){
+            $('html, body').animate({
+                scrollTop: $("#"+f_id).offset().top
+            }, 500);
+        }
     </script>
 @endsection

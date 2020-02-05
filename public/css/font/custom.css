@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Nunito', sans-serif;
+    background-color: rgb(229, 229, 229);
 }
 
 .footer {
@@ -98,6 +99,10 @@ html, body {
     width: 100%;
 }
 
+.hide {
+    display: none;
+}
+
 #cardBookBottom {
     z-index: 20;
 }
@@ -110,4 +115,25 @@ html, body {
     margin-left: 0.5rem;
 }
 
+.pd-all-5 {
+    padding: .25rem;
+}
+
+.nav-sticky {
+    position: sticky;
+    top: 5%;
+    z-index: 20;
+}
+
+@media(max-width: 992px) {
+    #productDetailTab {
+        display: none;
+    }
+}
+
+@media (min-width: 920px) {
+    #productDetailTab {
+        display: block;
+    }
+}
 

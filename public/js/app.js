@@ -117788,7 +117788,8 @@ window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.
 window.daterangepicker = __webpack_require__(/*! daterangepicker */ "./node_modules/daterangepicker/daterangepicker.js");
 window.select2 = __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 window.dt = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
-window.Swiper = __webpack_require__(/*! swiper/js/swiper */ "./node_modules/swiper/js/swiper.js"); //Calender
+window.Swiper = __webpack_require__(/*! swiper/js/swiper */ "./node_modules/swiper/js/swiper.js");
+window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"); //Calender
 
 
 
@@ -118232,8 +118233,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\web\tms\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\web\tms\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Program Files\github\tms\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Program Files\github\tms\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

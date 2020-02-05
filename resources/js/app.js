@@ -6,6 +6,7 @@
 
 require('./bootstrap');
 require('datatables.net-buttons-bs4');
+
 //require('swiper/js/swiper');
 
 window.Vue = require('vue');
@@ -15,6 +16,7 @@ window.daterangepicker = require('daterangepicker');
 window.select2 = require('select2');
 window.dt = require('datatables.net');
 window.Swiper = require('swiper/js/swiper');
+window._ = require('lodash');
 //Calender
 
 import * as Calendar from '@fullcalendar/core';

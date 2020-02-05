@@ -12,6 +12,7 @@
                         <form method="POST" id="main-form"
                               action="{{ route('backend.product.update',$product->id) }}">
                             @csrf
+                            @method('PATCH')
                             <input type="hidden" name="product_id" value="{{$product->id}}">
                             <div class="form-row">
                                 <div class="form-group col-md-8">
@@ -75,7 +76,7 @@
 
                             <div class="form-group">
                                 <label>{{ __('product.overview') }}</label>
-                                <textarea class="form-control" name="overview" placeholder="Required"
+                                <textarea class="form-control" name="overview" id="overview" placeholder="Required"
                                           rows="3">{{$product->overview}}</textarea>
                             </div>
 
@@ -122,12 +123,15 @@
 @endsection
 
 @section('script')
+    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function () {
             if ('{{$product->id}}' != '0') {
                 $('#nav-tab a[href="#nav-image"]').tab('show');
                 $('#nav-main').empty();
             }
+
+            CKEDITOR.replaceAll();
         });
 
         function confirm_reset() {
