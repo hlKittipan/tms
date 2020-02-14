@@ -37,7 +37,7 @@
             <section class="searchBox">
                 <div class="container">
                     <div class="row justify-content-md-center">
-                        <div class="col-md-10 py-2 border rounded my-4">
+                        <div class="col-md-10 py-2 border rounded my-4 bg-white shadow-sm">
                             <h3 class="text-center text-title">Search tour</h3>
                             <form action="{{route('search')}}" method="GET">
                                 @csrf
@@ -61,12 +61,12 @@
                                             @endisset
                                         </select>
                                     </div>
-                                    <label class="col-sm-1 col-form-label text-lg-right">Adult</label>
-                                    <div class="col-sm-1">
+                                    <label class="col-sm-1 col-form-label text-lg-right hide">Adult</label>
+                                    <div class="col-sm-1 hide">
                                         <input type="number" name="adult" class="form-control">
                                     </div>
-                                    <label class="col-sm-1 col-form-label text-lg-right">Child</label>
-                                    <div class="col-sm-1">
+                                    <label class="col-sm-1 col-form-label text-lg-right hide">Child</label>
+                                    <div class="col-sm-1 hide">
                                         <input type="number" name="child" class="form-control">
                                     </div>
                                     <label class="col-sm-1 col-form-label text-lg-right">Month</label>
@@ -89,7 +89,7 @@
                             <h3 class="text-center pb-2 text-title">Tour promotions</h3>
                             <div class="row justify-content-md-center row-cols-1 row-cols-md-3">
                                 @foreach($promotion as $key=>$value)
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <div class="card">
                                             <img src="{{$value->src}}"
                                                  class="card-img-top" alt="...">

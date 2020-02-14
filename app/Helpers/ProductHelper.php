@@ -205,22 +205,35 @@ if (!function_exists('productSearch')) {
                 $join->on('i.id', '=', 'pm.images_id')
                     ->where('i.type', '=', 'Main');
             });
-        if ($request->has('search')) {
-            $data = $data->where('p.name','like',$request->search);
+
+        if (isset($request->search)) {
+            $data = $data->where('p.name','like','%'.$request->search.'%');
+            session()->put('search', $request->search);
         }
 
-        if ($request->has('country')) {
-            $data = $data->where('province_id','=',$request->country);
+        if (isset($request->country)) {
+            $data = $data->whereIn('p.province_id',$request->country);
+            session()->put('country', $request->country);
         }
 
-        if ($request->has('adult')){
-            //$data = $data->where()
+        if (isset($request->month)){
+            $data = $data->whereMonth('pe.date_start', '<=', changeFormatDate($request->month,'m'));
+            $data = $data->whereYear('pe.date_start', '<=', changeFormatDate($request->month,'Y'));
+            $data = $data->whereMonth('pe.date_end', '>=', changeFormatDate($request->month,'m'));
+            $data = $data->whereYear('pe.date_end', '>=', changeFormatDate($request->month,'Y'));
+            session()->put('month', $request->month);
         }
-        $adult = $request->adult;
-        $child = $request->child;
-        $month = $request->month;
+
+        if (isset($request->adult)) {
+            //$data = $data->whereMonth('created_at', '=', $request->month);
+            session()->put('adult', $request->adult);
+        }
+        if (isset($request->child)) {
+            //$data = $data->whereMonth('created_at', '=', $request->month);
+            session()->put('child', $request->child);
+        }
         $data = $data->distinct()->paginate('25');
-
-
+        //dd($data);
+        return $data;
     }
 }

@@ -7,7 +7,9 @@ use App\Model\Product;
 use App\Model\Province;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class SiteController extends Controller
 {
@@ -23,8 +25,8 @@ class SiteController extends Controller
         \LogActivity($log);
         $topSales = productTopSales();
         $promotion = productPromotion();
-        $province = Province::all()->sortBy('name')->pluck('name','id');
-        return view('font.index', compact('topSales', 'promotion','province'));
+        $province = Province::all()->sortBy('name')->pluck('name', 'id');
+        return view('font.index', compact('topSales', 'promotion', 'province'));
     }
 
     /**
@@ -109,17 +111,19 @@ class SiteController extends Controller
 
     public function postProductSearch(Request $request)
     {
-        //dd($request->all());
-
-        //$data = productSearch($request->all());
-        return view('font.search');
+        //dd($request->all(),isset($request->adult),Carbon::parse($request->month)->format('m'));
+        $data = new \stdClass();
+        $data->result = productSearch($request);
+        $data->province = Province::pluck('name','id');
+        //dd($data);
+        return view('font.search',compact('data'));
     }
 
     public function addToCart($id)
     {
         $product = Product::find($id);
 
-        if(!$product) {
+        if (!$product) {
 
             abort(404);
 
@@ -128,7 +132,7 @@ class SiteController extends Controller
         $cart = session()->get('cart');
 
         // if cart is empty then this the first product
-        if(!$cart) {
+        if (!$cart) {
 
             $cart = [
                 $id => [
@@ -145,7 +149,7 @@ class SiteController extends Controller
         }
 
         // if cart not empty then check if this product exist then increment quantity
-        if(isset($cart[$id])) {
+        if (isset($cart[$id])) {
 
             $cart[$id]['quantity']++;
 
