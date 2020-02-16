@@ -292,14 +292,18 @@ class SiteController extends Controller
         $quo->save();
 
         $product = DB::table('products as p')
+            ->join('periods as pe', 'p.id', '=', 'pe.product_id')
+            ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
             ->select('p.id as product_id', 'p.name', 'pe.id as period_id', 'pri.id as price_id',
                 'pri.public_adult', 'pri.public_child', 'pri.public_infant', 'p.number_of_pax')
-            ->join('periods as pe', function ($join) {
-                $join->on('p.id', '=', 'pe.product_id')
-                    ->whereDate('pe.date_end', '>=', Carbon::today());
-            })
-            ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
-            ->where('p.id', '=', $request->product_id)->first();
+        ->where('p.id','=',$request->product_id);
+        if ($request->s_price_id == null) {
+            $product = $product->where('pri.id', '=', $request->price_id);
+        } else {
+            $product = $product->where('pri.id', '=', $request->s_price_id);
+        }
+        $product = $product->where('pe.id', '=', $request->period_id)
+            ->first();
         $quo_detail = new Quotation_detail();
         $quo_detail->quo_id = $quo->id;
         $quo_detail->product_id = $product->product_id;
@@ -329,6 +333,12 @@ class SiteController extends Controller
             'status' => 1,
         ]);
         $quo = Quotation::findOrFail($quo->id);
-        return view('font.show',compact('next_data','quo','client'));
+        return view('font.show', compact('next_data', 'quo', 'client', 'product'));
+    }
+
+    public function getBook(Request $request)
+    {
+
+        return view('font.show');
     }
 }

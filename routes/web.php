@@ -20,6 +20,7 @@ Route::get('/scheduler','SiteController@checkScheduler')->name('scheduler');
 Route::get('/quotations','SiteController@getQuotations')->name('quotations');
 Route::get('/checkAvailable','SiteController@checkAvailable')->name('available');
 Route::post('/quotations/store','SiteController@storeQuotations')->name('quotations.store');
+Route::get('/book','SiteController@getBook')->name('book');
 /*
  * end font
  * */
