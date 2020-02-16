@@ -255,8 +255,10 @@ class SiteController extends Controller
         $available = $available->where('qd.period_id', '=', $request->period_id)
             ->select(DB::raw('(qd.unit_child + qd.unit_adult + qd.unit_infant) as total'), 'p.number_of_pax')
             ->first();
-        if (($available->total + $request->total_pax) >= $available->number_of_pax) {
-            return json_encode('Over off limit');
+        if ($available) {
+            if (($available->total + $request->total_pax) >= $available->number_of_pax) {
+                return json_encode('Over off limit');
+            }
         }
         return json_encode(true);
     }
@@ -296,7 +298,7 @@ class SiteController extends Controller
             ->join('prices as pri', 'pe.id', '=', 'pri.period_id')
             ->select('p.id as product_id', 'p.name', 'pe.id as period_id', 'pri.id as price_id',
                 'pri.public_adult', 'pri.public_child', 'pri.public_infant', 'p.number_of_pax')
-        ->where('p.id','=',$request->product_id);
+            ->where('p.id', '=', $request->product_id);
         if ($request->s_price_id == null) {
             $product = $product->where('pri.id', '=', $request->price_id);
         } else {

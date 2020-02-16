@@ -74,37 +74,37 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Number of Adult</label>
-                                                    <div class="col-sm-8"><input type="number" name="noa_102" class="form-control text-right" value="0"
+                                                    <div class="col-sm-8"><input type="number" name="noa_{{$data->id}}" class="form-control text-right" value="0"
                                                                                  onchange="calculatePrice('{!! $data->id !!}','noa_')"
                                                                                  price="{{$data->price[0]->s_price_id != null ? $data->price[0]->s_adult : $data->price[0]->public_adult }}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Number of Child</label>
-                                                    <div class="col-sm-8"><input type="number" name="noc_102" class="form-control text-right" value="0"
+                                                    <div class="col-sm-8"><input type="number" name="noc_{{$data->id}}" class="form-control text-right" value="0"
                                                                                  onchange="calculatePrice('{!! $data->id !!}','noc_')"
                                                                                  price="{{$data->price[0]->s_price_id != null ? $data->price[0]->s_child : $data->price[0]->public_child }}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Number of Infant</label>
-                                                    <div class="col-sm-8"><input type="number" name="noi_102" class="form-control text-right" value="0"
+                                                    <div class="col-sm-8"><input type="number" name="noi_{{$data->id}}" class="form-control text-right" value="0"
                                                                                  onchange="calculatePrice('{!! $data->id !!}','noi_')"
                                                                                  price="{{$data->price[0]->s_price_id != null ? $data->price[0]->s_infant : $data->price[0]->public_infant }}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Total</label>
-                                                    <div class="col-sm-8"><input type="number" name="t_102"  class="form-control text-right"></div>
+                                                    <div class="col-sm-8"><input type="number" name="t_{{$data->id}}"  class="form-control text-right"></div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Vat</label>
                                                     <div class="input-group col-sm-8">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">%</div>
                                                         </div>
-                                                        <input type="number" name="v_102" class="form-control text-right" value="7"
+                                                        <input type="number" name="v_{{$data->id}}" class="form-control text-right" value="7"
                                                                onchange="calculatePrice('{!! $data->id !!}','')" readonly="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Net Total</label>
-                                                    <div class="col-sm-8"><input type="number" name="nt_102" readonly="" class="form-control text-right"></div>
+                                                    <div class="col-sm-8"><input type="number" name="nt_{{$data->id}}" readonly="" class="form-control text-right"></div>
                                                 </div>
                                             </div>
                                         </div>
