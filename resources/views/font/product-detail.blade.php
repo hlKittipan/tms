@@ -188,13 +188,13 @@
                             <table class="table table-dark table-borderless">
                                 <tr>
                                     <th>
-                                        <a href="{{route('quotations',['id'=>$data->id])}}" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
+                                        <button type="button" class="btn btn-sm btn-block btn-outline-primary"data-toggle="modal" data-target="#checkScheduler">Book now</button>
                                     </th>
                                     <th>
-                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
+                                        <a href="tel:xxxxxxx" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
                                     </th>
                                     <th>
-                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-success">WeChat book</a>
+                                        <a href="https://api.whatsapp.com/send?phone=xxxxxx&text=I%20am%20interested%20in%20{!! $data->name !!}." type="button" class="btn btn-sm btn-block btn-outline-success">WeChat book</a>
                                     </th>
                                 </tr>
                             </table>
