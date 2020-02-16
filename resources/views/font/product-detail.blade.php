@@ -6,7 +6,6 @@
             <div class="container py-3">
                 <div class="card shadow">
                     <div class="card-header">
-
                         <div class="btn-toolbar justify-content-between" role="toolbar"
                              aria-label="Toolbar with button groups">
                             <div class="btn-group" role="group" aria-label="First group">
@@ -87,16 +86,16 @@
                                         <div class="card-footer">
                                             <div class="row text-center">
                                                 <div class="col-md-12 py-2">
-                                                    <a href="#" type="button" class="btn btn-block btn-outline-primary">Book
-                                                        now</a>
+                                                    <button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#checkScheduler">
+                                                        {{__('book.book_now')}}
+                                                    </button>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="#" type="button" class="btn btn-block btn-outline-danger">Call
-                                                        book</a>
+                                                    <a href="tel:xxxxxxx" type="button" class="btn btn-block btn-outline-danger">{{__('book.call_now')}}</a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="#" type="button" class="btn btn-block btn-outline-success">Line
-                                                        book</a>
+                                                    <a href="https://api.whatsapp.com/send?phone=xxxxxx&text=I%20am%20interested%20in%20{!! $data->name !!}." type="button"
+                                                       class="btn btn-block btn-outline-success" target="_blank">{{__('book.whatsapp')}}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +144,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <div id='calendar'></div>
+
                                 </div>
                             </div>
 
@@ -189,7 +188,7 @@
                             <table class="table table-dark table-borderless">
                                 <tr>
                                     <th>
-                                        <a href="#" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
+                                        <a href="{{route('quotations',['id'=>$data->id])}}" type="button" class="btn btn-sm btn-block btn-outline-primary">Book now</a>
                                     </th>
                                     <th>
                                         <a href="#" type="button" class="btn btn-sm btn-block btn-outline-danger">Call book</a>
@@ -204,10 +203,40 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="checkScheduler" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Select date</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="spinner-grow hide" id="loading" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div id='calendar'></div>
+                    </div>
+                    {{--<div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>--}}
+                </div>
+            </div>
+        </div>
     </div>
+
 @endsection
 @section('script')
     <script>
+        const product_id = '{!! $data->id !!}';
+        const period_id = '{!! $data->periods[0]->id !!}';
+        const price_id = '{!! $data->periods[0]->price_id !!}';
+        const s_price_id = '{!! $data->periods[0]->s_price_id !!}';
+        const token = '{!! csrf_token() !!}';
+
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
@@ -218,77 +247,65 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
-                selectable: true,
-                navLinks: true, // can click day/week names to navigate views
+                defaultDate: new Date(),
+                selectable: false,
+                navLinks: false, // can click day/week names to navigate views
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
-                events: [
+                lazyFetching:true,
+                events:
                     {
-                        title: 'All Day Event',
-                        start: '2020-01-01',
-                    },
-                    {
-                        title: 'Long Event',
-                        start: '2018-01-07',
-                        end: '2020-01-10'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2020-01-09T16:00:00'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2020-01-16T16:00:00'
-                    },
-                    {
-                        title: 'Conference',
-                        start: '2018-01-11',
-                        end: '2020-01-13'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2020-01-12T10:30:00',
-                        end: '2020-01-12T12:30:00'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2020-01-12T12:00:00'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2020-01-12T14:30:00'
-                    },
-                    {
-                        title: 'Happy Hour',
-                        start: '2020-01-12T17:30:00'
-                    },
-                    {
-                        title: 'Dinner',
-                        start: '2020-01-12T20:00:00'
-                    },
-                    {
-                        title: 'Birthday Party',
-                        start: '2020-01-13T07:00:00'
-                    },
-                    {
-                        title: 'Click for Google',
-                        url: 'http://google.com/',
-                        start: '2020-01-28'
+                        url: '{{route('scheduler')}}',
+                        method: 'GET',
+                        extraParams: {
+                            _token: token,
+                            product_id: product_id,
+                            period_id: period_id,
+                            price_id: price_id,
+                            s_price_id: s_price_id,
+                        },
+                        error: function (text) {
+                            console.log(text);
+                        },
+                        failure: function () {
+                            console.log("failure");
+                        },
+                        success:function(data){
+                            console.log('success');
+                            console.log(data)
+                            calendar.render(data);
+                            //calendar.render('refetchEvents');
+                            //calendar('refetchEvents');
+                        },
+                        color: 'yellow',   // a non-ajax option
+                        textColor: 'black' // a non-ajax option
                     }
-                ],
-                dateClick: function (info) {
+                ,
+                eventClick: function (info) {
+                    info.jsEvent.preventDefault(); // don't let the browser navigate
+
+                    if (info.event.url) {
+                        window.open(info.event.url);
+                    }
+                },
+
+                onMonthChange: function (month) {
+                    console.log(month);
+                },
+
+                /*dateClick: function (info) {
                     alert('Clicked on: ' + info.dateStr);
                     alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
                     alert('Current view: ' + info.view.type);
                     // change the day's background color just for fun
                     info.dayEl.style.backgroundColor = 'red';
-                }
+                }*/
             });
 
-            calendar.render();
 
+            $('#checkScheduler').on('shown.bs.modal', function () {
+                calendar.render();
+            });
             var stickyOffset = $('#cardBook').offset().top;
 
             $(window).scroll(function () {
@@ -305,11 +322,12 @@
                 }
             });
 
-            $('body').scrollspy({ target: '#productDetailTab' })
+            $('body').scrollspy({target: '#productDetailTab'})
         });
-        function smoothTo(f_id){
+
+        function smoothTo(f_id) {
             $('html, body').animate({
-                scrollTop: $("#"+f_id).offset().top
+                scrollTop: $("#" + f_id).offset().top
             }, 500);
         }
     </script>

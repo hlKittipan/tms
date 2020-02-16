@@ -16,6 +16,10 @@
 Route::resource('/', 'SiteController');
 Route::get('/product/{product_id}','SiteController@getProductDetail')->name('product');
 Route::get('/search','SiteController@postProductSearch')->name('search');
+Route::get('/scheduler','SiteController@checkScheduler')->name('scheduler');
+Route::get('/quotations','SiteController@getQuotations')->name('quotations');
+Route::get('/checkAvailable','SiteController@checkAvailable')->name('available');
+Route::post('/quotations/store','SiteController@storeQuotations')->name('quotations.store');
 /*
  * end font
  * */

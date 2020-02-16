@@ -41,5 +41,9 @@ return [
     'hotel_tel' => 'Hotel Tel.',
     'email' => 'E-mail',
     'upload_passport' => 'Upload Passport',
+    'book_now' => 'Book now',
+    'call_now' => 'Call book',
+    'whatsapp' => 'WhatsApp',
+    'quotations' => 'Quotations'
 
 ];

@@ -9,6 +9,7 @@ $(function () {
         }
     });*/
 });
+var available_of_product = {};
 
 $('#searchProduct').select2({
     ajax: {
@@ -131,7 +132,6 @@ function removeProduct(id) {
 
 }
 
-var available_of_product = {};
 
 function checkAvailable(product_id, number_of_pax) {
     $.ajax({

@@ -72,7 +72,8 @@ if (!function_exists('productGetPeriod')) {
         $data = DB::table('periods as pe')
             ->select('pe.id', 'pe.date_end', 'pe.date_start', 'pe.sun', 'pe.mon', 'pe.tue', 'pe.wed', 'pe.thu', 'pe.fri', 'pe.sat',
                 'pri.id as price_id', 'pri.public_adult', 'pri.public_child', 'pri.public_infant', 'pri.status',
-                's_pri.public_adult as s_adult', 's_pri.public_child as s_child', 's_pri.public_infant as s_infant')
+                's_pri.public_adult as s_adult', 's_pri.public_child as s_child', 's_pri.public_infant as s_infant',
+                's_pri.id as s_price_id')
             ->leftJoin('prices as pri', function ($join) {
                 $join->on('pe.id', '=', 'pri.period_id')
                     ->where('pri.status', '=', 1);
@@ -211,7 +212,10 @@ if (!function_exists('productSearch')) {
             session()->put('search', $request->search);
         }
 
-        if (isset($request->country)) {
+        if (isset($request->country) || $request->country != 0) {
+            if(is_array($request->country) == false){
+                $request->country = array($request->country);
+            }
             $data = $data->whereIn('p.province_id',$request->country);
             session()->put('country', $request->country);
         }
@@ -235,5 +239,10 @@ if (!function_exists('productSearch')) {
         $data = $data->distinct()->paginate('25');
         //dd($data);
         return $data;
+    }
+}
+
+if (!function_exists('checkProductAvailable')) {
+    function checkProductAvailable($request){
     }
 }
