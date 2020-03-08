@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ClientBookMail;
 use App\Model\Client as Customer;
 use App\Model\LogActivity;
 use App\Model\Period;
@@ -342,13 +343,13 @@ class SiteController extends Controller
             'status' => 1,
         ]);
         $quo = Quotation::findOrFail($quo->id);
-        if (is_array($request->last_name)){
+        if (is_array($request->last_name)) {
             $last_name = $request->last_name[0];
-        }else{
+        } else {
             $last_name = $request->last_name;
         }
         //return view('font.show', compact('next_data', 'quo', 'client', 'product'));
-        return redirect()->route('view',['_token'=>$request->_token,'last_name'=>$last_name,'booking'=>$book_no]);
+        return redirect()->route('view', ['_token' => $request->_token, 'last_name' => $last_name, 'booking' => $book_no, 'status' => '0']);
     }
 
     public function getBook(Request $request)
@@ -369,14 +370,19 @@ class SiteController extends Controller
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.book_no', '=', $request->booking)
             ->where('c.last_name', '=', $request->last_name)
-            ->select('q.id as quo_id','q.quo_date','q.total','q.discount_per','q.discount_price','q.vat','q.net')
+            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net')
             ->first();
-        if ($book){
+        if ($book) {
             $book->client = getClientDetail($book->quo_id);
             $book->detail = getBookDetail($book->quo_id);
             //dd($book);
-            return view('font.view-booking',compact('book'));
-        }else{
+            if (isset($request->status)) {
+                if ($request->status == '0'){
+                    \Mail::to($book->client[0]->email)->send(new ClientBookMail($book));
+                }
+            }
+            return view('font.view-booking', compact('book'));
+        } else {
             return redirect()->route('search')->with('success', 'Find not found');
         }
     }

@@ -280,7 +280,7 @@ if (!function_exists('getClientDetail')) {
         $data = DB::table('quotations as q')
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.id', '=', $quo_id)
-            ->select('c.id as client_id','c.first_name','c.last_name','c.emails','c.passport','c.hotel_name','c.room_number','c.hotel_tel')
+            ->select('c.id as client_id','c.first_name','c.last_name','c.email','c.passport','c.hotel_name','c.room_number','c.hotel_tel')
             ->get();
         return $data;
     }

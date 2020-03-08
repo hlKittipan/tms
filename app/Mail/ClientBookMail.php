@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MyTestMail extends Mailable
+class ClientBookMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -18,7 +18,7 @@ class MyTestMail extends Mailable
      */
     public function __construct($details)
     {
-        $this->details = $details;
+        $this->book = $details;
     }
 
     /**
@@ -28,9 +28,7 @@ class MyTestMail extends Mailable
      */
     public function build()
     {
-        return $this->from(config('mail.username'))
-            ->to('hlkittipan@gmail.com','hlkittipan')
-            ->subject('Mail from ItSolutionStuff.com')
-            ->view('emails.MyTestMail');
+        return $this->view('emails.book')
+            ->bcc(['support@islandtourphuket.com','no-reply@islandtourphuket.com']);
     }
 }
