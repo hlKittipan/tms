@@ -9,7 +9,7 @@ class Quotation extends Model
     protected $with = ['Quotation_details'];
 
     protected $fillable = [
-        'staff_id','client_id','quo_date','total','discount_per','discount_price','vat','net'
+        'staff_id','client_id','quo_date','total','discount_per','discount_price','vat','net','book_no'
     ];
 
     public function Quotation_details(){

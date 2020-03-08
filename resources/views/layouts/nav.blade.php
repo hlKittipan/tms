@@ -17,7 +17,7 @@
                 <a class="nav-link" href="#">Tour</a>
             </li>
             <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">View Booking</a>
+                <a class="nav-link" href="{{route('search')}}">View Booking</a>
             </li>
             <li class="nav-item dropdown m-auto px-2">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

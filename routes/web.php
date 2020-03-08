@@ -21,6 +21,8 @@ Route::get('/quotations','SiteController@getQuotations')->name('quotations');
 Route::get('/checkAvailable','SiteController@checkAvailable')->name('available');
 Route::post('/quotations/store','SiteController@storeQuotations')->name('quotations.store');
 Route::get('/book','SiteController@getBook')->name('book');
+Route::get('/search','SiteController@searchBooking')->name('search');
+Route::get('/view','SiteController@showBooking')->name('view');
 /*
  * end font
  * */
@@ -93,5 +95,17 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test',function(){
     return view('test');
+});
+
+Route::get('/send-mail', function () {
+
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing emails using smtp'
+    ];
+
+    \Mail::send(new \App\Mail\MyTestMail($details));
+
+    dd("Email is Sent.");
 });
 

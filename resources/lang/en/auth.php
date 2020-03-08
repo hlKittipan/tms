@@ -18,7 +18,7 @@ return [
     'username' => 'Username',
     'password' => 'Password',
     'confirm_password' => 'Confirm Password',
-    'email' => 'E-mail',
+    'emails' => 'E-mail',
     'save' => 'Save',
     'reset' => 'Reset'
 

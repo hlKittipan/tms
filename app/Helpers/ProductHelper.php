@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Quotation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -208,23 +209,23 @@ if (!function_exists('productSearch')) {
             });
 
         if (isset($request->search)) {
-            $data = $data->where('p.name','like','%'.$request->search.'%');
+            $data = $data->where('p.name', 'like', '%' . $request->search . '%');
             session()->put('search', $request->search);
         }
 
         if (isset($request->country) || $request->country != 0) {
-            if(is_array($request->country) == false){
+            if (is_array($request->country) == false) {
                 $request->country = array($request->country);
             }
-            $data = $data->whereIn('p.province_id',$request->country);
+            $data = $data->whereIn('p.province_id', $request->country);
             session()->put('country', $request->country);
         }
 
-        if (isset($request->month)){
-            $data = $data->whereMonth('pe.date_start', '<=', changeFormatDate($request->month,'m'));
-            $data = $data->whereYear('pe.date_start', '<=', changeFormatDate($request->month,'Y'));
-            $data = $data->whereMonth('pe.date_end', '>=', changeFormatDate($request->month,'m'));
-            $data = $data->whereYear('pe.date_end', '>=', changeFormatDate($request->month,'Y'));
+        if (isset($request->month)) {
+            $data = $data->whereMonth('pe.date_start', '<=', changeFormatDate($request->month, 'm'));
+            $data = $data->whereYear('pe.date_start', '<=', changeFormatDate($request->month, 'Y'));
+            $data = $data->whereMonth('pe.date_end', '>=', changeFormatDate($request->month, 'm'));
+            $data = $data->whereYear('pe.date_end', '>=', changeFormatDate($request->month, 'Y'));
             session()->put('month', $request->month);
         }
 
@@ -243,6 +244,44 @@ if (!function_exists('productSearch')) {
 }
 
 if (!function_exists('checkProductAvailable')) {
-    function checkProductAvailable($request){
+    function checkProductAvailable($request)
+    {
+    }
+}
+
+if (!function_exists('checkBookUnique')) {
+    function checkBookUnique($book_no)
+    {
+        $check = Quotation::where('book_no', '=', $book_no)->first();
+        if ($check) {
+            $checkBookUnique = true;
+        } else {
+            $checkBookUnique = false;
+        }
+        return $checkBookUnique;
+    }
+}
+
+if (!function_exists('getBookDetail')) {
+    function getBookDetail($quo_id)
+    {
+        $data = DB::table('quotations as q')
+            ->join('quotation_details as qe', 'q.id', '=', 'qe.quo_id')
+            ->join('products as p', 'qe.product_id', '=', 'p.id')
+            ->where('q.id', '=', $quo_id)
+            ->select('qe.unit_adult','qe.unit_child','qe.unit_infant','qe.public_adult','qe.public_child','qe.public_infant',
+                'qe.discount','qe.vat','qe.total','qe.net','p.name','p.id','p.overview')->get();
+        return $data;
+    }
+}
+
+if (!function_exists('getClientDetail')) {
+    function getClientDetail($quo_id){
+        $data = DB::table('quotations as q')
+            ->join('clients as c', 'q.client_id', '=', 'c.id')
+            ->where('q.id', '=', $quo_id)
+            ->select('c.id as client_id','c.first_name','c.last_name','c.emails','c.passport','c.hotel_name','c.room_number','c.hotel_tel')
+            ->get();
+        return $data;
     }
 }

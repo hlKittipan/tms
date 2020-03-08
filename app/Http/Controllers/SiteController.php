@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
@@ -286,11 +287,17 @@ class SiteController extends Controller
             ]);
         }
 
+        do {
+            $book_no = Str::random('10');
+            $checkBookUnique = checkBookUnique($book_no);
+        } while ($checkBookUnique);
+
         //create quotation
         $quo = new Quotation();
         $quo->staff_id = 0;
         $quo->quo_date = Carbon::now();
         $quo->client_id = $client->id;
+        $quo->book_no = $book_no;
         $quo->save();
 
         $product = DB::table('products as p')
@@ -335,12 +342,42 @@ class SiteController extends Controller
             'status' => 1,
         ]);
         $quo = Quotation::findOrFail($quo->id);
-        return view('font.show', compact('next_data', 'quo', 'client', 'product'));
+        if (is_array($request->last_name)){
+            $last_name = $request->last_name[0];
+        }else{
+            $last_name = $request->last_name;
+        }
+        //return view('font.show', compact('next_data', 'quo', 'client', 'product'));
+        return redirect()->route('view',['_token'=>$request->_token,'last_name'=>$last_name,'booking'=>$book_no]);
     }
 
     public function getBook(Request $request)
     {
 
         return view('font.show');
+    }
+
+    public function searchBooking()
+    {
+        return view('font.search-booking');
+    }
+
+    public function showBooking(Request $request)
+    {
+        //dd($request->all());
+        $book = DB::table('quotations as q')
+            ->join('clients as c', 'q.client_id', '=', 'c.id')
+            ->where('q.book_no', '=', $request->booking)
+            ->where('c.last_name', '=', $request->last_name)
+            ->select('q.id as quo_id','q.quo_date','q.total','q.discount_per','q.discount_price','q.vat','q.net')
+            ->first();
+        if ($book){
+            $book->client = getClientDetail($book->quo_id);
+            $book->detail = getBookDetail($book->quo_id);
+            //dd($book);
+            return view('font.view-booking',compact('book'));
+        }else{
+            return redirect()->route('search')->with('success', 'Find not found');
+        }
     }
 }

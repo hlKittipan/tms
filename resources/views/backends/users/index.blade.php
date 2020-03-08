@@ -29,11 +29,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>{{ __('auth.email') }}</label>
+                                <label>{{ __('auth.emails') }}</label>
                                 <input type="email" class="form-control is-invalid" name="email"
-                                       value="{{ old('email') }}" placeholder="name@example.com" required>
+                                       value="{{ old('emails') }}" placeholder="name@example.com" required>
 
-                                @error('email')
+                                @error('emails')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

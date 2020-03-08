@@ -48,7 +48,7 @@
                                     <option value="text" @if (old('type') == "text") {{ 'selected' }} @endif>Text</option>
                                     <option value="number" @if (old('type') == "number") {{ 'selected' }} @endif>Number</option>
                                     <option value="date" @if (old('type') == "date") {{ 'selected' }} @endif>Date</option>
-                                    <option value="email" @if (old('type') == "email") {{ 'selected' }} @endif>E-mail</option>
+                                    <option value="email" @if (old('type') == "emails") {{ 'selected' }} @endif>E-mail</option>
                                 </select>
                             </div>
 

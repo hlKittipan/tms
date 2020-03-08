@@ -39,7 +39,7 @@ return [
     'hotel_name' => 'Hotel name',
     'room_number' => 'Room number',
     'hotel_tel' => 'Hotel Tel.',
-    'email' => 'E-mail',
+    'emails' => 'E-mail',
     'upload_passport' => 'Upload Passport',
     'book_now' => 'Book now',
     'call_now' => 'Call book',

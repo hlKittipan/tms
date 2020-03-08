@@ -15,6 +15,7 @@ class CreateQuotations extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('book_no',50);
             $table->string('staff_id')->nullable();
             $table->string('client_id');
             $table->dateTime('quo_date')->nullable();

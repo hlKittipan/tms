@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>{{ __('auth.email') }}</label>
+                                <label>{{ __('auth.emails') }}</label>
                                 <input type="email" class="form-control " name="email"
                                        value="{{ $user->email }}" placeholder="name@example.com" disabled>
                             </div>

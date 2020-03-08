@@ -22,6 +22,15 @@
     <!-- Styles -->
     <link href="{{ new_asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ new_asset('css/font/custom.css') }}" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159949173-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-159949173-2');
+    </script>
 
 </head>
 <body>

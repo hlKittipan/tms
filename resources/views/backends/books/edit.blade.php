@@ -39,7 +39,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">{{__('book.email')}}</label>
+                                            <label class="col-sm-2 col-form-label">{{__('book.emails')}}</label>
                                             <div class="col-sm-4">
                                                 <input type="email" name="email" class="form-control" value="{{$quotation->email}}">
                                             </div>

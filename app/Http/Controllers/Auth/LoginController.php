@@ -63,12 +63,12 @@ class LoginController extends Controller
     {
         $login = request()->input('username');
 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'emails' : 'username';
 
         $this->password = request()->input('username').request()->input('password');
         request()->merge([$fieldType => $login]);
-        if($fieldType === 'email'){
-            $user = User::where('email',$login)->first();
+        if($fieldType === 'emails'){
+            $user = User::where('emails',$login)->first();
             $this->password = $user->username.request()->input('password');
         }
         /*Disabled custom password*/

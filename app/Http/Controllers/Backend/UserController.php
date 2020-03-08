@@ -57,7 +57,7 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|unique:users',
             'name' => 'required',
-            'email' => 'required|unique:users|email',
+            'emails' => 'required|unique:users|emails',
             'password' => 'required|min:6|confirmed',
         ]);
         $password = Hash::make($request->username.$request->password);

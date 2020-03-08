@@ -71,7 +71,7 @@ class UserController extends Controller
      * Create user
      *
      * @param  [string] name
-     * @param  [string] email
+     * @param  [string] emails
      * @param  [string] password
      * @param  [string] password_confirmation
      * @return [string] message
@@ -81,13 +81,13 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|string',
             'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
+            'emails' => 'required|string|emails|unique:users',
             'password' => 'required|string|confirmed'
         ]);
         $user = new User([
             'username' => $request->name,
             'name' => $request->name,
-            'email' => $request->email,
+            'emails' => $request->email,
             'password' => bcrypt($request->password)
         ]);
         $user->save();
@@ -99,7 +99,7 @@ class UserController extends Controller
     /**
      * Login user and create token
      *
-     * @param  [string] email
+     * @param  [string] emails
      * @param  [string] password
      * @param  [boolean] remember_me
      * @return [string] access_token

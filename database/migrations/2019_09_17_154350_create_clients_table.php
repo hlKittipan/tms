@@ -26,7 +26,7 @@ class CreateClientsTable extends Migration
             $table->string('postal_code',10)->nullable();
             $table->string('tel')->nullable();
             $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->string('emails')->nullable();
             $table->string('hotel_name')->nullable();
             $table->string('room_number')->nullable();
             $table->string('hotel_tel')->nullable();
