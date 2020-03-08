@@ -370,7 +370,7 @@ class SiteController extends Controller
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.book_no', '=', $request->booking)
             ->where('c.last_name', '=', $request->last_name)
-            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net')
+            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net','q.book_no')
             ->first();
         if ($book) {
             $book->client = getClientDetail($book->quo_id);

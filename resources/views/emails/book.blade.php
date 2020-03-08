@@ -12,7 +12,7 @@
                     <div class="btn-toolbar justify-content-between" role="toolbar"
                          aria-label="Toolbar with button groups">
                         <div class="btn-group" role="group" aria-label="First group">
-                            <h4></h4>
+                            <h4>Booking No. {{$book->book_no}}</h4>
                         </div>
                         <h4>View Booking</h4>
                     </div>
@@ -33,6 +33,10 @@
                                 </div>
                                 <div class="col-md-6"></div>
                             @endforeach
+                            <div class="col-md-12">
+                                <h4>Booking detail</h4>
+                                <hr>
+                            </div>
                             <div class="col-md-11 pt-5">
                                 <div class="table-responsive">
                                     <table class="table">

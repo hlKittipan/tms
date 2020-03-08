@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class ClientBookMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $details;
+    public $book;
     /**
      * Create a new message instance.
      *
