@@ -379,6 +379,8 @@ class SiteController extends Controller
             if (isset($request->status)) {
                 if ($request->status == '0'){
                     \Mail::to($book->client[0]->email)->send(new ClientBookMail($book));
+                    $str = "บางคนจองทัวร์ โปรดตรวจสอบ ฺ Booking No : ".$book->book_no . " Last name : ".$book->client[0]->last_name;
+                    notify_message($str);
                 }
             }
             return view('font.view-booking', compact('book'));
