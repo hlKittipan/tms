@@ -183,23 +183,33 @@ class SiteController extends Controller
     {
         //dd($request->all());
         $date = '';
-        $start = changeFormatDate($request->start, 'Y-m-d');
+        if($request->start < Carbon::now()){
+            $start = changeFormatDate(Carbon::now(), 'Y-m-d');
+        }else{
+            $start = changeFormatDate($request->start, 'Y-m-d');
+        }
         $end = changeFormatDate($request->end, 'Y-m-d');
         $day = Carbon::parse($request->start);
 
+        if ($request->s_price_id == null){
+            $price_id = $request->price_id;
+        }else{
+            $price_id = $request->s_price_id;
+        }
         $diff = Carbon::parse($request->start)->diffInDays(Carbon::parse($request->end));
 
-        $data = collect(DB::select('SELECT p.name, p.number_of_pax, ( unit_child + unit_adult + unit_infant ) AS unit_total,  date(book_date) as book_date' .
+        $data = collect(DB::select('SELECT p.name, p.number_of_pax, SUM( unit_child + unit_adult + unit_infant ) AS unit_total,  date(book_date) as book_date' .
             ' FROM products AS p ' .
             ' INNER JOIN periods AS pe ON p.id = pe.product_id ' .
             ' INNER JOIN quotation_details AS qd ON p.id = qd.product_id ' .
-            ' WHERE qd.product_id = ' . $request->product_id . ' AND qd.price_id = ' . $request->price_id . ' AND qd.period_id = ' . $request->period_id . ' ' .
+            ' WHERE qd.product_id = ' . $request->product_id . ' AND qd.price_id = ' . $price_id . ' AND qd.period_id = ' . $request->period_id . ' ' .
             ' and pe.date_start <= "' . $start . '" ' .
             ' and pe.date_end >= "' . $end . '" ' .
             ' and book_date between  "' . $start . '" and "' . $end . '" '));
+        //dd($data);
         $product = Product::findOrfail($request->product_id);
         for ($i = 0; $i < $diff; $i++) {
-            $date = Carbon::parse($request->start)->addDays($i)->format('Y-m-d');
+            $date = Carbon::parse($start)->addDays($i)->format('Y-m-d');
             $checkData = $data->where('book_date', $date);
             if ($checkData->isEmpty()) {
                 $result[] = array(
@@ -215,13 +225,15 @@ class SiteController extends Controller
             } else {
                 foreach ($checkData as $k => $v) {
                     $ref_color = $v->unit_total >= $product->number_of_pax ? 'red' : 'green';
+                    $url = route('quotations', ['_token' => csrf_token(), 'date' => $v->book_date, 'product_id' => $request->product_id, 'price_id' => $request->price_id, 'period_id' => $request->period_id, 'unit_total' => $v->unit_total]);
+                    $url = $ref_color === 'red' ? '' : $url;
                     $result[] = array(
                         'id' => $i + 1,
                         'title' => $v->unit_total . '/' . $product->number_of_pax,
                         'start' => $v->book_date,
                         'color' => $ref_color,
                         'textColor' => 'white',
-                        'url' => route('quotations', ['_token' => csrf_token(), 'date' => $v->book_date, 'product_id' => $request->product_id, 'price_id' => $request->price_id, 'period_id' => $request->period_id, 'unit_total' => $v->unit_total]),
+                        'url' => $url,
                     );
                 }
             }
