@@ -28,7 +28,13 @@ class ClientBookMail extends Mailable
      */
     public function build()
     {
+        $email_to = $this->book->client[0]->email === null ? 'support@islandtourphuket.com' : $this->book->client[0]->email;
+        //dd($this->book);
+        $message = request()->ip() === '127.0.0.1' ? '[test]' : '';
+        $subject = $message." Client Booking detail";
         return $this->view('emails.book')
+            ->subject($subject)
+            ->to($email_to)
             ->bcc(['support@islandtourphuket.com','no-reply@islandtourphuket.com']);
     }
 }

@@ -290,7 +290,7 @@ if (!function_exists('notify_message')) {
     {
         //Line setting
         define('LINE_API',"https://notify-api.line.me/api/notify");
-        $token = "Xr2KCIswKYvPHioP9NbrwySrz2xCl6RnkMyarrUVKkf"; //ใส่Token ที่copy เอาไว้
+        $token = "2lFxliP8OAuCqQBgU1Hyf9JHqDcyraiTSKkcBkOIhcs"; //ใส่Token ที่copy เอาไว้
 
         $queryData = array('message' => $message);
         $queryData = http_build_query($queryData, '', '&');

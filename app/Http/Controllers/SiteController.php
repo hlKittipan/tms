@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -287,6 +288,7 @@ class SiteController extends Controller
 
         //Create client
         $client = Customer::create($request->all());
+        //dd($client);
         //Upload passport client
         if ($request->hasFile('passport')) {
             $files = $request->file('passport');
@@ -390,9 +392,12 @@ class SiteController extends Controller
             //dd($book);
             if (isset($request->status)) {
                 if ($request->status == '0'){
-                    \Mail::to($book->client[0]->email)->send(new ClientBookMail($book));
-                    $str = "บางคนจองทัวร์ โปรดตรวจสอบ ฺ Booking No : ".$book->book_no . " Last name : ".$book->client[0]->last_name;
+
+                    $message = request()->ip() === '127.0.0.1' ? '[test]' : '';
+                    $str = $message." บางคนจองทัวร์ โปรดตรวจสอบ ฺ Booking No : ".$book->book_no . " Last name : ".$book->client[0]->last_name;
                     notify_message($str);
+                    //dd($this->book->client[0]->email);
+                    Mail::send(new ClientBookMail($book));
                 }
             }
             return view('font.view-booking', compact('book'));
