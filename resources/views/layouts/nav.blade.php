@@ -11,29 +11,30 @@
                 <a class="nav-link" href="{{url('/')}}">Home</a>
             </li>
             <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">Person</a>
-            </li>
-            <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">Tour</a>
-            </li>
-            <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="{{route('search')}}">View Booking</a>
+                <a class="nav-link" href="{{route('search/booking')}}">View Booking</a>
             </li>
             <li class="nav-item dropdown m-auto px-2">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+                    Tour
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="{{route('search',['country'=>'1'])}}">Phuket</a>
+                    <a class="dropdown-item" href="{{route('search',['country'=>'2'])}}">Pangnga</a>
+                    <a class="dropdown-item" href="{{route('search',['country'=>'3'])}}">Krabi</a>
+                    {{--<div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>--}}
                 </div>
             </li>
+            <li class="nav-item m-auto px-2">
+                <a class="nav-link" href="#">About us</a>
+            </li>
+            <li class="nav-item m-auto px-2">
+                <a class="nav-link" href="#">Contact us</a>
+            </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Quick Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" action="{{route('search')}}">
+            <input class="form-control mr-sm-2" type="text" placeholder="Quick Search" aria-label="Search" name="search">
             <button class="btn search-outline-blue my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>

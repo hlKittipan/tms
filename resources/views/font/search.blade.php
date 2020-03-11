@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Search Tour '. session('search') )
 
 @section('content')
     <div class="flex-center position-ref full-height">

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Booking detail #'.$book->book_no)
 @section('content')
     <div class="flex-center position-ref full-height">
         <div class="content">

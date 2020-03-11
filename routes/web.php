@@ -21,7 +21,7 @@ Route::get('/quotations','SiteController@getQuotations')->name('quotations');
 Route::get('/checkAvailable','SiteController@checkAvailable')->name('available');
 Route::post('/quotations/store','SiteController@storeQuotations')->name('quotations.store');
 Route::get('/book','SiteController@getBook')->name('book');
-Route::get('/search','SiteController@searchBooking')->name('search');
+Route::get('/search/booking','SiteController@searchBooking')->name('search/booking');
 Route::get('/view','SiteController@showBooking')->name('view');
 /*
  * end font

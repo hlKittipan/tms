@@ -169,7 +169,7 @@ class QuotationController extends Controller
     {
         $quotation = DB::table('quotations as q')
             ->select('q.id as quo_id', 'q.staff_id', 'q.client_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net', 'q.remark',
-                'c.first_name', 'c.last_name', 'c.emails', 'c.hotel_name', 'c.room_number', 'c.hotel_tel', 'c.passport')
+                'c.first_name', 'c.last_name', 'c.email', 'c.hotel_name', 'c.room_number', 'c.hotel_tel', 'c.passport')
             ->join('clients as c', 'c.id', '=', 'q.client_id')
             ->where('q.id', '=', $id)
             ->first();

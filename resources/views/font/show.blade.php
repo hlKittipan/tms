@@ -11,7 +11,7 @@
                             <div class="btn-group" role="group" aria-label="First group">
                                 <h4>{{__('book.booking')}} </h4>
                             </div>
-                            <h4> ID : {{$quo->id}}</h4>
+                            <h4> Booking NO. : {{$book_no}}</h4>
                         </div>
                     </div>
                     <div class="card-body">
