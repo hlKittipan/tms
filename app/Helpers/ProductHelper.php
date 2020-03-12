@@ -269,18 +269,31 @@ if (!function_exists('getBookDetail')) {
             ->join('quotation_details as qe', 'q.id', '=', 'qe.quo_id')
             ->join('products as p', 'qe.product_id', '=', 'p.id')
             ->where('q.id', '=', $quo_id)
-            ->select('qe.unit_adult','qe.unit_child','qe.unit_infant','qe.public_adult','qe.public_child','qe.public_infant',
-                'qe.discount','qe.vat','qe.total','qe.net','p.name','p.id','p.overview')->get();
-        return $data;
+            ->select('qe.unit_adult', 'qe.unit_child', 'qe.unit_infant', 'qe.public_adult', 'qe.public_child', 'qe.public_infant',
+                'qe.discount', 'qe.vat', 'qe.total', 'qe.net', 'p.name', 'p.id', 'p.overview')->get();
+        $result = new stdClass();
+        if ($data->isNotEmpty()){
+            foreach ($data as $key => $value){
+                $result->{$key} = new stdClass();
+                foreach ($value as $k => $v){
+                    $result->{$key}->{$k} = $v;
+                }
+                $result->{$key}->trans = getDetailTransport($quo_id);
+            }
+        }else{
+            $result = null;
+        }
+        return $result;
     }
 }
 
 if (!function_exists('getClientDetail')) {
-    function getClientDetail($quo_id){
+    function getClientDetail($quo_id)
+    {
         $data = DB::table('quotations as q')
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.id', '=', $quo_id)
-            ->select('c.id as client_id','c.first_name','c.last_name','c.email','c.passport','c.hotel_name','c.room_number','c.hotel_tel')
+            ->select('c.id as client_id', 'c.first_name', 'c.last_name', 'c.email', 'c.passport', 'c.hotel_name', 'c.room_number', 'c.hotel_tel')
             ->get();
         return $data;
     }
@@ -289,7 +302,7 @@ if (!function_exists('notify_message')) {
     function notify_message($message)
     {
         //Line setting
-        define('LINE_API',"https://notify-api.line.me/api/notify");
+        define('LINE_API', "https://notify-api.line.me/api/notify");
         $token = "2lFxliP8OAuCqQBgU1Hyf9JHqDcyraiTSKkcBkOIhcs"; //ใส่Token ที่copy เอาไว้
 
         $queryData = array('message' => $message);
@@ -307,5 +320,31 @@ if (!function_exists('notify_message')) {
         $result = @file_get_contents(LINE_API, FALSE, $context);
         $res = json_decode($result);
         return $res;
+    }
+}
+
+if (!function_exists('getTransports')) {
+    function getTransports($product_id)
+    {
+        $result = DB::table('transports as t')
+            ->join('product_many_services as ps', 't.id', '=', 'ps.service_id')
+            ->where('ps.product_id', '=', $product_id)
+            ->where('t.status', '=', '1')
+            ->select('t.name', 't.price', 't.id', 'ps.id as ps_id')
+            ->get();
+        return $result;
+    }
+}
+
+if (!function_exists('getDetailTransports')) {
+    function getDetailTransport($quo_id)
+    {
+        $result = DB::table('transports as t')
+            ->join('product_many_services as ps', 't.id', '=', 'ps.service_id')
+            ->join('quotation_many_service_charges as qs', 'ps.id', '=', 'qs.charge_id')
+            ->where('qs.quo_id', '=', $quo_id)
+            ->select('t.name','t.price','t.id')
+            ->first();
+        return $result;
     }
 }

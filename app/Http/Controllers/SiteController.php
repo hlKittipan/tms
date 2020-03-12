@@ -184,17 +184,17 @@ class SiteController extends Controller
     {
         //dd($request->all());
         $date = '';
-        if($request->start < Carbon::now()){
+        if ($request->start < Carbon::now()) {
             $start = changeFormatDate(Carbon::now(), 'Y-m-d');
-        }else{
+        } else {
             $start = changeFormatDate($request->start, 'Y-m-d');
         }
         $end = changeFormatDate($request->end, 'Y-m-d');
         $day = Carbon::parse($request->start);
 
-        if ($request->s_price_id == null){
+        if ($request->s_price_id == null) {
             $price_id = $request->price_id;
-        }else{
+        } else {
             $price_id = $request->s_price_id;
         }
         $diff = Carbon::parse($request->start)->diffInDays(Carbon::parse($request->end));
@@ -249,6 +249,7 @@ class SiteController extends Controller
         $data->price = productGetPeriod($request->product_id);
         $data->book_date = $request->date;
         $data->unit_total = $request->unit_total;
+        $data->transports = getTransports($request->product_id);
         //dd($data);
 
         return view('font.quotations', compact('data'));
@@ -285,6 +286,7 @@ class SiteController extends Controller
         $quo_total = 0;
         $quo_vat = 0;
         $quo_net = 0;
+        $charge = 0;
 
         //Create client
         $client = Customer::create($request->all());
@@ -346,6 +348,7 @@ class SiteController extends Controller
         $quo_detail->discount = $request->input('d_' . $request->product_id);
         $quo_detail->save();
 
+        $charge = $charge + $request->input('charge_' . $request->product_id);
         $quo_total = ($quo_total + $request->input('t_' . $request->product_id));
         $quo_vat = $quo_vat + $request->input('v_' . $request->product_id);
         $quo_net = ($quo_net + $request->input('nt_' . $request->product_id) - $request->input('d_' . $request->product_id));
@@ -354,8 +357,18 @@ class SiteController extends Controller
             'total' => $quo_total,
             'vat' => $quo_vat,
             'net' => $quo_net,
+            'charge' =>$charge,
             'status' => 1,
         ]);
+
+        if ($request->ps_value != 0 && $request->trans_id != 0) {
+            DB::table('quotation_many_service_charges')->insert([
+                'quo_id' => $quo->id,
+                'charge_id' => $request->ps_value,
+                'price' => $request->ps_price,
+                'created_at' => Carbon::now()
+            ]);
+        }
         $quo = Quotation::findOrFail($quo->id);
         if (is_array($request->last_name)) {
             $last_name = $request->last_name[0];
@@ -384,17 +397,16 @@ class SiteController extends Controller
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.book_no', '=', $request->booking)
             ->where('c.last_name', '=', $request->last_name)
-            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net','q.book_no')
+            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net', 'q.book_no','q.charge')
             ->first();
         if ($book) {
             $book->client = getClientDetail($book->quo_id);
             $book->detail = getBookDetail($book->quo_id);
             //dd($book);
             if (isset($request->status)) {
-                if ($request->status == '0'){
-
+                if ($request->status == '0') {
                     $message = request()->ip() === '127.0.0.1' ? '[test]' : '';
-                    $str = $message." บางคนจองทัวร์ โปรดตรวจสอบ ฺ Booking No : ".$book->book_no . " Last name : ".$book->client[0]->last_name;
+                    $str = $message . " บางคนจองทัวร์ โปรดตรวจสอบ ฺ Booking No : " . $book->book_no . " Last name : " . $book->client[0]->last_name;
                     notify_message($str);
                     //dd($this->book->client[0]->email);
                     Mail::send(new ClientBookMail($book));

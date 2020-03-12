@@ -75,10 +75,18 @@
                                                 <td class="text-right">{{$value->public_infant}}</td>
                                                 <td class="text-right">{{$value->unit_infant * $value->public_infant}}</td>
                                             </tr>
+                                            <tr>
+                                                <th scope="row"></th>
+                                                <td></td>
+                                                <td>Transports</td>
+                                                <td>{{ $value->unit_adult+ $value->unit_child+$value->unit_infant}}</td>
+                                                <td class="text-right">{{$value->trans->price}}</td>
+                                                <td class="text-right">{{($value->unit_adult+ $value->unit_child+$value->unit_infant) * $value->trans->price}}</td>
+                                            </tr>
                                             @endforeach
                                             <tr>
                                                 <th scope="row" colspan="5" class="text-right">Total</th>
-                                                <td class="text-right">{{$book->total}}</td>
+                                                <td class="text-right">{{$book->total + $book->charge}}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row" colspan="5" class="text-right">Vat 7%</th>

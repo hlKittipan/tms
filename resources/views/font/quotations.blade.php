@@ -71,6 +71,19 @@
                                                     </div>
                                                 </div>
                                                 <hr>
+                                                <div class="py-1">
+                                                    <div class="float-left">{{ __('product.product') }}</div>
+                                                    <div class="float-right">
+                                                        <select class="form-control" name="trans_id" id="sl_tran" onchange="calculatePrice('{!! $data->id !!}','')">
+                                                            <option value="0" price="0">Select transport</option>
+                                                            @foreach($data->transports as $key => $value)
+                                                                <option value="{{$value->id}}" price="{{$value->price}}" ps_id="{{$value->ps_id}}">{{$value->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <input type="hidden" value="0" name="ps_value">
+                                                        <input type="hidden" value="0" name="ps_price">
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Number of Adult</label>
@@ -92,7 +105,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Total</label>
-                                                    <div class="col-sm-8"><input type="number" name="t_{{$data->id}}"  class="form-control text-right"></div>
+                                                    <div class="col-sm-8"><input type="number" name="t_{{$data->id}}" class="form-control text-right" readonly=""></div>
+                                                </div>
+                                                <div class="form-group row"><label class="col-sm-4 col-form-label">Charge</label>
+                                                    <div class="col-sm-8"><input type="number" name="charge_{{$data->id}}" class="form-control text-right" readonly=""></div>
                                                 </div>
                                                 <div class="form-group row"><label class="col-sm-4 col-form-label">Vat</label>
                                                     <div class="input-group col-sm-8">
@@ -166,9 +182,23 @@
 @section('script')
     <script>
         var available_total = '{{$data->unit_total}}';
-        document.addEventListener('DOMContentLoaded', function () {
 
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('#sl_tran').select2();
+
+            $('#sl_tran').on('change', function (e) {
+                var ps_value = $('#sl_tran option:selected').attr('ps_id');
+                var ps_price = $('#sl_tran option:selected').attr('price');
+                if(ps_value == undefined){
+                    ps_value = 0
+                    ps_price = 0
+                }
+                $("input[name='ps_value']").val(ps_value);
+                $("input[name='ps_price']").val(ps_price);
+            });
         });
+
 
         function calculatePrice(product_id, input_name) {
             var noa = parseInt($('input[name="noa_' + product_id + '"]').val());
@@ -178,11 +208,16 @@
             var vat = parseInt($('input[name="v_' + product_id + '"]').val());
             var t = 0;
             var nt = 0;
+            var charge = 0;
             var public_adult = parseInt($('input[name="noa_' + product_id + '"]').attr('price'));
             var public_child = parseInt($('input[name="noc_' + product_id + '"]').attr('price'));
             var public_infant = parseInt($('input[name="noi_' + product_id + '"]').attr('price'));
             var number_of_pax = parseInt('{{$data->number_of_pax}}');
+            var transports = $('#sl_tran option:selected').attr('price');
 
+            if(transports != undefined){
+                transports = parseInt(transports);
+            }
             if (!$.isNumeric(noa) || !$.isNumeric(noc) || !$.isNumeric(noi)) {
                 return false
             }
@@ -192,9 +227,11 @@
                 $('#alertMessage').modal('show');
                 resetValuePax(input_name + product_id);
             } else {
+                charge = transports*(noa+noc+noi);
                 t = ((noa * public_adult) + (noc * public_child) + (noi * public_infant));
-                nt = (t + (t * vat / 100));
+                nt = ((t+charge) + ((t+charge) * vat / 100));
                 $('input[name="t_' + product_id + '"]').val(t.toFixed(2));
+                $('input[name="charge_' + product_id + '"]').val(charge.toFixed(2));
                 $('input[name="nt_' + product_id + '"]').val(nt.toFixed(2));
             }
 
