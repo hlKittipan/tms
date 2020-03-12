@@ -38,6 +38,15 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label>{{ __('product.product') }}</label>
+                                <select class="form-control" name="product_id" id="sl_product">
+                                    @foreach($product as $key => $value)
+                                        <option value="{{$value->id}}" {{ $value->id == $ps->product_id ? 'selected' : '' }}>{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                             <button type="submit" class="btn btn-primary">{{ __('auth.save') }}</button>
                             <button type="reset" class="btn btn-danger">{{ __('auth.reset') }}</button>

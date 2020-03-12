@@ -41,6 +41,15 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label>{{ __('product.product') }}</label>
+                                <select class="form-control" name="product_id" id="sl_product">
+                                    @foreach($product as $key => $value)
+                                        <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">{{ __('auth.save') }}</button>
                             <button type="reset" class="btn btn-danger">{{ __('auth.reset') }}</button>
                         </form>
@@ -56,6 +65,7 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Price</th>
+                                <th>Product name</th>
                                 <th width="280px">Action</th>
                             </tr>
                             @foreach ($result as $key => $list)
@@ -63,12 +73,13 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $list->name }}</td>
                                     <td>{{ $list->price }}</td>
+                                    <td>{{ $list->product_name }}</td>
                                     <td>
                                         <a href="{{ route('backend.transport.edit',$list->id) }}" data-toggle="tooltip" data-placement="top" title="Edit">
                                             <i class="fas fa-edit fa-2x"></i>
                                         </a>
                                         <a href="#" data-toggle="tooltip" data-placement="top" title="Remove" onclick="event.preventDefault();
-                                                     document.getElementById('hidden-form{{$list->id}}').submit();">
+                                            document.getElementById('hidden-form{{$list->id}}').submit();">
                                             <i class="fas fa-trash fa-2x"></i>
                                         </a>
 
@@ -92,8 +103,9 @@
 @endsection
 @section('script')
     <script>
-        $(function () {
+        $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
+            $('#sl_product').select2();
+        });
     </script>
 @endsection
