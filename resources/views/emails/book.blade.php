@@ -30,8 +30,11 @@
                                     <div><b>E-mail :</b> {{$value->email}}</div>
                                     <div><b>Hotel name :</b> {{$value->hotel_name}}</div>
                                     <div><b>Hotel tel :</b> {{$value->hotel_tel}} <b>Room number :</b> {{$value->room_number}}</div>
+                                    <hr>
+                                    <div><b>Booking No : </b> {{$book->book_no}} </div>
+                                    <div><b>Departure date : </b> {{changeFormatDate($book->quo_date,'d/m/Y')}} <b> Reservation date : </b>{{changeFormatDate($book->created_at,'d/m/Y')}}</div>
                                 </div>
-                                <div class="col-md-6"></div>
+                                <div class="col-md-6"><b> Passport </b><br><img src="{{new_asset($value->passport)}}"></div>
                             @endforeach
                             <div class="col-md-12">
                                 <h4>Booking detail</h4>
@@ -53,7 +56,7 @@
                                         @foreach($book->detail as $key => $value)
                                             <tr>
                                                 <td scope="row">{{$value->id}}</td>
-                                                <td colspan="2">{{$value->name}}</td>
+                                                <td colspan="2"><a href="{{route('product',['product_id'=>$value->id])}}"  target="_blank"> {{$value->name}}</a></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -97,7 +100,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row" colspan="5" class="text-right">Vat 7%</th>
-                                            <td class="text-right">{{$book->vat}}</td>
+                                            <td class="text-right">{{(($book->total + $book->charge)*$book->vat/100)}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row" colspan="5" class="text-right">Net total</th>

@@ -397,7 +397,7 @@ class SiteController extends Controller
             ->join('clients as c', 'q.client_id', '=', 'c.id')
             ->where('q.book_no', '=', $request->booking)
             ->where('c.last_name', '=', $request->last_name)
-            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net', 'q.book_no','q.charge')
+            ->select('q.id as quo_id', 'q.quo_date', 'q.total', 'q.discount_per', 'q.discount_price', 'q.vat', 'q.net', 'q.book_no','q.charge','q.created_at')
             ->first();
         if ($book) {
             $book->client = getClientDetail($book->quo_id);
@@ -414,7 +414,7 @@ class SiteController extends Controller
             }
             return view('font.view-booking', compact('book'));
         } else {
-            return redirect()->route('search')->with('success', 'Find not found');
+            return redirect()->route('search/booking')->with('success', 'Find not found');
         }
     }
 }
