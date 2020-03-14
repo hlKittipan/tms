@@ -28,6 +28,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Client name</th>
+                                <th>Hotel name</th>
+                                <th>Product name</th>
                                 <th>Booking date</th>
                                 <th width="280px">Action</th>
                             </tr>
@@ -38,6 +40,8 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $list->first_name ." ".$list->last_name }}</td>
+                                        <td>{{ $list->hotel_name }}</td>
+                                        <td>{{ $list->name }}</td>
                                         <td>{{ $list->quo_date }}</td>
 
                                         <td>

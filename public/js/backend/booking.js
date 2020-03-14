@@ -159,6 +159,8 @@ function calculatePrice(product_id, input_name) {
     var public_child = parseInt($('input[name="noc_' + product_id + '"]').attr('price'));
     var public_infant = parseInt($('input[name="noi_' + product_id + '"]').attr('price'));
     var number_of_pax = parseInt($("#available_span_" + product_id).attr('number_of_pax'));
+    var charge = 0;
+    var transports = $('#sl_tran option:selected').attr('price');
 
     if (!$.isNumeric(noa) || !$.isNumeric(noc) || !$.isNumeric(noi)) {
         return false
@@ -169,9 +171,11 @@ function calculatePrice(product_id, input_name) {
         $('#alertMessage').modal('show');
         resetValuePax(input_name + product_id);
     } else {
-        t = ((noa * public_adult) + (noc * public_child) + (noi * public_infant) - d);
-        nt = (t + (t * vat / 100));
+        charge = transports*(noa+noc+noi);
+        t = ((noa * public_adult) + (noc * public_child) + (noi * public_infant));
+        nt = ((t+charge) + ((t+charge) * vat / 100));
         $('input[name="t_' + product_id + '"]').val(t.toFixed(2));
+        $('input[name="charge_' + product_id + '"]').val(charge.toFixed(2));
         $('input[name="nt_' + product_id + '"]').val(nt.toFixed(2));
     }
 

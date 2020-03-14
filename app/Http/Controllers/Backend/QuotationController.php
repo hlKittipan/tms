@@ -39,8 +39,13 @@ class QuotationController extends Controller
     public function index()
     {
         $quotation = DB::table('quotations as q')
-            ->select('q.id', 'q.quo_date', 'c.first_name', 'c.last_name')
+            ->select('q.id', 'q.quo_date', 'c.first_name', 'c.last_name','c.hotel_name','p.name')
             ->join('clients as c', 'q.client_id', '=', 'c.id')
+            ->join('quotation_details as qd',function($join){
+                $join->on('qd.quo_id','=','q.id')
+                ->limit(1);
+            })
+            ->join('products as p','p.id','=','qd.product_id')
             ->latest('q.created_at')->paginate(10);
         //dd($quotation);
         return view('backends.books.index', compact('quotation'));
@@ -179,10 +184,16 @@ class QuotationController extends Controller
                 ->join('products as p', 'p.id', '=', 'qd.product_id')
                 ->where('qd.quo_id', '=', $quotation->quo_id)
                 ->get();
-
+            $quotation->trans = DB::table('quotation_many_service_charges as qc')
+                ->join('product_many_services as ps', 'qc.charge_id', '=', 'ps.id')
+                ->join('transports as t','t.id','=','ps.service_id')
+                ->where('qc.quo_id','=',$quotation->quo_id)
+                ->select('t.id as service_id','ps.id as charge_id','qc.quo_id','t.name','t.price')
+                ->first();
         }
         //dd($quotation);
-        return view('backends.books.edit', compact('quotation'));
+        $transports = getTransports($quotation->quo_detail[0]->product_id);
+        return view('backends.books.edit', compact('quotation','transports'));
     }
 
     /**

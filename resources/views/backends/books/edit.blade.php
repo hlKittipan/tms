@@ -50,7 +50,8 @@
                                                 </div>
                                             @else
                                                 <div class="col-sm-4">
-                                                    <a href="{{new_asset($quotation->passport)}}" target="_blank"> <img src="{{new_asset($quotation->passport)}}" class="card-img-top"></a>
+                                                    <a href="{{new_asset($quotation->passport)}}" target="_blank"> <img src="{{new_asset($quotation->passport)}}"
+                                                                                                                        class="card-img-top"></a>
                                                 </div>
                                             @endif
                                         </div>
@@ -80,7 +81,7 @@
                                     <div class="col-md-12" id="product_list">
                                         @foreach($quotation->quo_detail as $value)
                                             <div class="card mb-3" id="list_id_{{$value->product_id}}">
-                                                <div class="card-header"><b>{{__('book.id')}}</b> : {{$value->product_id}}  <b>{{__('product.name')}}</b> : {{$value->name}}
+                                                <div class="card-header"><b>{{__('book.id')}}</b> : {{$value->product_id}} <b>{{__('product.name')}}</b> : {{$value->name}}
                                                     <span class="float-right" id="available_span_{{$value->product_id}}" number_of_pax="{{$value->number_of_pax}}"></span>
                                                     <input type="hidden" name="product_id[]" value="{{$value->product_id}}">
                                                 </div>
@@ -100,54 +101,85 @@
                                                             <div class="form-group row">
                                                                 <label class="col-sm-2 col-form-label">{{__('product.date')}}</label>
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" name="date_{{$value->product_id}}" class="form-control form-date" onchange="checkAvailable('{{$value->product_id}}','{{$value->number_of_pax}}')" value="{{\Carbon\Carbon::parse($value->book_date)->format('m/d/Y')}}">
+                                                                    <input type="text" name="date_{{$value->product_id}}" class="form-control form-date"
+                                                                           onchange="checkAvailable('{{$value->product_id}}','{{$value->number_of_pax}}')"
+                                                                           value="{{\Carbon\Carbon::parse($value->book_date)->format('m/d/Y')}}">
                                                                 </div>
                                                             </div>
+                                                            <hr>
+                                                            <div class="py-1">
+                                                                <div class="float-left">{{ __('product.product') }}</div>
+                                                                <div class="float-right">
+                                                                    <select class="form-control" name="trans_id" id="sl_tran" onchange="calculatePrice('{!! $value->product_id !!}','')">
+                                                                        <option value="0" price="0">Select transport</option>
+                                                                        @foreach($transports as $k => $v)
+                                                                            <option value="{{$v->id}}" price="{{$v->price}}" ps_id="{{$v->ps_id}}" {{ $quotation->trans->service_id == $v->id ? 'selected' :'' }}>{{$v->name}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <input type="hidden" value="0" name="ps_value">
+                                                                    <input type="hidden" value="0" name="ps_price">
+                                                                </div>
                                                             </div>
+                                                        </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.number_of_adult')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="noa_{{$value->product_id}}" class="form-control text-right" value="{{$value->unit_adult}}" onchange="calculatePrice('{{$value->product_id}}','noa_')" price="{{$value->public_adult}}">
+                                                                    <input type="number" name="noa_{{$value->product_id}}" class="form-control text-right"
+                                                                           value="{{$value->unit_adult}}" onchange="calculatePrice('{{$value->product_id}}','noa_')"
+                                                                           price="{{$value->public_adult}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.number_of_child')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="noc_{{$value->product_id}}" class="form-control text-right" value="{{$value->unit_child}}" onchange="calculatePrice('{{$value->product_id}}','noc_')" price="{{$value->public_child}}">
+                                                                    <input type="number" name="noc_{{$value->product_id}}" class="form-control text-right"
+                                                                           value="{{$value->unit_child}}" onchange="calculatePrice('{{$value->product_id}}','noc_')"
+                                                                           price="{{$value->public_child}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.number_of_infant')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="noi_{{$value->product_id}}" class="form-control text-right" value="{{$value->unit_infant}}" onchange="calculatePrice('{{$value->product_id}}','noi_')" price="{{$value->public_infant}}">
+                                                                    <input type="number" name="noi_{{$value->product_id}}" class="form-control text-right"
+                                                                           value="{{$value->unit_infant}}" onchange="calculatePrice('{{$value->product_id}}','noi_')"
+                                                                           price="{{$value->public_infant}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.discounts')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="d_{{$value->product_id}}" class="form-control text-right" value="{{$value->discount}}" onchange="calculatePrice('{{$value->product_id}}','')">
+                                                                    <input type="number" name="d_{{$value->product_id}}" class="form-control text-right"
+                                                                           value="{{$value->discount}}" onchange="calculatePrice('{{$value->product_id}}','')">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.total')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="t_{{$value->product_id}}" readonly class="form-control text-right" value="{{$value->total}}">
+                                                                    <input type="number" name="t_{{$value->product_id}}" readonly class="form-control text-right"
+                                                                           value="{{$value->total}}">
                                                                 </div>
+                                                            </div>
+                                                            <div class="form-group row"><label class="col-sm-4 col-form-label">Charge</label>
+                                                                <div class="col-sm-8"><input type="number" name="charge_{{$value->product_id}}" class="form-control text-right" readonly=""
+                                                                    value="{{($value->unit_infant+$value->unit_adult+$value->unit_child)*$quotation->trans->price}}"></div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.vat')}}</label>
                                                                 <div class="input-group col-sm-8">
-                                                                    <div class="input-group-prepend"><div class="input-group-text">%
+                                                                    <div class="input-group-prepend">
+                                                                        <div class="input-group-text">%
                                                                         </div>
                                                                     </div>
-                                                                    <input type="number" name="v_{{$value->product_id}}" class="form-control text-right" value="{{$value->vat}}" onchange="calculatePrice('{{$value->product_id}}','')">
+                                                                    <input type="number" name="v_{{$value->product_id}}" class="form-control text-right" value="{{$value->vat}}"
+                                                                           onchange="calculatePrice('{{$value->product_id}}','')">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-4 col-form-label">{{__('book.net_total')}}</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="number" name="nt_{{$value->product_id}}" readonly class="form-control text-right" value="{{$value->net}}"></div>
+                                                                    <input type="number" name="nt_{{$value->product_id}}" readonly class="form-control text-right"
+                                                                           value="{{$value->net}}"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -220,7 +252,18 @@
             $('.form-date').daterangepicker({
                 "singleDatePicker": true
             });
+            $('#sl_tran').select2();
 
+            $('#sl_tran').on('change', function (e) {
+                var ps_value = $('#sl_tran option:selected').attr('ps_id');
+                var ps_price = $('#sl_tran option:selected').attr('price');
+                if(ps_value == undefined){
+                    ps_value = 0
+                    ps_price = 0
+                }
+                $("input[name='ps_value']").val(ps_value);
+                $("input[name='ps_price']").val(ps_price);
+            });
         });
 
         function confirm_reset() {
