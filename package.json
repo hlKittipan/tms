@@ -31,6 +31,7 @@
         "@fullcalendar/interaction": "^4.3.0",
         "@fullcalendar/list": "^4.3.0",
         "@fullcalendar/timegrid": "^4.3.0",
+        "chart.js": "^2.9.3",
         "datatables.net": "^1.10.20",
         "datatables.net-bs4": "^1.10.20",
         "datatables.net-buttons-bs4": "^1.6.1",

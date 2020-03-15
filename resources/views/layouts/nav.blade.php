@@ -27,10 +27,10 @@
                 </div>
             </li>
             <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">About us</a>
+                <a class="nav-link" href="{{url('/about')}}">About us</a>
             </li>
             <li class="nav-item m-auto px-2">
-                <a class="nav-link" href="#">Contact us</a>
+                <a class="nav-link" href="{{url('/contact')}}">Contact us</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{{route('search')}}">

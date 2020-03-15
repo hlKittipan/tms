@@ -3,7 +3,8 @@
         <a class="navbar-brand" href="{{ route('letmepass') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -26,6 +27,18 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item dropdown {{ routeIsActive(['backend.booking.index','backend.booking.create']) }}">
+                        <a id="booking" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fas fa-book"></i> Report <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="booking">
+                            <a class="dropdown-item" href="{{route('backend.report.sales')}}"> Sales </a>
+                            <a class="dropdown-item" href="#"> View </a>
+                            <a class="dropdown-item" href="#"> Visit country </a>
+                        </div>
+
+                    </li>
                     <li class="nav-item dropdown {{ routeIsActive(['backend.booking.index','backend.booking.create']) }}">
                         <a id="booking" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-cart-plus"></i> {{ __('book.booking') }} <span class="caret"></span>

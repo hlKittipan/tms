@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>
@@ -13,53 +13,20 @@
                     <div class="card-header">{{ __('product.province_management') }}</div>
 
                     <div class="card-body">
-                        <form class="was-validated needs-validation" method="POST"
-                              action="{{ route('backend.province.store') }}">
-                            @csrf
-                            <div class="form-group">
-                                <label>{{ __('product.province_name') }}</label>
-                                <input type="text" class="form-control is-invalid" name="name"
-                                       value="{{ old('name') }}" placeholder="name" required>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">{{ __('auth.save') }}</button>
-                            <button type="reset" class="btn btn-danger">{{ __('auth.reset') }}</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">{{ __('product.province_management') }}</div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th width="280px">Action</th>
-                            </tr>
-                            @foreach ($province as $key => $list)
-                                <tr>
-                                    <td>{{ $key++ }}</td>
-                                    <td>{{ $list->name }}</td>
-                                    <td>
-                                        <a href="{{ route('backend.province.edit',$list->id) }}" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="fas fa-edit fa-2x"></i>
-                                        </a>
-                                        <!--<a href="" data-toggle="tooltip" data-placement="top" title="Reset Password">
-                                            <i class="fas fa-recycle fa-2x"></i>
-                                        </a>-->
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                        {!! $province->links() !!}
+                        <div class="col-md-12">
+                            <form class="was-validated needs-validation" method="GET"
+                                  action="{{ route('backend.report.sales') }}">
+                                @csrf
+                                <div class="form-row align-items-center">
+                                    <input type="text" name="dates" class="form-control col-sm-4" required/>
+                                    <button type="submit" class="btn btn-primary col-sm-2">{{ __('product.search') }}</button>
+                                    <button type="reset" class="btn btn-danger col-sm-2">{{ __('auth.reset') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <canvas id="myChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,7 +36,50 @@
 @section('script')
     <script>
         $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
+            $('input[name="dates"]').daterangepicker({
+                "showWeekNumbers": true,
+                "showISOWeekNumbers": true,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                "alwaysShowCalendars": true,
+            }, function(start, end, label) {
+                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+            });
+
+            var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         })
     </script>
 @endsection

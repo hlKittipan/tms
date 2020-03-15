@@ -81,7 +81,7 @@
                                             <tr>
                                                 <th scope="row"></th>
                                                 <td></td>
-                                                <td>Transports</td>
+                                                <td>Transports From {{ $value->trans->name }}</td>
                                                 <td>{{ $value->unit_adult+ $value->unit_child+$value->unit_infant}}</td>
                                                 <td class="text-right">{{$value->trans->price}}</td>
                                                 <td class="text-right">{{($value->unit_adult+ $value->unit_child+$value->unit_infant) * $value->trans->price}}</td>
