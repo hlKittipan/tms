@@ -24,6 +24,7 @@
                                 <h4>Client detail</h4>
                                 <hr>
                             </div>
+
                             @foreach($book->client as $key => $value)
                                 <div class="col-md-6">
                                     <div><b>Last Name :</b> {{$value->last_name}} <b>First Name :</b> {{$value->first_name}}</div>
@@ -85,14 +86,16 @@
                                                 <td class="text-right">{{$value->public_infant}}</td>
                                                 <td class="text-right">{{$value->unit_infant * $value->public_infant}}</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row"></th>
-                                                <td></td>
-                                                <td>Transports</td>
-                                                <td>{{ $value->unit_adult+ $value->unit_child+$value->unit_infant}}</td>
-                                                <td class="text-right">{{$value->trans->price}}</td>
-                                                <td class="text-right">{{($value->unit_adult+ $value->unit_child+$value->unit_infant) * $value->trans->price}}</td>
-                                            </tr>
+                                            @if($value->trans != null)
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <td></td>
+                                                    <td>Transports From {{ $value->trans->name }}</td>
+                                                    <td>{{ $value->unit_adult+ $value->unit_child+$value->unit_infant}}</td>
+                                                    <td class="text-right">{{$value->trans->price}}</td>
+                                                    <td class="text-right">{{($value->unit_adult+ $value->unit_child+$value->unit_infant) * $value->trans->price}}</td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         <tr>
                                             <th scope="row" colspan="5" class="text-right">Total</th>
