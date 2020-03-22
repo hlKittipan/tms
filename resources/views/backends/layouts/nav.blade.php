@@ -33,7 +33,8 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="booking">
-                            <a class="dropdown-item" href="{{route('backend.report.sales')}}"> Sales </a>
+                            <a class="dropdown-item" href="{{route('backend.report',['reportType'=>'sales'])}}"> Sales </a>
+                            <a class="dropdown-item" href="{{route('backend.report',['reportType'=>'products'])}}"> Product </a>
                             <a class="dropdown-item" href="#"> View </a>
                             <a class="dropdown-item" href="#"> Visit country </a>
                         </div>

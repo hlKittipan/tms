@@ -86,7 +86,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend', 'as' => 'backend.
     Route::resource('transport', 'TransportController');
 
     //Report
-    Route::get('report/sales','ReportController@sales')->name('report.sales');
+    Route::get('report','ReportController@getReport')->name('report');
 });
 
 
