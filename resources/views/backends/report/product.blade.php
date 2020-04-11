@@ -32,6 +32,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Product name</th>
                                         <th scope="col">January</th>
                                         <th scope="col">February</th>
                                         <th scope="col">March</th>
@@ -49,9 +50,12 @@
                                     <tbody>
                                     @foreach($result as $key => $value)
                                         @if(property_exists($value,"data"))
-                                            @foreach($value as $k => $v)
+                                            @foreach($value->data as $k => $v)
                                                 <tr>
-                                                    <th class="align-middle">{{$key}}</th>
+                                                    @if($loop->first)
+                                                        <th scope="row" rowspan="{{count((array)$value->data)}}" class="align-middle">{{$key}}</th>
+                                                    @endif
+                                                    <td>{{$v->name}}</td>
                                                     <td>{!! $v->{"01"} !!}</td>
                                                     <td>{!! $v->{"02"} !!}</td>
                                                     <td>{!! $v->{"03"} !!}</td>
